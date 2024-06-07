@@ -1,0 +1,17 @@
+{
+  "name": "app",
+  "private": true,
+  "scripts": {
+    "build": "bun bun.config.js",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.4",
+    "autoprefixer": "^10.4.19",
+    "daisyui": "^4.12.2",
+    "flowbite": "^2.3.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4"
+  }
+}

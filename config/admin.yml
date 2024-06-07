@@ -1,0 +1,11 @@
+development:
+  username: "admin"
+  password: "admin"
+
+test:
+  username: "admin"
+  password: "admin"
+
+production:
+  username: <%= Rails.application.credentials.admin&.username %>
+  password: <%= Rails.application.credentials.admin&.password %>

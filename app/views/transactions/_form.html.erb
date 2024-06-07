@@ -1,0 +1,55 @@
+<%= form_with(model: transaction) do |form| %>
+  <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Create Transaction</h2>
+
+      <% if transaction.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+          <ul>
+            <% transaction.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form.collection_select(:account_id, Account.all, :id, :title, { prompt: "Select an account" }, { required: true, class: "select select-bordered w-full max-w-xs" }) %>
+
+      <%= form.collection_select(:category_id, Category.all, :id, :title, { prompt: "Select a category" }, { required: true, class: "select select-bordered w-full max-w-xs" }) %>
+
+      <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
+        Title
+        <%= form.text_field :title, required: true, class: "grow" %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+        </svg>
+      <% end %>
+
+      <%= form.label :value, class: "input input-bordered flex items-center gap-2" do %>
+        Value
+        <%= form.text_field :value, required: true, class: "grow" %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+      <% end %>
+
+      <div>
+        <%= form.label :due_on, class: "input input-bordered flex items-center gap-2" do %>
+          Due On
+          <%= form.date_field :due_on, required: true, class: "grow" %>
+        <% end %>
+      </div>
+
+      <%= form.label :paid_at, class: "input input-bordered flex items-center gap-2" do %>
+        Paid At
+        <%= form.date_field :paid_at, required: true, class: "grow" %>
+      <% end %>
+
+      <div class="card-actions justify-center">
+        <%= form.submit("Save Transaction", class: "btn btn-primary") %>
+      </div>
+    </div>
+  </div>
+<% end %>
