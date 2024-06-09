@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+GIT_COMMIT=$(git rev-parse --short HEAD);
+
+echo "Pushing tags: latest,${GIT_COMMIT}"
+
+docker buildx build -t andersonskm/dindin:latest \
+  -t andersonskm/dindin:$GIT_COMMIT \
+  --platform=linux/amd64 --push .;
