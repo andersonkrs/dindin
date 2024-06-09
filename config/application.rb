@@ -24,5 +24,7 @@ module DinDin
     config.time_zone = "America/Sao_Paulo"
     # config.eager_load_paths << Rails.root.join("extras")
     #
+    #
+    config.session_store :cookie_store, expire_after: 1.month, key: "_dindin_session_v1"
   end
 end

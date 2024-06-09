@@ -1,6 +1,7 @@
 class Transaction < ApplicationRecord
   belongs_to :category
   belongs_to :account
+  belongs_to :creator, default: -> { Current.user }, class_name: "User"
 
   monetize :value_cents
 

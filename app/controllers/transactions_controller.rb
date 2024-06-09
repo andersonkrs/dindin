@@ -1,4 +1,4 @@
-class TransactionsController < ApplicationController
+class TransactionsController < AccountController
   before_action :set_transaction, only: %i[ show edit update destroy ]
 
   def index
