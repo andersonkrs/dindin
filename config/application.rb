@@ -25,6 +25,8 @@ module DinDin
     # config.eager_load_paths << Rails.root.join("extras")
     #
     #
-    config.session_store :cookie_store, expire_after: 1.month, key: "_dindin_session_v1"
+    config.session_store :cookie_store, expire_after: 1.month
+    config.i18n.available_locales = ["en", "pt-BR"]
+    config.i18n.locale = :en
   end
 end

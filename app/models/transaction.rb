@@ -5,7 +5,6 @@ class Transaction < ApplicationRecord
 
   monetize :value_cents
 
-  attribute :value_cents, :integer, default: -> { nil }
   attribute :due_on, :date, default: -> { Date.today }
   attribute :paid_at, :date, default: -> { Date.today }
 end

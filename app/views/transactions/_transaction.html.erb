@@ -1,27 +1,18 @@
-<div id="<%= dom_id transaction %>">
-  <p>
-    <strong>Title:</strong>
-    <%= transaction.title %>
-  </p>
-
-  <p>
-    <strong>Due on:</strong>
-    <%= transaction.due_on %>
-  </p>
-
-  <p>
-    <strong>Paid at:</strong>
-    <%= transaction.paid_at %>
-  </p>
-
-  <p>
-    <strong>Category:</strong>
-    <%= transaction.category_id %>
-  </p>
-
-  <p>
-    <strong>Account:</strong>
-    <%= transaction.account_id %>
-  </p>
-
-</div>
+<tr id="<%= dom_id transaction %>">
+  <td>
+    <div class="flex items-center gap-3">
+      <div class="avatar placeholder">
+        <div class="bg-neutral text-neutral-content rounded-full w-12">
+          <span class="text-xs"><%= transaction.category.title.chars.values_at(0, -1).map(&:upcase).join %></span>
+        </div>
+      </div>
+      <div> 
+        <div class="font-bold"><%= transaction.title %></div>
+        <div class="text-sm opacity-50"><%= transaction.category.title %></div>
+      </div>
+    </div>
+  </td>
+  <td class="text-right font-bold text-md <%= class_names("text-emerald-500" => false, "text-red-600" => true) %>">
+    <%= "-" %><%= humanized_money_with_symbol(transaction.value) %>
+  </td>
+</tr>

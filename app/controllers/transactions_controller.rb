@@ -2,7 +2,7 @@ class TransactionsController < AccountController
   before_action :set_transaction, only: %i[ show edit update destroy ]
 
   def index
-    @transactions = Transaction.all
+    @transactions = Transaction.order(due_on: :desc, id: :desc)
   end
 
   def show
@@ -20,7 +20,7 @@ class TransactionsController < AccountController
 
     respond_to do |format|
       if @transaction.save
-        format.html { redirect_to new_transaction_url, notice: "Transaction was successfully created." }
+        format.html { redirect_to new_transaction_url, notice: "Transaction successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -57,9 +57,10 @@ class TransactionsController < AccountController
         :title,
         :due_on,
         :value,
-        :paid_at,
         :category_id,
         :account_id,
+      ).merge(
+        paid_at: Time.zone.today,
       )
     end
 end

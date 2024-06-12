@@ -1,7 +1,6 @@
 # encoding : utf-8
 
 MoneyRails.configure do |config|
-
   # To set the default currency
   #
   config.default_currency = :brl
@@ -96,7 +95,7 @@ MoneyRails.configure do |config|
   #
   # For the legacy behaviour of "per currency" localization (formatting depends
   # only on currency):
-  # config.locale_backend = :currency
+  config.locale_backend = :i18n
   #
   # Example:
   # Money.new(10_000_00, 'USD').format # => $10,000.00
