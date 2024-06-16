@@ -1,0 +1,21 @@
+<% if Current.user.present? %>
+  <div class="flex justify-center items-center navbar">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl">Din Din</a>
+    </div>
+    <div class="flex-none">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-16 rounded-full">
+            <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          </div>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li>
+            <%= link_to "Logout", destroy_session_path, method: :delete %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
