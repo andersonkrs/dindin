@@ -1,28 +1,21 @@
 <% content_for :title, "Transactions" %>
 
-<h1>Transactions</h1>
-
-<div class="card bg-base-100 rounded-[24px] shadow-2xl overflow-x-auto sm:w-full lg:w-2/3">
-  <div class="card-body">
-    <div class="flex flex-row items-center justify-end">
-      <%= link_to new_transaction_path, class: "btn btn-accent" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
-        </svg>
+<div class="card bg-base-100 rounded-2xl shadow-2xl w-full md:w-2/3">
+  <div class="card-body px-2 py-5">
+    <div class="flex items-center justify-end w-full px-4">
+      <%= link_to new_transaction_path, role: "button", class: "btn btn-outline btn-accent" do %>
+        <%= icon "calculator" %>
         New Expense
       <% end %>
     </div>
-
-    <table class="table">
-      <thead>
-        <th>Title</th>
-        <th class="text-right">Value</th>
-      </thead>
-      <tbody>
-        <% @transactions.each do |transaction| %>
+    <div class="divider text-4xl font-bold mx-5 my-3">Transactions</div>
+    <div class="flex flex-col w-full pt-0 px-1 sm:px-5 lg:px-10">
+      <% @transactions.group_by(&:due_on).each do |date, transactions| %>
+        <div class="mx-5 py-4 flex items-center text-sm font-semibold text-gray-500"><%= I18n.l date, format: :long %></div>
+        <% transactions.each do |transaction| %>
           <%= render transaction %>
         <% end %>
-      </tbody>
-    </table>
+      <% end %>
+    </div>
   </div>
 </div>

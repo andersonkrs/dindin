@@ -9,7 +9,7 @@ class TransactionsController < AccountController
   end
 
   def new
-    @transaction = Transaction.new
+    @transaction = Transaction.new(paid_at: Time.zone.today)
   end
 
   def edit
@@ -30,7 +30,7 @@ class TransactionsController < AccountController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
-        format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
+        format.html { redirect_to transactions_url, notice: "Transaction successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -53,14 +53,16 @@ class TransactionsController < AccountController
 
     # Only allow a list of trusted parameters through.
     def transaction_params
+      paid_at = params[:transaction][:paid] == "1" ? Time.zone.today : nil
+
       params.require(:transaction).permit(
         :title,
         :due_on,
         :value,
         :category_id,
         :account_id,
-      ).merge(
-        paid_at: Time.zone.today,
+      ).with_defaults(
+        paid_at: paid_at,
       )
     end
 end

@@ -1,18 +1,33 @@
-<tr id="<%= dom_id transaction %>">
-  <td>
-    <div class="flex items-center gap-3">
-      <div class="avatar placeholder">
-        <div class="bg-neutral text-neutral-content rounded-full w-12">
-          <span class="text-xs"><%= transaction.category.title.chars.values_at(0, -1).map(&:upcase).join %></span>
+<%= link_to edit_transaction_path(transaction), class: "block" do %>
+  <article id="<%= dom_id transaction %>" class="flex hover:bg-gray-100 py-1">
+    <div class="grow py-1 text-sm font-medium text-gray-800">
+      <div class="flex-shrink-0 group block">
+        <div class="flex items-center">
+          <div class="flex flex-col items-center w-5">
+            <span class="<%= class_names("hidden" => transaction.paid_at.present?) %> size-3.5 rounded-full transform ring-2 ring-white bg-orange-400 dark:ring-neutral-900"></span>
+          </div>
+          <div class="relative">
+            <div class="avatar placeholder">
+              <div class="bg-neutral text-neutral-content rounded-full w-12">
+                <span class="text-xl">
+                  <%= transaction.category.title.chars.values_at(0, -1).map(&:upcase).join %>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="ms-3">
+            <h3 class="font-semibold text-gray-800">
+              <%= transaction.title %>
+            </h3>
+            <p class="text-sm font-medium text-gray-400">
+            <%= transaction.category.title %>
+            </p>
+          </div>
         </div>
       </div>
-      <div> 
-        <div class="font-bold"><%= transaction.title %></div>
-        <div class="text-sm opacity-50"><%= transaction.category.title %></div>
-      </div>
     </div>
-  </td>
-  <td class="text-right font-bold text-md <%= class_names("text-emerald-500" => false, "text-red-600" => true) %>">
-    <%= "-" %><%= humanized_money_with_symbol(transaction.value) %>
-  </td>
-</tr>
+    <div class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium text-center">
+      <span class="text-right font-semibold text-md <%= class_names("text-emerald-500" => false, "text-red-600" => true) %>"><%= "-" %><%= humanized_money_with_symbol(transaction.value) %></span>
+    </div>
+  </article>
+<% end %>
