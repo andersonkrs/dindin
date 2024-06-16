@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :sessions, only: %i[new create destroy]
+  get "/sessions", to: "sessions#new", as: "new_session"
+  post "/sessions", to: "sessions#create", as: "create_session"
+  delete "/sessions", to: "sessions#destroy", as: "destroy_session"
 
   resources :transactions
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
