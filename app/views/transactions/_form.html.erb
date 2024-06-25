@@ -1,9 +1,15 @@
-<%# locals: (transaction:, title:) -%>
+<%# locals: (transaction:) -%>
 
 <%= form_with(model: transaction) do |form| %>
   <div class="card w-96 bg-base-100 shadow-xl">
     <div class="card-body items-stretch">
-      <h1 class="card-title justify-center mb-2"><%= title %></h1>
+      <h1 class="card-title justify-center mb-2">
+        <% if transaction.persisted? %>
+          <%= "Edit #{transaction.model_name.human}" %>
+        <% else %>
+          <%= "New #{transaction.model_name.human}" %>
+        <% end %>
+      </h1>
 
       <% if transaction.errors.any? %>
         <div style="color: red">
@@ -21,7 +27,7 @@
         <%= form.label :value, class: "input input-bordered flex items-center gap-2", data: { controller: "money-input" } do %>
           <%= icon "banknotes" %>
 
-          <%= form.text_field :value, autofocus: true, inputmode: "numeric", maxlength: "21", required: true, placeholder: "Value", class: "grow font-semibold text-lg text-right", data: { "money-input-target": "input", action: "input->money-input#handleFormat focus->money-input#handleFocus click->money-input#handleFocus" } %>
+          <%= form.text_field :value, inputmode: "numeric", maxlength: "21", required: true, placeholder: "Value", class: "grow font-semibold text-lg text-right", data: { "money-input-target": "input", action: "input->money-input#handleFormat focus->money-input#handleFocus click->money-input#handleFocus" } %>
         <% end %>
 
         <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
@@ -53,8 +59,13 @@
           <% end %>
         </div>
 
-        <div class="card-actions justify-center">
-          <%= form.submit("Save Transaction", class: "btn btn-primary") %>
+        <div class="card-actions flex justify-center items-center">
+          <%= form.submit("Save #{transaction.model_name.human}", class: "btn btn-primary #{class_names("ml-auto" => transaction.persisted?)}") %>
+          <% if transaction.persisted? %>
+            <%= link_to transaction_path(transaction), class: "btn btn-error btn-circle btn-outline ml-auto", data: { "turbo-method": :delete } do%>
+              <%= icon "trash" %>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

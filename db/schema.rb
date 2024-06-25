@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_06_09_152810) do
+ActiveRecord::Schema[7.2].define(version: 2024_06_18_103436) do
   create_table "accounts", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -39,10 +39,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_06_09_152810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "creator_id"
+    t.string "type", null: false
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["category_id"], name: "index_transactions_on_category_id"
     t.index ["creator_id"], name: "index_transactions_on_creator_id"
     t.index ["title"], name: "index_transactions_on_title"
+    t.index ["type"], name: "index_transactions_on_type"
+    t.check_constraint "type in ('Expense', 'Income')"
   end
 
   create_table "users", force: :cascade do |t|

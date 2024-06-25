@@ -1,6 +1,6 @@
-<% content_for :title, "Editing transaction" %>
+<% content_for :title, "Editing #{@transaction.model_name.human}" %>
 
-<%= render "form", transaction: @transaction, title: "Edit Transaction" %>
+<%= render "transactions/form", transaction: @transaction %>
 
 <div>
   <%= link_to "Back to transactions", transactions_path %>

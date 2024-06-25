@@ -3,5 +3,5 @@
 echo "Triggering deployment"
 
 curl --verbose --request GET \
-  --url 'https://coolify.andersonmacedo.me/api/v1/deploy?uuid=hcg0ocw&force=false' \
+  --url "${COOLIFY_DEPLOYMENT_URL}" \
   -H "Authorization: Bearer ${COOLIFY_TOKEN}"
