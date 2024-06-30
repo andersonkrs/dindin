@@ -42,3 +42,5 @@
 /config/credentials/production.key
 
 .DS_Store
+
+/config/credentials/development.key
