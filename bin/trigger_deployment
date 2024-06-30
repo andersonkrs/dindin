@@ -3,5 +3,5 @@
 echo "Triggering deployment"
 
 curl --verbose --request GET \
-  --url "${COOLIFY_DEPLOYMENT_URL}" \
+  --url "${COOLIFY_WEBHOOK}" \
   -H "Authorization: Bearer ${COOLIFY_TOKEN}"
