@@ -15,7 +15,6 @@
 
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -23,7 +22,7 @@
 
   <body class="bg-slate-50 min-h-screen">
     <div class="container mx-auto">
-      <div class="flex flex-col gap-2 items-center justify-center">
+      <div class="flex flex-col gap-1 md:gap-2 items-center justify-center">
         <%= render "shared/navbar" %>
         <%= render "shared/notifications" %>
         <%= yield %>

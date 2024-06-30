@@ -1,0 +1,6 @@
+<%# locals: (title:, icon:, href:) -%>
+
+<%= link_to(href, class: "flex flex-[1_1_30%] flex-col items-center justify-center rounded-md py-5 bg-[#ffffff47] hover:bg-[#0000000f]") do %>
+  <%= icon icon, variant: "solid" %>
+  <span class="font-semibold"><%= title %></span>
+<% end %>

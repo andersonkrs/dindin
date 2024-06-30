@@ -1,14 +1,14 @@
 <% content_for :title, "Transactions" %>
 
 <div class="card bg-base-100 rounded-2xl shadow-2xl w-full md:w-2/3">
-  <div class="card-body px-2 py-5">
-    <div class="flex items-center justify-end w-full px-4">
+  <div class="card-body px-2 py-2">
+    <div class="flex items-center justify-end w-full px-2">
       <%= link_to new_expense_path, role: "button", class: "btn btn-outline btn-accent" do %>
         <%= icon "calculator" %>
         New Expense
       <% end %>
     </div>
-    <div class="divider text-4xl font-bold mx-5 my-3">Transactions</div>
+    <div class="max-sm:divider-start divider text-2xl md:text-4xl font-bold mx-5 my-1">Transactions</div>
     <div class="flex flex-col w-full pt-0 px-1 sm:px-5 lg:px-10">
       <% @transactions.group_by(&:due_on).each do |date, transactions| %>
         <div class="mx-5 py-4 flex items-center text-sm font-semibold text-gray-500"><%= I18n.l date, format: :long %></div>

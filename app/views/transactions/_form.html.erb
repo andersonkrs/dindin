@@ -1,7 +1,7 @@
 <%# locals: (transaction:) -%>
 
-<%= form_with(model: transaction) do |form| %>
-  <div class="card w-96 bg-base-100 shadow-xl">
+<div class="card w-96 bg-base-100 shadow-xl">
+  <%= form_with(model: transaction) do |form| %>
     <div class="card-body items-stretch">
       <h1 class="card-title justify-center mb-2">
         <% if transaction.persisted? %>
@@ -62,12 +62,12 @@
         <div class="card-actions flex justify-center items-center">
           <%= form.submit("Save #{transaction.model_name.human}", class: "btn btn-primary #{class_names("ml-auto" => transaction.persisted?)}") %>
           <% if transaction.persisted? %>
-            <%= link_to transaction_path(transaction), class: "btn btn-error btn-circle btn-outline ml-auto", data: { "turbo-method": :delete } do%>
+            <%= link_to transaction_path(transaction), class: "btn btn-sm h-10 w-10 btn-error btn-circle btn-outline ml-auto", data: { "turbo-method": :delete } do%>
               <%= icon "trash" %>
             <% end %>
           <% end %>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :transactions, only: %i[index destroy]
   resources :expenses, only: %i[new edit create update]
+  resources :categories, only: %i[index new edit create update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

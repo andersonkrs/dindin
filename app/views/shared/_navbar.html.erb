@@ -1,9 +1,10 @@
 <% if Current.user.present? %>
-  <div class="flex justify-center items-center navbar">
-    <div class="flex-1">
-      <a class="btn btn-ghost text-xl">Din Din</a>
+  <div class="navbar max-sm:max-h-14 max-sm:min-h-14">
+    <div class="navbar-start"></div>
+    <div class="navbar-center">
+      <%= render "shared/menu/menu" %>
     </div>
-    <div class="flex-none">
+    <div class="navbar-end">
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-16 rounded-full">
