@@ -7,16 +7,11 @@
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.1
-FROM docker.io/library/ruby:$RUBY_VERSION-slim as base
+ARG RUBY_VERSION=3.3.3
+FROM ruby:$RUBY_VERSION-alpine AS base
 
 # Rails app lives here
 WORKDIR /rails
-
-# Install base packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libsqlite3-0 libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -25,46 +20,66 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development"
 
 # Throw-away build stage to reduce size of final image
-FROM base as build
+FROM base AS build
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config unzip && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+# Install glibc to correctly install Bun
+RUN apk --no-cache add ca-certificates wget
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
+RUN apk add --no-cache --force-overwrite glibc-2.28-r0.apk
 
-ENV BUN_INSTALL=/usr/local/bun
-ENV PATH=/usr/local/bun/bin:$PATH
-ARG BUN_VERSION=1.1.12
-RUN curl -fsSL https://bun.sh/install | bash -s -- "bun-v${BUN_VERSION}"
+RUN apk add --update --no-cache \
+  build-base \
+  git \
+  zip \
+  tzdata \
+  sqlite-dev \
+  npm 
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+RUN npm install -g bun@1.1.12 --include=optional
+
+# Verify bun installation
+RUN bun --version
 
 # Install node modules
 COPY package.json bun.lockb ./
 RUN cat package.json
 RUN bun install --frozen-lockfile
 
+# Install application gems
+COPY .ruby-version Gemfile Gemfile.lock ./
+RUN bundle install && bundle exec bootsnap precompile --gemfile
+
 # Copy application code
 COPY . .
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
-
-# Precompiling assets for producion without requiring secret RAILS_MASTER_KEY
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for app image
 FROM base
 
+ENV TMPDIR="/rails/tmp"
+
+# Install dependencies:
+# - tzdata: Timezones
+# - libxml2 libxslt1 gcompat: Nokogiri
+# - vips: ActiveStorage
+# - zip Backups
+RUN apk add --update --no-cache \
+  bash curl \
+  tzdata \
+  sqlite-dev \
+  redis \
+  libxml2 libxslt gcompat \
+  vips \
+  zip
+
 # Copy built artifacts: gems, application
-COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
+COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-#Entrypoint prepares the database.
+# Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
