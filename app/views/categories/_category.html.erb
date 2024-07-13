@@ -1,16 +1,12 @@
-<%= link_to edit_category_path(category), class: "relative before:bg-gray-200 first:before:hidden before:h-[1px] before:mr-2 before:left-12 before:top-0 before:right-0 before:absolute" do %>
-  <article id="<%= dom_id category %>" class="flex hover:bg-gray-100 rounded-2xl py-1 px-2">
+<%# locals: (category:) -%>
+
+<%= link_to edit_category_path(category), id: dom_id(category), data: { turbo_frame: "category_form", title: category.title }, class: "relative before:bg-gray-200 first:before:hidden before:h-[1px] before:mr-2 before:left-12 before:top-0 before:right-0 before:absolute" do %>
+  <article class="flex hover:bg-gray-100 rounded-2xl py-1 px-2">
     <div class="grow py-1 text-sm font-medium text-gray-800">
       <div class="flex-shrink-0 group block">
         <div class="flex items-center">
           <div class="relative">
-            <div class="avatar placeholder">
-              <div class="bg-neutral text-neutral-content rounded-full w-10">
-                <span class="text-md">
-                  <%= category.title.chars.values_at(0, -1).map(&:upcase).join %>
-                </span>
-              </div>
-            </div>
+            <%= render "icon", category: category %>
           </div>
           <div class="ms-3">
             <h3 class="font-semibold text-lg text-black">

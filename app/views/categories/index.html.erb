@@ -1,20 +1,36 @@
 <% content_for :title, "Categories" %>
 
-<div class="card bg-base-100 rounded-2xl shadow-2xl w-full md:w-2/3">
-  <div class="card-body px-2 py-2">
-    <div class="flex items-center justify-end w-full px-2">
-      <%= link_to new_category_path(kind: :expense), role: "button", class: "btn font-medium btn-sm rounded-[3rem] btn-outline btn-accent" do %>
-        <%= icon "plus" %>
-        New
-      <% end %>
+<div class="index-card md:w-2/4">
+  <%= turbo_frame_tag dom_id(Category, :card), class: "index-card-body" do %>
+    <div class="index-card-title py-5">
+      <%= icon "chart-pie", class: "size-20 md:size-32 hidden" %>Categories
     </div>
-    <div class="max-sm:divider-start divider text-2xl md:text-4xl font-bold mx-5 my-1">
-      <%= icon "chart-pie", class: "size-16 md:size-32" %>Categories
-    </div>
-    <div class="flex flex-col w-full pt-0 px-1 md:px-10 py-5">
+
+    <%= tag.div class: "flex flex-row items-center justify-start md:justify-center" do %>
+      <div role="tablist" class="tabs tabs-boxed">
+        <%= link_to(categories_path(tab: :expense), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab", "bg-accent" => @active_tab == "expense")) do %>
+          <%= icon "payment-method", class: "mr-1" %>Expense
+        <% end %>
+        <%= link_to(categories_path(tab: :income), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab", "bg-primary" => @active_tab == "income")) do %>
+          <%= icon "piggy-bank", class: "mr-1" %>Income
+        <% end %>
+      </div>
+
+      <div class="absolute right-5">
+        <%= link_to(new_category_path(tab: @active_tab), data: { turbo_frame: "category_form" }, class: class_names("btn-action", "btn-accent" => @active_tab == "expense", "btn-primary" => @active_tab == "income")) do %>
+          <%= icon "plus", class: "stroke-2" %>
+          New
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag dom_id(Category, "#{@active_tab}_list"), data: { controller: "sorted" }, class: "flex flex-col w-full pt-0 px-1 md:px-5 py-5" do %>
       <% @categories.each do |category| %>
         <%= render "categories/category", category: category %>
       <% end %>
-    </div>
-  </div>
+    <% end %>
+  <% end %>
+
+  <%= turbo_frame_tag("category_form") do %>
+  <% end %>
 </div>

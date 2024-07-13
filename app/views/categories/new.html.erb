@@ -1,4 +1,4 @@
-<% content_for :title, "Editing #{@category.model_name.human}" %>
+<% content_for :title, "Creating #{@category.model_name.human}" %>
 
 <%= turbo_frame_tag("category_form") do %>
   <%= render "categories/form", category: @category %>

@@ -8,12 +8,14 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
+    "@rails/request.js": "^0.0.9",
     "@stimulus-components/notification": "^3.0.0",
     "autoprefixer": "^10.4.19",
     "current.js": "^0.2.1",
     "daisyui": "^4.12.2",
     "flowbite": "^2.3.0",
     "postcss": "^8.4.38",
+    "requests.js": "^1.0.0",
     "tailwindcss": "^3.4.4"
-  }
+  },
 }

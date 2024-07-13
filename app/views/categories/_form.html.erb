@@ -1,0 +1,81 @@
+<%# locals: (category:) -%>
+
+<dialog id="category_form_dialog" class="modal modal-bottom sm:modal-middle backdrop:opacity-20" data-controller="categories-dialog category-icon">
+  <div data-categories-dialog-target="card" class="modal-box shadow-2xl sm:max-w-[25rem] backface-hidden duration-700 p-4 sm:p-5 <%= category_gradient_class(category) %>">
+
+    <button data-action="click->categories-dialog#handleClose" class="btn btn-md btn-circle btn-ghost absolute font-bold right-2 top-2 text-lg">✕</button>
+
+    <% unless category.persisted? %>
+      <%= button_tag data: { action: "click->categories-dialog#flipCard" }, class: "btn btn-md btn-circle btn-ghost absolute font-bold left-2 top-2 text-lg" do %>
+        <%= icon "arrows-up-down", class: "stroke-2" %>
+      <% end %>
+    <% end %>
+
+    <%= form_with(model: category, data: { "categories_dialog_target": "form", action: "turbo:submit-end->categories-dialog#submitEnd" }) do |form| %>
+      <% if category.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+          <ul>
+            <% category.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form.hidden_field :kind, data: { "categories_dialog_target": "kindInput" } %>
+
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center justify-center">
+          <%= render "icon", category: category, size: "lg" %>
+        </div>
+
+        <div class="flex gap-2 items-center justify-start mt-1">
+          <%= form.label :title, class: "input input-bordered font-semibold text-secondary input-md flex items-center text-xl w-full" do %>
+            <%= form.text_field :title, placeholder: "Name", required: true, class: "grow" %>
+          <% end %>
+        </div>
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text font-semibold text-lg">Pick a color</span>
+          </div>
+          <div class="grid grid-flow-row grid-cols-8 auto-rows-max gap-x-2 gap-y-3 w-full">
+            <% CategoriesHelper::COLOR_MAPPING.each do |color, background| %>
+              <label for="<%= color %>", class="cursor-pointer">
+                <%= form.radio_button :color, color, hidden: true, class: "peer", id: color, data: { action: "input->category-icon#handleColorChanged input->categories-dialog#updateSubmitState" } %>
+                <span class="category-color block h-10 w-10 rounded-full <%= background %> transition duration-300 peer-checked:ring-2 peer-checked:ring-slate-600 peer-checked:ring-offset-2"></span>
+              </label>
+            <% end %>
+          </div>
+        </label>
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text font-semibold text-lg">Pick an icon</span>
+          </div>
+          <div class="grid grid-flow-row grid-cols-8 auto-rows-max gap-x-2 gap-y-3 w-full">
+            <% CategoriesHelper::ICONS.each do |icon| %>
+              <label for="<%= icon %>", class="cursor-pointer">
+                <%= form.radio_button :icon, icon, hidden: true, class: "peer", id: icon, data: { action: "input->category-icon#handleIconChanged input->categories-dialog#updateSubmitState" } %>
+                <span class="flex justify-center items-center h-10 w-10 rounded-full text-black bg-stone-300 transition duration-300 peer-checked:bg-gray-400 peer-checked:ring-2 peer-checked:ring-slate-600 peer-checked:ring-offset-2">
+                  <%= icon icon, class: "category-icon fill-black", variant: "solid" %>
+                </span>
+              </label>
+            <% end %>
+          </div>
+        </label>
+
+        <div class="card-actions mt-3 flex justify-center items-center">
+          <%= form.button(type: "submit", data: { "categories_dialog_target": "submit" }, class: "btn-submit btn-disabled") do %>
+            <%= icon "check", class: "stroke-4" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

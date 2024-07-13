@@ -1,26 +1,28 @@
-<% alert_types = { :alert => 'warning', :error => 'error', :notice => 'info', :success => 'success'} %>
+<div id="flash">
+  <% alert_types = { :alert => 'warning', :error => 'error', :notice => 'info', :success => 'success'} %>
 
-<% flash.each do |type, message| %>
-  <div
-    class="absolute top-8 start-1/2 -translate-x-1/2 z-50 transition transform duration-3000 my-1 min-w-full md:min-w-[400px] bg-white border border-gray-200 rounded-2xl shadow-2xl"
-    role="alert"
-    data-controller="notification"
-    data-transition-enter-from="opacity-0 translate-x-6"
-    data-transition-enter-to="opacity-100 translate-x-0"
-    data-transition-leave-from="opacity-100 translate-x-0"
-    data-transition-leave-to="opacity-0 translate-x-6"
-  >
-    <div class="flex p-4">
-      <div class="flex-shrink-0">
-        <%= icon "information-circle", class: "flex-shrink-0 size-4 text-blue-500 mt-0.5" %>
-      </div>
-      <div class="ms-3">
-        <p class="text-md">
+  <% flash.each do |type, message| %>
+    <div
+      class="absolute top-8 start-1/2 -translate-x-1/2 z-50 transition transform duration-3000 my-1 min-w-full md:min-w-[400px] bg-white border border-gray-200 rounded-2xl shadow-2xl"
+      role="alert"
+      data-controller="notification"
+      data-transition-enter-from="opacity-0 translate-x-6"
+      data-transition-enter-to="opacity-100 translate-x-0"
+      data-transition-leave-from="opacity-100 translate-x-0"
+      data-transition-leave-to="opacity-0 translate-x-6"
+      >
+      <div class="flex p-4">
+        <div class="flex-shrink-0">
+          <%= icon "information-circle", class: "flex-shrink-0 size-4 text-blue-500 mt-0.5" %>
+        </div>
+        <div class="ms-3">
+          <p class="text-md">
           <%= message %>
-        </p>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
 

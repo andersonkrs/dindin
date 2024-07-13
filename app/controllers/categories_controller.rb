@@ -2,19 +2,23 @@ class CategoriesController < AccountController
   before_action :set_category, only: %i[ edit update ]
 
   def new
-    @category = Category.new(kind: :expense)
+    @active_tab = Category.kinds.fetch(params[:tab], "expense")
+    @category = Category.new(kind: @active_tab)
   end
 
   def index
-    @categories = Category.all
+    @active_tab = Category.kinds.fetch(params[:tab], "expense")
+    @categories = Category.where(kind: @active_tab).order(title: :asc)
   end
 
   def create
-    @category = Category.new(category_params)
+    @category = Category.new(category_create_params)
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to categories_path, notice: "Category created!" }
+        flash.now[:notice] = "Category created!"
+
+        format.turbo_stream { render :create, status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -23,8 +27,10 @@ class CategoriesController < AccountController
 
   def update
     respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to categories_path, notice: "Category updated!" }
+      if @category.update(category_update_params)
+        flash.now[:notice] = "Category updated!"
+
+        format.turbo_stream { render :update, status: :ok }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -33,7 +39,7 @@ class CategoriesController < AccountController
 
   def edit
   end
-  
+
   private
 
   def set_category
@@ -41,6 +47,10 @@ class CategoriesController < AccountController
   end
 
   def category_create_params
-    params.require(:category).permit(:title, :kind)
+    params.require(:category).permit(:title, :kind, :color, :icon)
+  end
+
+  def category_update_params
+    params.require(:category).permit(:title, :color, :icon)
   end
 end

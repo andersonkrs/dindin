@@ -2,7 +2,16 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "./application";
 
-import MoneyInputController from "./money_input_controller"
-application.register("money-input", MoneyInputController)
+import CategoriesDialogController from "./categories_dialog_controller";
+application.register("categories-dialog", CategoriesDialogController);
+
+import CategoryIconController from "./category_icon_controller";
+application.register("category-icon", CategoryIconController);
+
+import SortedController from "./sorted_controller";
+application.register("sorted", SortedController);
+
+import MoneyInputController from "./money_input_controller";
+application.register("money-input", MoneyInputController);

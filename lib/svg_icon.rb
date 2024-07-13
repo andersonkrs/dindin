@@ -14,9 +14,7 @@ class SvgIcon
     doc = Nokogiri::HTML::DocumentFragment.parse(raw_svg)
 
     svg = doc.at("svg")
-    # svg.set_attribute("stroke", "currentColor")
-    # svg.set_attribute("stroke-width", "1.5")
-    svg.add_class("size-6")
+    svg.add_class("size-6") unless class_names&.include?("size-")
 
     if class_names
       svg.add_class(class_names)

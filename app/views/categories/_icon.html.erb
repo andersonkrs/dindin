@@ -1,0 +1,11 @@
+<%# locals: (category:, size: "sm") -%>
+
+<div class="avatar placeholder">
+  <div data-category-icon-target="avatar" class="<%= category_color(category) %> text-center text-white rounded-full <%= class_names("w-10" => size == "sm", "w-12" => size == "md", "w-16 text-xl" => size == "lg") %>">
+    <% if category.persisted? && category.icon.blank? %>
+      <%= category_icon_placeholder(category, class: class_names("category-icon fill-white", "size-8" => size == "lg")) %> 
+    <% else %>
+      <%= category_icon(category, variant: :solid, class: class_names("category-icon fill-white", "size-8" => size == "lg")) %>
+    <% end %>
+  </div>
+</div>
