@@ -4,7 +4,9 @@
       <div class="flex-shrink-0 group block">
         <div class="flex items-center">
           <div class="relative">
-            <%= render "categories/icon", category: transaction.category, size: "md" %>
+            <% cache transaction.category do %>
+              <%= render "categories/icon", category: transaction.category, size: "md" %>
+            <% end %>
           </div>
           <div class="ms-3">
             <h3 class="font-semibold text-gray-800">

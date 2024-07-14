@@ -25,8 +25,10 @@
     <% end %>
 
     <%= turbo_frame_tag dom_id(Category, "#{@active_tab}_list"), data: { controller: "sorted" }, class: "flex flex-col w-full pt-0 px-1 md:px-5 py-5" do %>
-      <% @categories.each do |category| %>
-        <%= render "categories/category", category: category %>
+      <% cache @categories do %>
+        <% @categories.each do |category| %>
+          <%= render "categories/category", category: category %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>

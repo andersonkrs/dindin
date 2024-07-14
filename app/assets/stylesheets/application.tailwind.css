@@ -24,7 +24,7 @@
   }
 
   .btn-action {
-    @apply btn font-semibold btn-sm h-[2.3rem] rounded-[3rem] btn-outline;
+    @apply btn font-extrabold text-[1.1rem] btn-sm h-[2.7rem] border-[1.8px] px-4 rounded-[2rem] btn-outline;
   }
 
   .btn-submit {
