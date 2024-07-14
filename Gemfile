@@ -2,38 +2,44 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.0.beta2"
-# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft"
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.0.2"
-# Use the Puma web server [https://github.com/puma/puma]
+
+gem "bootsnap", require: false
+
 gem "puma", ">= 5.0"
-# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails"
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+
+# Drivers
+gem "sqlite3", ">= 2.0.2"
+gem "activerecord-enhancedsqlite3-adapter"
+
+# Solid gems
+gem "solid_queue"
+gem "solid_cache", github: "npezza93/solid_cache", branch: "main" # Rails 7.2 beta fix
+gem "solid_cable"
+gem "solid_errors"
+
+# Queue management
+gem "mission_control-jobs"
+
+# Hotwire
 gem "turbo-rails"
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
-# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+
+# Bundling
+gem "propshaft"
+gem "jsbundling-rails"
 gem "cssbundling-rails"
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-gem "redis", ">= 4.0.1"
 
+# Password encryption
 gem "bcrypt", "~> 3.1.7"
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
-
-# Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
 
 # Handles monetization
 gem "money-rails", "~> 1.12"
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# Active Storage
 gem "image_processing", "~> 1.2"
 gem "aws-sdk-s3", require: false
 

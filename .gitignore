@@ -44,3 +44,5 @@
 .DS_Store
 
 /config/credentials/development.key
+
+/config/credentials/test.key
