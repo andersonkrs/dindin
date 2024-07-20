@@ -1,4 +1,6 @@
-<%= link_to edit_polymorphic_path(transaction), class: "block" do %>
+<%# locals: (transaction:) -%>
+
+<%= link_to polymorphic_path(transaction, action: :edit), data: { turbo_frame: "_top" }, class: "block" do %>
   <article id="<%= dom_id transaction %>" class="flex hover:bg-gray-100 py-1 px-2 rounded-2xl">
     <div class="grow py-1 text-sm font-medium text-gray-800">
       <div class="flex-shrink-0 group block">

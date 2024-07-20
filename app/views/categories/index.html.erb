@@ -8,10 +8,10 @@
 
     <%= tag.div class: "flex flex-row items-center justify-start md:justify-center" do %>
       <div role="tablist" class="tabs tabs-boxed">
-        <%= link_to(categories_path(tab: :expense), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab", "bg-accent" => @active_tab == "expense")) do %>
-          <%= icon "payment-method", class: "mr-1" %>Expense
+        <%= link_to(categories_path(tab: :expense), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab h-9", "bg-accent" => @active_tab == "expense")) do %>
+          <%= icon "payment-method", class: "" %>Expense
         <% end %>
-        <%= link_to(categories_path(tab: :income), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab", "bg-primary" => @active_tab == "income")) do %>
+        <%= link_to(categories_path(tab: :income), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab h-9", "bg-primary" => @active_tab == "income")) do %>
           <%= icon "piggy-bank", class: "mr-1" %>Income
         <% end %>
       </div>

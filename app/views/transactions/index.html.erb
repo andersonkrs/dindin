@@ -11,19 +11,22 @@
       <% end %>
     </div>
 
-    <div class="flex flex-col w-full pt-0 px-1 md:px-3">
+    <div class="flex flex-col justify-center w-full pt-0 px-1 md:px-3">
+      <%= turbo_frame_tag dom_id(Transaction, :list) do %>
+        <% cache @page.records do %>
+          <% @page.records.group_by(&:due_on).each do |date, transactions| %>
+            <%= transactions_date_divider(date) %>
 
-      <% cache @transactions do %>
-        <% @transactions.group_by(&:due_on).each do |date, transactions| %>
-          <div class="mx-1 py-2 flex items-center text-sm font-semibold text-gray-500"><%= I18n.l date, format: :long %></div>
-          <% transactions.each do |transaction| %>
-            <% cache transaction do %>
-              <%= render "transactions/transaction", transaction: transaction %>
-           <% end %>
+            <%= render partial: "transaction", collection: transactions %>
           <% end %>
         <% end %>
       <% end %>
+    </div>
 
+    <div class="flex w-full justify-center align-middle">
+      <% if @page.before_last? %>
+        <%= turbo_frame_tag dom_id(Transaction, :load_more), class: "loading loading-spinner loading-lg m-auto", src: transactions_path(page: @page.next_param, format: :turbo_stream), loading: :lazy %>
+      <% end %>
     </div>
   </div>
 </div>
