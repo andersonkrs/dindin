@@ -1,13 +1,3 @@
-GIT
-  remote: https://github.com/npezza93/solid_cache.git
-  revision: e4e583b2aebf4939bb5c2fd8179c8451d92782b2
-  branch: main
-  specs:
-    solid_cache (0.6.0)
-      activejob (>= 7)
-      activerecord (>= 7)
-      railties (>= 7)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -138,6 +128,9 @@ GEM
     fugit (1.11.0)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
+    geared_pagination (1.2.0)
+      activesupport (>= 5.0)
+      addressable (>= 2.5.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.5)
@@ -264,6 +257,10 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis (5.2.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.2)
     reline (0.5.8)
       io-console (~> 0.5)
@@ -307,8 +304,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    solid_cable (1.0.3)
-      rails (< 9)
     solid_errors (0.4.3)
       actionmailer (~> 7.0)
       actionpack (~> 7.0)
@@ -368,6 +363,7 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   debug
+  geared_pagination
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails
@@ -376,10 +372,9 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails (~> 7.2.0.beta2)
+  redis (>= 4.0.1)
   rubocop-rails-omakase
   selenium-webdriver
-  solid_cable
-  solid_cache!
   solid_errors
   solid_queue
   sqlite3 (>= 2.0.2)

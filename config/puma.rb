@@ -20,7 +20,7 @@
 # Any libraries that use a connection pool or another resource pool should
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
-threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 2)
 threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
@@ -34,7 +34,7 @@ when "production"
   #
   # Automatically detect the number of available processors in production.
   require "concurrent-ruby"
-  workers_count = Integer(ENV.fetch("WEB_CONCURRENCY") { Concurrent.available_processor_count })
+  workers_count = Integer(ENV.fetch("WEB_CONCURRENCY") { 1 })
   workers workers_count if workers_count > 1
 
   preload_app!

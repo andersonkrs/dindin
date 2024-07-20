@@ -12,10 +12,11 @@ gem "puma", ">= 5.0"
 gem "sqlite3", ">= 2.0.2"
 gem "activerecord-enhancedsqlite3-adapter"
 
+# Redis
+gem "redis", ">= 4.0.1"
+
 # Solid gems
 gem "solid_queue"
-gem "solid_cache", github: "npezza93/solid_cache", branch: "main" # Rails 7.2 beta fix
-gem "solid_cable"
 gem "solid_errors"
 
 # Queue management
@@ -42,6 +43,9 @@ gem "money-rails", "~> 1.12"
 # Active Storage
 gem "image_processing", "~> 1.2"
 gem "aws-sdk-s3", require: false
+
+# Pagination
+gem "geared_pagination"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
