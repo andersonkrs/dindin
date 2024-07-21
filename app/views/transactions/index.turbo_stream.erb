@@ -1,9 +1,6 @@
 <%= turbo_stream.append dom_id(Transaction, :list) do %>
   <% cache @page.records do %>
-    <% @page.records.group_by(&:due_on).each do |date, transactions| %>
-      <%= transactions_date_divider(date) %>
-      <%= render partial: "transaction", collection: transactions %>
-    <% end %>
+    <%= render partial: "transaction", collection: @page.records %>
   <% end %>
 <% end %>
 
