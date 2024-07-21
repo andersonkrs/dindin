@@ -12,7 +12,8 @@ class ExpensesController < AccountController
 
     respond_to do |format|
       if @transaction.save
-        format.html { redirect_to new_expense_url, notice: "Expense successfully created." }
+        flash.now[:notice] = "Expense created"
+        format.turbo_stream
       else
         format.html { render "transactions/new", status: :unprocessable_entity }
       end
@@ -22,7 +23,8 @@ class ExpensesController < AccountController
   def update
     respond_to do |format|
       if @transaction.update(expense_params)
-        format.html { redirect_to transactions_url, notice: "Expense successfully updated." }
+        flash.now[:notice] = "Expense updated"
+        format.turbo_stream
       else
         format.html { render "transactions/edit", status: :unprocessable_entity }
       end

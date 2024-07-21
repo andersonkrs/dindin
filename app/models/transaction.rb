@@ -8,5 +8,11 @@ class Transaction < ApplicationRecord
 
   monetize :value_cents
 
+  validates :title, presence: true
+
   def paid? = paid_at.present?
+
+  def sort_key
+    "#{due_on.to_fs(:number)}#{id}"
+  end
 end

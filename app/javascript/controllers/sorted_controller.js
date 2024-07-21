@@ -1,43 +1,28 @@
 import { Controller } from "@hotwired/stimulus";
-
-export function observeMutations(
-  callback,
-  target = this.element,
-  options = {
-    childList: true,
-    subtree: true,
-  },
-) {
-  const observer = new MutationObserver((mutations) => {
-    observer.disconnect();
-    Promise.resolve().then(start);
-    callback.call(this, mutations);
-  });
-
-  function start() {
-    if (target.isConnected) observer.observe(target, options);
-  }
-
-  start();
-}
+import { observeMutations } from "../helpers";
 
 // Connects to data-controller="sorted"
 export default class extends Controller {
+  static values = {
+    reverse: Boolean,
+  };
+
   initialize() {
     observeMutations.bind(this)(this.sortChildren);
   }
 
   connect() {
-    console.log("sorting");
     this.sortChildren();
   }
 
-  // Private
-
   sortChildren() {
     const { children } = this;
-    if (elementsAreSorted(children)) return;
-    children.sort(compareElements).forEach(this.append);
+
+    if (elementsAreSorted(children, this.reverseValue)) return;
+
+    children
+      .sort((a, b) => compareElements(a, b, this.reverseValue))
+      .forEach(this.append);
   }
 
   get children() {
@@ -47,18 +32,22 @@ export default class extends Controller {
   append = (child) => this.element.append(child);
 }
 
-function elementsAreSorted([left, ...rights]) {
+function elementsAreSorted([left, ...rights], reverse) {
   for (const right of rights) {
-    if (compareElements(left, right) > 0) return false;
+    if (compareElements(left, right, reverse) > 0) return false;
     left = right;
   }
   return true;
 }
 
-function compareElements(left, right) {
-  return getSortCode(left).localeCompare(getSortCode(right));
+function compareElements(left, right, reverse) {
+  if (reverse) {
+    return getSortCode(right).localeCompare(getSortCode(left));
+  } else {
+    return getSortCode(right).localeCompare(getSortCode(left));
+  }
 }
 
 function getSortCode(element) {
-  return element.getAttribute("data-title");
+  return element.getAttribute("data-sort-key");
 }

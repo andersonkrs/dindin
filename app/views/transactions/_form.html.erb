@@ -1,73 +1,74 @@
 <%# locals: (transaction:) -%>
 
-<div class="card w-96 bg-base-100 shadow-xl">
-  <%= form_with(model: transaction) do |form| %>
-    <div class="card-body items-stretch">
-      <h1 class="card-title justify-center mb-2">
-        <% if transaction.persisted? %>
-          <%= "Edit #{transaction.model_name.human}" %>
-        <% else %>
-          <%= "New #{transaction.model_name.human}" %>
+<div class="card-body items-stretch px-3">
+  <h1 class="card-title justify-center mb-2">
+    <% if transaction.persisted? %>
+      <%= "Edit #{transaction.model_name.human}" %>
+    <% else %>
+      <%= "New #{transaction.model_name.human}" %>
+    <% end %>
+  </h1>
+
+  <% if transaction.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+      <ul>
+        <% transaction.errors.each do |error| %>
+          <li><%= error.full_message %></li>
         <% end %>
-      </h1>
+      </ul>
+    </div>
+  <% end %>
 
-      <% if transaction.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+  <%= form_with(id: "transaction_form", model: transaction) do |form| %>
+    <div class="flex flex-col gap-4">
+      <%= form.label :value, class: "input input-bordered flex items-center gap-2", data: { controller: "money-input" } do %>
+        <%= icon "banknotes" %>
 
-          <ul>
-            <% transaction.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
+        <%= form.text_field :value, inputmode: "numeric", maxlength: "21", required: true, placeholder: "Value", class: "grow font-semibold text-lg text-right", data: { "money-input-target": "input", action: "input->money-input#handleFormat focus->money-input#handleFocus click->money-input#handleFocus" } %>
       <% end %>
 
-      <div class="flex flex-col gap-4">
-        <%= form.label :value, class: "input input-bordered flex items-center gap-2", data: { controller: "money-input" } do %>
-          <%= icon "banknotes" %>
+      <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
+        <%= icon "pencil" %>
+        <%= form.text_field :title, placeholder: "Description", required: true, class: "grow" %>
+      <% end %>
 
-          <%= form.text_field :value, inputmode: "numeric", maxlength: "21", required: true, placeholder: "Value", class: "grow font-semibold text-lg text-right", data: { "money-input-target": "input", action: "input->money-input#handleFormat focus->money-input#handleFocus click->money-input#handleFocus" } %>
+      <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
+        <%= icon "chart-pie" %>
+        <%= form.select(:category_id, options_from_collection_for_select(Category.all, :id, :title, transaction.category_id), { prompt: "Select a category" }, { required: true, class: "grow w-full max-w-xs" }) %>
+      <% end %>
+
+      <%= form.label :account_id, class: "input input-bordered flex items-center gap-2" do %>
+        <%= icon "credit-card" %>
+        <%= form.select(:account_id, options_from_collection_for_select(Account.all, :id, :title, transaction.account_id), { prompt: "Select an account" }, { required: true, class: "grow w-full max-w-xs" }) %>
+      <% end %>
+
+      <div class="flex gap-1">
+        <%= form.label :due_on, class: "input input-bordered flex items-center gap-2 indicator w-full" do %>
+          <span class="indicator-item indicator-center badge">Due date</span>
+          <%= icon "calendar-days" %>
+          <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow" %>
         <% end %>
 
-        <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
-          <%= icon "pencil" %>
-          <%= form.text_field :title, placeholder: "Description", required: true, class: "grow" %>
+        <%= form.label :paid, class: "input flex-1 w-full swap swap-rotate input-ghost" do %>
+          <%= form.check_box :paid, checked: transaction.paid? %>
+          <%= icon "hand-thumb-up", class: "swap-on w-8 h-8 size-6 text-emerald-500" %>
+          <%= icon "hand-thumb-down", class: "swap-off w-8 h-8 size-6 text-red-500" %>
         <% end %>
-
-        <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
-          <%= icon "chart-pie" %>
-          <%= form.select(:category_id, options_from_collection_for_select(Category.all, :id, :title), { prompt: "Select a category" }, { required: true, class: "grow w-full max-w-xs" }) %>
-        <% end %>
-
-        <%= form.label :account_id, class: "input input-bordered flex items-center gap-2" do %>
-          <%= icon "credit-card" %>
-          <%= form.select(:account_id, options_from_collection_for_select(Account.all, :id, :title), { prompt: "Select an account" }, { required: true, class: "grow w-full max-w-xs" }) %>
-        <% end %>
-
-        <div class="flex gap-1">
-          <%= form.label :due_on, class: "input input-bordered flex items-center gap-2 indicator w-full" do %>
-            <span class="indicator-item indicator-center badge">Due date</span>
-            <%= icon "calendar-days" %>
-            <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow" %>
-          <% end %>
-
-          <%= form.label :paid, class: "input flex-1 w-full swap swap-rotate" do %>
-            <%= form.check_box :paid, checked: transaction.paid? %>
-            <%= icon "hand-thumb-up", class: "swap-on w-8 h-8 size-6 text-emerald-500" %>
-            <%= icon "hand-thumb-down", class: "swap-off w-8 h-8 size-6 text-red-500" %>
-          <% end %>
-        </div>
-
-        <div class="card-actions flex justify-center items-center">
-          <%= form.submit("Save #{transaction.model_name.human}", class: "btn btn-primary #{class_names("ml-auto" => transaction.persisted?)}") %>
-          <% if transaction.persisted? %>
-            <%= link_to transaction_path(transaction), class: "btn btn-sm h-10 w-10 btn-error btn-circle btn-outline ml-auto", data: { "turbo-method": :delete } do%>
-              <%= icon "trash" %>
-            <% end %>
-          <% end %>
-        </div>
       </div>
     </div>
   <% end %>
+
+  <div class="card-actions flex justify-center items-center mt-2">
+    <%= button_tag(type: "submit", form: "transaction_form", class: "btn-submit #{class_names("absolute" => transaction.persisted?)}") do %>
+      <%= icon "check", class: "stroke-4" %>
+    <% end %>
+
+    <% if transaction.persisted? %>
+      <%= button_to transaction.becomes(Transaction), method: :delete, class: "btn btn-sm h-10 w-10 btn-error btn-circle btn-outline", form_class: "ml-auto", data: { turbo_method: :delete } do %>
+        <%= icon "trash" %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

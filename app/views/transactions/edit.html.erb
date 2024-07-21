@@ -1,7 +1,7 @@
 <% content_for :title, "Editing #{@transaction.model_name.human}" %>
 
-<%= render "transactions/form", transaction: @transaction %>
-
-<div>
-  <%= link_to "Back to transactions", transactions_path %>
-</div>
+<%= turbo_frame_tag dom_id(Transaction, :form) do %>
+  <div data-action="turbo:submit-end->transactions-dialog#submitEnd">
+    <%= render "transactions/form", transaction: @transaction %>
+  </div>
+<% end %>

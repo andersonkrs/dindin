@@ -7,11 +7,17 @@ import { application } from "./application";
 import CategoriesDialogController from "./categories_dialog_controller";
 application.register("categories-dialog", CategoriesDialogController);
 
+import TransactionsDialogController from "./transactions_dialog_controller";
+application.register("transactions-dialog", TransactionsDialogController);
+
 import CategoryIconController from "./category_icon_controller";
 application.register("category-icon", CategoryIconController);
 
 import SortedController from "./sorted_controller";
 application.register("sorted", SortedController);
+
+import DividerController from "./divider_controller";
+application.register("divider", DividerController);
 
 import MoneyInputController from "./money_input_controller";
 application.register("money-input", MoneyInputController);

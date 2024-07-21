@@ -9,6 +9,8 @@ class CategoriesController < AccountController
   def index
     @active_tab = Category.kinds.fetch(params[:tab], "expense")
     @categories = Category.where(kind: @active_tab).order(title: :asc)
+
+    fresh_when @categories
   end
 
   def create

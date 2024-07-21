@@ -1,7 +1,5 @@
 <% content_for :title, "New #{@transaction.model_name.human}" %>
 
-<%= render "transactions/form", transaction: @transaction %>
-
-<div>
-  <%= link_to "Back to transactions", transactions_path %>
-</div>
+<%= turbo_frame_tag dom_id(Transaction, :form) do %>
+  <%= render "transactions/form", transaction: @transaction %>
+<% end %>

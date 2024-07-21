@@ -28,7 +28,7 @@
   }
 
   .btn-submit {
-    @apply btn btn-primary btn-circle text-white h-14 w-14 bg-green-400 transition ease-in-out delay-150 hover:scale-110 duration-300;
+    @apply btn btn-primary btn-circle text-white h-14 w-14 bg-green-400 transition ease-in-out delay-150 hover:scale-125 duration-300;
   }
 
   .category-gradient--income {
@@ -45,6 +45,10 @@
 
   .rotate-y-180 {
     transform: rotateY(180deg) !important;
+  }
+
+  .divider-list {
+    @apply before:text-sm before:font-semibold before:text-gray-500
   }
 }
 

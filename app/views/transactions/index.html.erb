@@ -1,24 +1,20 @@
 <% content_for :title, "Transactions" %>
 
-<div class="index-card">
+<div class="index-card" data-controller="transactions-dialog">
   <div class="index-card-body">
     <div class="index-card-title py-5">Transactions</div>
 
     <div class="index-card-actions">
-      <%= link_to new_expense_path, role: "button", class: "btn-action text-indigo-400 hover:bg-indigo-500 hover:text-white hover:border-indigo-500" do %>
+      <%= link_to new_expense_path, data: { action: "click->transactions-dialog#open", turbo_frame: dom_id(Transaction, :form) }, class: "btn-action text-indigo-400 hover:bg-indigo-500 hover:text-white hover:border-indigo-500" do %>
         <%= icon "plus", class: "stroke-3" %>
         New
       <% end %>
     </div>
 
     <div class="flex flex-col justify-center w-full pt-0 px-1 md:px-3">
-      <%= turbo_frame_tag dom_id(Transaction, :list) do %>
+      <%= turbo_frame_tag dom_id(Transaction, :list), data: { controller: "sorted divider", sorted_reverse_value: true } do %>
         <% cache @page.records do %>
-          <% @page.records.group_by(&:due_on).each do |date, transactions| %>
-            <%= transactions_date_divider(date) %>
-
-            <%= render partial: "transaction", collection: transactions %>
-          <% end %>
+          <%= render partial: "transaction", collection: @page.records %>
         <% end %>
       <% end %>
     </div>
@@ -29,4 +25,12 @@
       <% end %>
     </div>
   </div>
+
+  <dialog class="modal modal-bottom sm:modal-middle backdrop:opacity-20" data-transactions-dialog-target="modal">
+    <div class="modal-box shadow-2xl sm:max-w-[25rem] backface-hidden duration-700 category-gradient--expense">
+      <button data-action="click->transactions-dialog#close" class="btn btn-md btn-circle btn-ghost absolute font-bold right-2 top-2 text-lg">✕</button>
+
+      <%= turbo_frame_tag dom_id(Transaction, :form), data: { transactions_dialog_target: "frame" } %>
+    </div>
+  </dialog>
 </div>

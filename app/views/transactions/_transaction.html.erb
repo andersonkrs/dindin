@@ -1,7 +1,17 @@
 <%# locals: (transaction:) -%>
 
-<%= link_to polymorphic_path(transaction, action: :edit), data: { turbo_frame: "_top" }, class: "block" do %>
-  <article id="<%= dom_id transaction %>" class="flex hover:bg-gray-100 py-1 px-2 rounded-2xl">
+<%=
+  link_to polymorphic_path(transaction, action: :edit),
+          id: dom_id(transaction),
+          data: {
+            sort_key: transaction.sort_key,
+            divider_key: transaction.due_on.to_fs(:number),
+            divider_content: I18n.l(transaction.due_on, format: :long),
+            action: "click->transactions-dialog#open",
+            turbo_frame: dom_id(Transaction, :form)
+          },
+          class: "block divider-list" do %>
+  <article class="flex hover:bg-gray-100 py-1 px-2 rounded-2xl">
     <div class="grow py-1 text-sm font-medium text-gray-800">
       <div class="flex-shrink-0 group block">
         <div class="flex items-center">
