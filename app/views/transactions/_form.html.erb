@@ -60,13 +60,23 @@
     </div>
   <% end %>
 
-  <div class="card-actions flex justify-center items-center mt-2">
-    <%= button_tag(type: "submit", form: "transaction_form", class: "btn-submit #{class_names("absolute" => transaction.persisted?)}") do %>
+  <div class="card-actions flex justify-center items-center mt-2 relative">
+    <%= button_tag(
+      type: "submit",
+      form: "transaction_form",
+      class: "btn-submit",
+    ) do %>
       <%= icon "check", class: "stroke-4" %>
     <% end %>
 
     <% if transaction.persisted? %>
-      <%= button_to transaction.becomes(Transaction), method: :delete, class: "btn btn-sm h-10 w-10 btn-error btn-circle btn-outline", form_class: "ml-auto", data: { turbo_method: :delete } do %>
+      <%= button_to(
+        transaction.becomes(Transaction),
+        method: :delete,
+        class: "btn btn-sm h-11 w-11 btn-error btn-circle btn-outline transition ease-in-out hover:scale-125 duration-300",
+        form_class: "absolute inset-y-0 right-0 flex items-center",
+        data: { turbo_method: :delete }
+      ) do %>
         <%= icon "trash" %>
       <% end %>
     <% end %>

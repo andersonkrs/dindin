@@ -1,11 +1,13 @@
 <%= turbo_stream.append dom_id(Transaction, :list) do %>
-  <% cache @page.records do %>
-    <%= render partial: "transaction", collection: @page.records %>
-  <% end %>
+  <%= render partial: "transaction", collection: @page.records, cached: true %>
 <% end %>
 
 <%= turbo_stream.replace dom_id(Transaction, :load_more) do %>
   <% if @page.before_last? %>
-    <%= turbo_frame_tag dom_id(Transaction, :load_more), class: "loading loading-spinner loading-lg m-auto", src: transactions_path(page: @page.next_param, format: :turbo_stream), loading: :lazy %>
+    <%= 
+      turbo_frame_tag dom_id(Transaction, :load_more),
+                      class: "loading loading-spinner loading-lg m-auto",
+                      src: transactions_path(page: @page.next_param, format: :turbo_stream),
+                      loading: :lazy %>
   <% end %>
 <% end %>

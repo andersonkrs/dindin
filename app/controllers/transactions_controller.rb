@@ -2,7 +2,6 @@ class TransactionsController < AccountController
   before_action :set_transaction, only: %i[ destroy ]
 
   def index
-    fresh_when Transaction.all
     set_page_and_extract_portion_from Transaction.all, ordered_by: { due_on: :desc, id: :desc }
   end
 

@@ -1,5 +1,5 @@
 <%= turbo_stream.prepend dom_id(Transaction, :list) do %>
-  <%= render "transactions/transaction", transactio: @transaction %>
+  <%= render "transactions/transaction", transaction: @transaction %>
 <% end %>
 
 <%= turbo_stream.replace dom_id(Transaction, :form) do %>

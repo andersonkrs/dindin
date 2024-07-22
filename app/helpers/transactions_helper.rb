@@ -1,7 +1,15 @@
 module TransactionsHelper
-  def transactions_date_divider(date)
-    tag.div class: "hide-duplicate-divider mx-1 py-2 flex items-center text-sm font-semibold text-gray-500", data: { sort_key: date.to_fs(:number) } do
-      I18n.l(date, format: :long)
-    end
+  def transaction_divider_key(transaction)
+    transaction.due_on.to_fs(:number)
+  end
+
+  def transaction_divider_content(transaction)
+    fmt_due_date = I18n.l(transaction.due_on, format: :long)
+
+    return "Today, #{fmt_due_date}" if transaction.due_on == Time.zone.today
+    return "Yesterday, #{fmt_due_date}" if transaction.due_on == Time.zone.yesterday
+    return "#{transaction.due_on.strftime("%A")}, #{fmt_due_date}" if transaction.due_on >= 5.days.ago
+
+    fmt_due_date
   end
 end

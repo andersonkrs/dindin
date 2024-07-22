@@ -5,8 +5,8 @@
           id: dom_id(transaction),
           data: {
             sort_key: transaction.sort_key,
-            divider_key: transaction.due_on.to_fs(:number),
-            divider_content: I18n.l(transaction.due_on, format: :long),
+            divider_key: transaction_divider_key(transaction),
+            divider_content: transaction_divider_content(transaction),
             action: "click->transactions-dialog#open",
             turbo_frame: dom_id(Transaction, :form)
           },
