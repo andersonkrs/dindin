@@ -7,10 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require "faker"
 
 User.where(email: "admin@example.com").first_or_create!(password: "password")
 
-["Wallet", "Santander Master Card", ""].each do |account_name|
+["Wallet", "Santander Master Card"].each do |account_name|
   Account.where(title: account_name).first_or_create!
 end
 
@@ -31,15 +32,13 @@ Category.expense.where(title: "Others").first_or_create!(color: colors.sample, i
 Category.expense.where(title: "Home").first_or_create!(color: colors.sample, icon: "home-modern")
 Category.expense.where(title: "Pharmacy").first_or_create!(color: colors.sample, icon: "bandage")
 
-(4.weeks.ago.to_date...Date.today).each do |day|
-  next if [true, false].sample
-
-  rand(1..4).times do
+(2.months.ago.to_date...Date.today).each do |day|
+  rand(0..5).times do
     category = Category.expense.sample
     Expense.create!({
-      title: category.title,
+      title: Faker::Lorem.sentence(word_count: rand(1..3)),
       category: category,
-      value: rand(0.1...1_200),
+      value: [rand(1..10), rand(20..100), rand(100..500), rand(500..1200)].sample,
       account: Account.all.sample,
       due_on: day,
       creator: User.last

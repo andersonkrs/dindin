@@ -1,2 +1,3 @@
 <%= turbo_stream.replace(@transaction, partial: "transactions/transaction", locals: { transaction: @transaction }) %>
-<%= turbo_stream.replace(:flash, partial: "shared/notifications") %>
+
+<%= turbo_stream.flash %>

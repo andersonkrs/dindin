@@ -12,19 +12,19 @@
   }
 
   .index-card-body {
-    @apply card-body p-5;
+    @apply card-body p-4 gap-0 sm:p-5 sm:gap-2;
 
     > .index-card-actions {
-      @apply flex items-center justify-end w-full px-2;
+      @apply flex items-center justify-end w-full sm:px-2;
     }
 
     > .index-card-title {
-      @apply max-sm:divider-start divider text-2xl md:text-4xl font-bold mx-2 my-1;
+      @apply max-sm:divider-start divider font-bold text-xl py-4 mx-0 my-0 sm:py-5 sm:text-4xl sm:mx-2 sm:my-1;
     }
   }
 
   .btn-action {
-    @apply btn font-extrabold text-[1.1rem] btn-sm h-[2.7rem] border-[1.8px] px-4 rounded-[2rem] btn-outline;
+    @apply btn font-extrabold text-[1.1rem] btn-sm h-[2.5rem] sm:h-[2.7rem] border-[1.8px] px-4 rounded-[2rem] btn-outline;
   }
 
   .btn-submit {
@@ -48,7 +48,7 @@
   }
 
   .divider-list {
-    @apply before:text-sm before:font-semibold before:text-gray-500
+    @apply before:text-sm before:font-semibold before:text-gray-500 capitalize
   }
 }
 

@@ -1,4 +1,4 @@
 <%= turbo_stream.append(dom_id(Category, "#{@category.kind}_list")) do %>
   <%= render @category %>
 <% end %>
-<%= turbo_stream.replace(:flash, partial: "shared/notifications") %>
+<%= turbo_stream.flash %>

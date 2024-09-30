@@ -44,7 +44,7 @@ function compareElements(left, right, reverse) {
   if (reverse) {
     return getSortCode(right).localeCompare(getSortCode(left));
   } else {
-    return getSortCode(right).localeCompare(getSortCode(left));
+    return getSortCode(left).localeCompare(getSortCode(right));
   }
 }
 

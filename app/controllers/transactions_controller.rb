@@ -3,6 +3,8 @@ class TransactionsController < AccountController
 
   def index
     set_page_and_extract_portion_from Transaction.all, ordered_by: { due_on: :desc, id: :desc }
+
+    @categories = Category.where(id: @page.records.select(:category_id))
   end
 
   def destroy

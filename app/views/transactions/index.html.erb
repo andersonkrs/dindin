@@ -2,7 +2,7 @@
 
 <div class="index-card" data-controller="transactions-dialog">
   <div class="index-card-body">
-    <div class="index-card-title py-5">Transactions</div>
+    <div class="index-card-title">Transactions</div>
 
     <div class="index-card-actions">
       <%= link_to(new_expense_path,
@@ -16,13 +16,15 @@
       <% end %>
     </div>
 
-    <div class="flex flex-col justify-center w-full pt-0 px-1 md:px-3">
+    <div class="flex flex-col justify-center w-full pt-0 px-0 sm:px-3">
       <%= turbo_frame_tag(dom_id(Transaction, :list),
                           data: {
                             controller: "sorted divider",
                             sorted_reverse_value: true
                           }) do %>
-        <%= render partial: "transaction", collection: @page.records, cached: true %>
+        <% cache [@categories, @page.records] do %>
+          <%= render partial: "transaction", collection: @page.records %>
+        <% end %>
       <% end %>
     </div>
 
@@ -40,7 +42,7 @@
     <div class="modal-box shadow-2xl sm:max-w-[25rem] backface-hidden duration-700 category-gradient--expense">
       <button data-action="click->transactions-dialog#close" class="btn btn-md btn-circle btn-ghost absolute font-bold right-2 top-2 text-lg">✕</button>
 
-      <%= turbo_frame_tag dom_id(Transaction, :form), data: { transactions_dialog_target: "frame" } %>
+      <%= turbo_frame_tag dom_id(Transaction, :form), action: :morph, data: { transactions_dialog_target: "frame" } %>
     </div>
   </dialog>
 </div>

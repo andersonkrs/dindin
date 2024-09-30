@@ -1,6 +1,6 @@
 <%# locals: (transaction:) -%>
 
-<div class="card-body items-stretch px-3">
+<div class="card-body items-stretch px-1 py-1">
   <h1 class="card-title justify-center mb-2">
     <% if transaction.persisted? %>
       <%= "Edit #{transaction.model_name.human}" %>
@@ -31,13 +31,24 @@
 
       <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
         <%= icon "pencil" %>
-        <%= form.text_field :title, placeholder: "Description", required: true, class: "grow" %>
+        <%= form.text_field :title, placeholder: _("Description"), required: true, class: "grow" %>
       <% end %>
 
-      <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
-        <%= icon "chart-pie" %>
-        <%= form.select(:category_id, options_from_collection_for_select(Category.all, :id, :title, transaction.category_id), { prompt: "Select a category" }, { required: true, class: "grow w-full max-w-xs" }) %>
-      <% end %>
+      <div class="dropdown relative" data-controller="combobox">
+        <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
+          <%= icon "chart-pie" %>
+          <%= form.text_field :category_id, tabindex: 0, placeholder: _("Select a category"), required: true, class: "grow" %>
+        <% end %>
+        <ul class="dropdown-content menu bg-base-100" data-combobox-target="menu">
+          <% Category.expense.each do |category| %>
+            <%= tag.li(value: category.id) do %>
+              <%= tag.label class: "label cursor-pointer flex" do %>
+                <%= category.title %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
 
       <%= form.label :account_id, class: "input input-bordered flex items-center gap-2" do %>
         <%= icon "credit-card" %>

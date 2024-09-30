@@ -47,6 +47,10 @@ gem "aws-sdk-s3", require: false
 # Pagination
 gem "geared_pagination"
 
+# Better i18n
+gem "gettext", ">=3.0.2", require: false
+gem "gettext_i18n_rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -56,6 +60,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Generate fake data
+  gem "faker", require: false
 end
 
 group :development do

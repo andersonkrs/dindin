@@ -19,5 +19,11 @@ application.register("sorted", SortedController);
 import DividerController from "./divider_controller";
 application.register("divider", DividerController);
 
+import RelativeDateController from "./relative_date_controller";
+application.register("relative-date", RelativeDateController);
+
 import MoneyInputController from "./money_input_controller";
 application.register("money-input", MoneyInputController);
+
+import ComboBoxController from "./combobox_controller";
+application.register("combobox", ComboBoxController);

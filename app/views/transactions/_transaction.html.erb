@@ -4,14 +4,16 @@
   link_to polymorphic_path(transaction, action: :edit),
           id: dom_id(transaction),
           data: {
+            controller: "relative-date",
+            relative_date_attribute_value: "dividerContent",
             sort_key: transaction.sort_key,
             divider_key: transaction_divider_key(transaction),
-            divider_content: transaction_divider_content(transaction),
+            divider_content: transaction.due_on.in_time_zone.iso8601,
             action: "click->transactions-dialog#open",
-            turbo_frame: dom_id(Transaction, :form)
+            turbo_frame: dom_id(Transaction, :form),
           },
           class: "block divider-list" do %>
-  <article class="flex hover:bg-gray-100 py-1 px-2 rounded-2xl">
+  <article class="flex hover:bg-gray-100 px-1 sm:py-1 sm:px-2 rounded-2xl">
     <div class="grow py-1 text-sm font-medium text-gray-800">
       <div class="flex-shrink-0 group block">
         <div class="flex items-center">
@@ -31,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="px-6 py-4 whitespace-nowrap font-medium text-center">
+    <div class="pr-1 py-4 whitespace-nowrap font-medium text-center">
       <span class="text-right font-semibold text-md <%= class_names("text-emerald-500" => false, "text-red-600" => true) %>"><%= "-" %><%= humanized_money_with_symbol(transaction.value) %></span>
     </div>
   </article>

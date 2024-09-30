@@ -2,16 +2,16 @@
 
 <div class="index-card md:w-2/4">
   <%= turbo_frame_tag dom_id(Category, :card), class: "index-card-body" do %>
-    <div class="index-card-title py-5">
+    <div class="index-card-title">
       <%= icon "chart-pie", class: "size-20 md:size-32 hidden" %>Categories
     </div>
 
-    <%= tag.div class: "flex flex-row items-center justify-start md:justify-center" do %>
+    <%= tag.div class: "flex flex-row items-center justify-start md:justify-center my-1 pl-1" do %>
       <div role="tablist" class="tabs tabs-boxed">
-        <%= link_to(categories_path(tab: :expense), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab h-9", "bg-accent" => @active_tab == "expense")) do %>
+        <%= link_to(categories_path(tab: :expense), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab h-8 sm:h-9", "bg-accent" => @active_tab == "expense")) do %>
           <%= icon "payment-method", class: "" %>Expense
         <% end %>
-        <%= link_to(categories_path(tab: :income), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab h-9", "bg-primary" => @active_tab == "income")) do %>
+        <%= link_to(categories_path(tab: :income), data: { turbo_frame: "_top" }, role: "tab", class: class_names("tab h-8 sm:h-9", "bg-primary" => @active_tab == "income")) do %>
           <%= icon "piggy-bank", class: "mr-1" %>Income
         <% end %>
       </div>
@@ -24,7 +24,7 @@
       </div>
     <% end %>
 
-    <%= turbo_frame_tag dom_id(Category, "#{@active_tab}_list"), data: { controller: "sorted" }, class: "flex flex-col w-full pt-0 px-1 md:px-5 py-5" do %>
+    <%= turbo_frame_tag dom_id(Category, "#{@active_tab}_list"), data: { controller: "sorted" }, class: "flex flex-col w-full pt-1 px-0 sm:pt-3" do %>
       <% cache @categories do %>
         <% @categories.each do |category| %>
           <%= render "categories/category", category: category %>
