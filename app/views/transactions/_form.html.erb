@@ -34,25 +34,14 @@
         <%= form.text_field :title, placeholder: _("Description"), required: true, class: "grow" %>
       <% end %>
 
-      <div class="dropdown relative" data-controller="combobox">
-        <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
-          <%= icon "chart-pie" %>
-          <%= form.text_field :category_id, tabindex: 0, placeholder: _("Select a category"), required: true, class: "grow" %>
-        <% end %>
-        <ul class="dropdown-content menu bg-base-100" data-combobox-target="menu">
-          <% Category.expense.each do |category| %>
-            <%= tag.li(value: category.id) do %>
-              <%= tag.label class: "label cursor-pointer flex" do %>
-                <%= category.title %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
+      <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
+        <%= icon "chart-pie" %>
+        <%= form.select(:category_id, options_from_collection_for_select(Category.expense.order(:title), :id, :title, transaction.category_id), { prompt: _("Select an account" )}, { required: true, class: "grow w-full max-w-xs" }) %>
+      <% end %>
 
       <%= form.label :account_id, class: "input input-bordered flex items-center gap-2" do %>
         <%= icon "credit-card" %>
-        <%= form.select(:account_id, options_from_collection_for_select(Account.all, :id, :title, transaction.account_id), { prompt: "Select an account" }, { required: true, class: "grow w-full max-w-xs" }) %>
+        <%= form.select(:account_id, options_from_collection_for_select(Account.order(:title), :id, :title, transaction.account_id), { prompt: "Select an account" }, { required: true, class: "grow w-full max-w-xs" }) %>
       <% end %>
 
       <div class="flex gap-1">

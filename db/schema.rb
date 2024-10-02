@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_07_15_105433) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_03_145459) do
   create_table "accounts", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -69,6 +69,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_15_105433) do
     t.check_constraint "kind in ('expense', 'income')"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "transactions", force: :cascade do |t|
     t.string "title", null: false
     t.date "due_on", null: false
@@ -102,6 +111,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_15_105433) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "users", column: "creator_id"
+  add_foreign_key "sessions", "users"
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "categories"
   add_foreign_key "transactions", "users", column: "creator_id"

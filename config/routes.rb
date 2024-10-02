@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get "/sessions", to: "sessions#new", as: "new_session"
-  post "/sessions", to: "sessions#create", as: "create_session"
-  delete "/sessions", to: "sessions#destroy", as: "destroy_session"
+  resource :session
 
   resources :transactions, only: %i[index destroy]
   resources :expenses, only: %i[new edit create update]

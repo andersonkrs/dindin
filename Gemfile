@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 7.2.0.beta2"
+gem "rails", "~> 7.2.1"
 
 gem "bootsnap", require: false
 
@@ -18,6 +18,12 @@ gem "redis", ">= 4.0.1"
 # Solid gems
 gem "solid_queue"
 gem "solid_errors"
+
+# SSL
+gem "thruster"
+
+# Deployment
+gem "kamal"
 
 # Queue management
 gem "mission_control-jobs"
@@ -46,10 +52,6 @@ gem "aws-sdk-s3", require: false
 
 # Pagination
 gem "geared_pagination"
-
-# Better i18n
-gem "gettext", ">=3.0.2", require: false
-gem "gettext_i18n_rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
