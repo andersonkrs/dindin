@@ -13,7 +13,6 @@ export default class extends Controller {
 
   update() {
     const givenDate = new Date(this.element.dataset[this.attributeValue]);
-    console.log(givenDate, this.element.dataset[this.attributeValue]);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);

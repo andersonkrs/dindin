@@ -21,33 +21,56 @@
     </div>
   <% end %>
 
-  <%= form_with(id: "transaction_form", model: transaction) do |form| %>
+  <%= form_with(
+    id: "transaction_form",
+    model: transaction,
+    builder: TransactionsHelper::FormBuilder
+  ) do |form| %>
     <div class="flex flex-col gap-4">
       <%= form.label :value, class: "input input-bordered flex items-center gap-2", data: { controller: "money-input" } do %>
-        <%= icon "banknotes" %>
+        <%= icon "banknotes", class: "w-9" %>
 
-        <%= form.text_field :value, inputmode: "numeric", maxlength: "21", required: true, placeholder: "Value", class: "grow font-semibold text-lg text-right", data: { "money-input-target": "input", action: "input->money-input#handleFormat focus->money-input#handleFocus click->money-input#handleFocus" } %>
+        <%= form.text_field(
+          :value,
+          inputmode: "numeric",
+          maxlength: "21",
+          required: true,
+          placeholder: "Value",
+          class: "grow font-semibold text-lg text-right",
+          data: {
+            "money-input-target": "input",
+            action: "input->money-input#handleFormat focus->money-input#handleFocus click->money-input#handleFocus"
+          }
+        ) %>
       <% end %>
 
       <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
-        <%= icon "pencil" %>
+        <%= icon "pencil", class: "w-9" %>
         <%= form.text_field :title, placeholder: _("Description"), required: true, class: "grow" %>
       <% end %>
 
-      <%= form.label :category_id, class: "input input-bordered flex items-center gap-2" do %>
-        <%= icon "chart-pie" %>
-        <%= form.select(:category_id, options_from_collection_for_select(Category.expense.order(:title), :id, :title, transaction.category_id), { prompt: _("Select an account" )}, { required: true, class: "grow w-full max-w-xs" }) %>
-      <% end %>
+      <%= form.category_icon_combobox(:category_id, placeholder: _("Select a category"), collection: Category.expense.order(:title)) %>
 
       <%= form.label :account_id, class: "input input-bordered flex items-center gap-2" do %>
-        <%= icon "credit-card" %>
-        <%= form.select(:account_id, options_from_collection_for_select(Account.order(:title), :id, :title, transaction.account_id), { prompt: "Select an account" }, { required: true, class: "grow w-full max-w-xs" }) %>
+        <%= icon "credit-card", class: "w-9" %>
+        <%= form.select(
+          :account_id,
+          options_from_collection_for_select(
+            Account.order(:title),
+            :id,
+            :title,
+            transaction.account_id
+          ),
+          { prompt: _("Select an account") },
+          required: true,
+          class: "grow w-full max-w-xs"
+        ) %>
       <% end %>
 
       <div class="flex gap-1">
         <%= form.label :due_on, class: "input input-bordered flex items-center gap-2 indicator w-full" do %>
           <span class="indicator-item indicator-center badge">Due date</span>
-          <%= icon "calendar-days" %>
+          <%= icon "calendar-days", class: "w-9" %>
           <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow" %>
         <% end %>
 

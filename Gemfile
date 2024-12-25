@@ -2,18 +2,17 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 8.0.0.rc1"
 
 gem "bootsnap", require: false
 
 gem "puma", ">= 5.0"
 
 # Drivers
-gem "sqlite3", ">= 2.0.2"
-gem "activerecord-enhancedsqlite3-adapter"
+gem "sqlite3"
 
 # Redis
-gem "redis", ">= 4.0.1"
+gem "redis", "~> 4.0.1"
 
 # Solid gems
 gem "solid_queue"
@@ -77,3 +76,4 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+

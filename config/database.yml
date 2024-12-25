@@ -10,9 +10,6 @@ sqlite_defaults: &sqlite_defaults
   # Solid queue takes two queries by default + number of queue threads
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
   timeout: 5000
-  default_transaction_mode: immediate
-  pragmas:
-    mmap_size: <%= 64.megabytes %>
 
 development:
   primary:
@@ -57,8 +54,3 @@ production:
     <<: *sqlite_defaults
     database: "storage/dindin_queues_production.sqlite3"
     migrations_paths: "db/queues/migrate"
-
-default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000

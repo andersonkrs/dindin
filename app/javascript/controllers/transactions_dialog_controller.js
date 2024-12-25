@@ -14,24 +14,8 @@ export default class extends Controller {
   }
 
   submitEnd(e) {
-    console.log(e);
     if (e.detail.success) {
       this.close();
     }
   }
-
-  afterDelete(e) {
-    console.log(e);
-  }
-
-  //updateSubmitState() {
-  //  const selectedColor = this.formTarget["category[color]"].value;
-  //  const selectedIcon = this.formTarget["category[icon]"].value;
-  //
-  //  if (selectedIcon && selectedColor) {
-  //    this.submitTarget.classList.remove("btn-disabled");
-  //  } else {
-  //    this.submitTarget.classList.add("btn-disabled");
-  //  }
-  //}
 }
