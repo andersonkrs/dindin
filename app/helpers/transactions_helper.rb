@@ -12,4 +12,8 @@ module TransactionsHelper
 
     fmt_due_date
   end
+
+  def transaction_title_autocomplete(form)
+    render partial: "transactions/suggestion_autocomplete", locals: { form: form }
+  end
 end

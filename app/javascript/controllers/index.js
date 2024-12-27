@@ -27,3 +27,6 @@ application.register("money-input", MoneyInputController);
 
 import ComboBoxController from "./combobox_controller";
 application.register("combobox", ComboBoxController);
+
+import AutoCompleteController from "./autocomplete_controller";
+application.register("autocomplete", AutoCompleteController);

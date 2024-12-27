@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(Transaction, :autocomplete_results) do %>
+  <%= render partial: "autocomplete_results", collection: @transactions %>
+<% end %>

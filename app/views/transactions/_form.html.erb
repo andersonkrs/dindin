@@ -44,10 +44,7 @@
         ) %>
       <% end %>
 
-      <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
-        <%= icon "pencil", class: "w-9" %>
-        <%= form.text_field :title, placeholder: _("Description"), required: true, class: "grow" %>
-      <% end %>
+      <%= transaction_title_autocomplete(form) %>
 
       <%= form.category_icon_combobox(:category_id, placeholder: _("Select a category"), collection: Category.expense.order(:title)) %>
 
