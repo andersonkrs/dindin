@@ -1,2 +1,5 @@
 <%= turbo_stream.remove(@transaction) %>
+<%= turbo_stream.replace dom_id(Transaction, :form), method: :morph do %>
+  <%= turbo_frame_tag dom_id(Transaction, :form) %>
+<% end %>
 <%= turbo_stream.flash %>
