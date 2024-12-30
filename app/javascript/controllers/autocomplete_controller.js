@@ -17,11 +17,11 @@ export default class extends Controller {
   static values = {
     url: String,
     minLength: { type: Number, default: 2 },
-    debounce: { type: Number, default: 300 },
+    debounce: { type: Number, default: 500 },
   };
 
   connect() {
-    useDebounce(this, { wait: 300 });
+    useDebounce(this, { wait: this.debounceValue });
     useClickOutside(this);
   }
 
@@ -38,6 +38,7 @@ export default class extends Controller {
   choose(e) {
     this.inputTarget.value = e.currentTarget.dataset.title;
     this.closeResults();
+    this.dispatch("choose", { detail: { dataset: e.currentTarget.dataset } });
   }
 
   clickOutside() {
@@ -45,22 +46,16 @@ export default class extends Controller {
   }
 
   async startSearch(query) {
-    // Add loading class
-    //this.inputTarget.classList.add(this.loadingClass);
-
     const response = await get(this.urlValue, {
       query: { q: encodeURIComponent(query) },
       responseKind: "turbo-stream",
     });
 
-    if (response.ok) {
+    if (response.statusCode === 200) {
       this.showResults();
     } else {
-      console.error("Search failed:", error);
       this.closeResults();
     }
-
-    //this.inputTarget.classList.remove(this.loadingClass);
   }
 
   showResults() {
@@ -89,10 +84,8 @@ export default class extends Controller {
   }
 
   closeResults() {
-    // Remove results
     this.resultsTarget.classList.add("hidden");
 
-    // Cleanup floating positioning
     if (this.cleanupFloating) {
       this.cleanupFloating();
     }

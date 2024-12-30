@@ -1,0 +1,28 @@
+<li
+  data-autocomplete-target="item"
+  data-action="click->autocomplete#choose"
+  class="group relative cursor-pointer py-1 text-gray-900 select-none hover:bg-indigo-600 hover:text-white hover:outline-hidden"
+  id="listbox-option-<%= transaction.id %>"
+  data-id="<%= transaction.id %>"
+  data-title="<%= transaction.title %>"
+  data-category_id="<%= transaction.category_id %>"
+  data-account_id"<%= transaction.account_id %>"
+  role="option"
+  >
+  <div class="flex items-center px-3">
+    <div class="avatar placeholder">
+      <div class="<%= category_color(transaction.category) %> text-center text-white rounded-full w-9">
+        <%= category_icon(transaction.category, variant: :solid, class: "fill-white size-4") %>
+      </div>
+    </div>
+
+    <div class="ml-2 select-none">
+      <h3 class="font-semibold text-gray-800 group-hover:text-white">
+        <%= transaction.title %>
+      </h3>
+      <p class="text-xs font-medium text-gray-400 group-hover:text-slate-100">
+        <%= transaction.account.title %>
+      </p>
+    </div>
+  </div>
+</li>

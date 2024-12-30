@@ -9,7 +9,7 @@
             sort_key: transaction.sort_key,
             divider_key: transaction_divider_key(transaction),
             divider_content: transaction.due_on.in_time_zone.iso8601,
-            action: "click->transactions-dialog#open",
+            action: "click->transactions--dialog#open",
             turbo_frame: dom_id(Transaction, :form),
           },
           class: "block divider-list" do %>

@@ -1,3 +1,5 @@
+<%= turbo_stream.replace dom_id(Transaction, :form) do %>
+  <%= turbo_frame_tag dom_id(Transaction, :form), action: :morph %>
+<% end %>
 <%= turbo_stream.replace(@transaction, partial: "transactions/transaction", locals: { transaction: @transaction }) %>
-
 <%= turbo_stream.flash %>

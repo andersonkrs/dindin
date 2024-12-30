@@ -4,29 +4,29 @@
 
 import { application } from "./application";
 
+import AutocompleteController from "./autocomplete_controller";
+application.register("autocomplete", AutocompleteController);
+
 import CategoriesDialogController from "./categories_dialog_controller";
 application.register("categories-dialog", CategoriesDialogController);
-
-import TransactionsDialogController from "./transactions_dialog_controller";
-application.register("transactions-dialog", TransactionsDialogController);
 
 import CategoryIconController from "./category_icon_controller";
 application.register("category-icon", CategoryIconController);
 
-import SortedController from "./sorted_controller";
-application.register("sorted", SortedController);
+import ComboboxController from "./combobox_controller";
+application.register("combobox", ComboboxController);
 
 import DividerController from "./divider_controller";
 application.register("divider", DividerController);
 
-import RelativeDateController from "./relative_date_controller";
-application.register("relative-date", RelativeDateController);
-
 import MoneyInputController from "./money_input_controller";
 application.register("money-input", MoneyInputController);
 
-import ComboBoxController from "./combobox_controller";
-application.register("combobox", ComboBoxController);
+import RelativeDateController from "./relative_date_controller";
+application.register("relative-date", RelativeDateController);
 
-import AutoCompleteController from "./autocomplete_controller";
-application.register("autocomplete", AutoCompleteController);
+import SortedController from "./sorted_controller";
+application.register("sorted", SortedController);
+
+import Transactions__DialogController from "./transactions/dialog_controller";
+application.register("transactions--dialog", Transactions__DialogController);

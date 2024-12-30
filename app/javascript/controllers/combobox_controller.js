@@ -22,14 +22,20 @@ export default class extends Controller {
     useClickOutside(this);
 
     if (this.inputTarget.value) {
-      const selectedItem = this.itemTargets.find(
-        (item) => item.dataset.id === this.inputTarget.value,
-      );
+      this.selectId(this.inputTarget.value);
+    }
+  }
 
-      if (selectedItem) {
-        this.selectedTarget.value = selectedItem.dataset.title;
-        this.updateSelectedElement(selectedItem);
-      }
+  selectId(value) {
+    this.inputTarget.value = value;
+
+    const selectedItem = this.itemTargets.find(
+      (item) => item.dataset.id === value,
+    );
+
+    if (selectedItem) {
+      this.selectedTarget.value = selectedItem.dataset.title;
+      this.updateSelectedElement(selectedItem);
     }
   }
 

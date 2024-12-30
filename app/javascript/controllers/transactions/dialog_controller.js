@@ -1,9 +1,16 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["modal", "frame"];
+  static outlets = ["combobox"];
+  static targets = ["modal"];
 
-  connect() { }
+  connect() {
+    this.open();
+  }
+
+  suggestionSelected(e) {
+    this.comboboxOutlet.selectId(e.detail.dataset.category_id);
+  }
 
   open() {
     this.modalTarget.showModal();
@@ -14,6 +21,7 @@ export default class extends Controller {
   }
 
   submitEnd(e) {
+    console.log(e);
     if (e.detail.success) {
       this.close();
     }
