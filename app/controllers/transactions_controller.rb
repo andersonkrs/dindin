@@ -14,7 +14,6 @@ class TransactionsController < AccountController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_transaction
     @transaction = Transaction.find(params[:id])
   end
