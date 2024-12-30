@@ -1,13 +1,10 @@
-<div id="form-category-id-combobox" data-controller="combobox" class="form-combobox relative">
+<div id="form-account-id-combobox" data-controller="combobox" class="form-combobox relative">
   <%= form.label field, class: "input input-bordered flex items-center gap-2", data: { combobox_target: "label" } do %>
-    <div data-combobox-target="selectedIcon">
-      <div data-attribute="icon-placeholder" class="<%= class_names("avatar placeholder") %>">
+    <div>
+      <div class="avatar placeholder">
         <div class="text-center">
-          <%= icon "chart-pie", class: "w-9" %>
+          <%= icon "credit-card", class: "w-9" %>
         </div>
-      </div>
-
-      <div data-attribute="icon" class="<%= class_names("hidden avatar placeholder") %>">
       </div>
     </div>
 
@@ -16,7 +13,7 @@
     <div class="w-full flex">
       <%=
         form.text_field("_#{field}",
-                        placeholder: _("Select a category"),
+                        placeholder: _("Select an account"),
                         required: true,
                         class: "flex-1 cursor-pointer caret-transparent",
                         data: { combobox_target: "selected", action: "click->combobox#toggle keydown->combobox#handleKeyDown" }) %>
@@ -25,7 +22,6 @@
       <a class="col-start-1 row-start-1 self-center justify-self-end" data-action="click->combobox#toggle">
         <%= icon "chevron-up-down", class: "text-gray-500 size-4" %>
       </a>
-
     </div>
   <% end %>
 
@@ -33,7 +29,7 @@
     <ul
       data-combobox-target="list"
       style="z-index: 1000"
-      class="hidden absolute top-0 left-0 w-full max-h-48 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg focus:outline-hidden sm:text-sm"
+      class="hidden absolute top-0 left-0 w-full max-h-48 overflow-auto rounded-md bg-white text-base ring-1 shadow-lg focus:outline-hidden sm:text-sm"
       tabindex="-1"
       role="listbox">
 
@@ -42,21 +38,12 @@
           <li
             data-combobox-target="item"
             data-action="click->combobox#choose"
-            class="group relative cursor-pointer py-1 text-gray-900 select-none hover:bg-indigo-600 hover:text-white hover:outline-hidden"
+            class="group relative flex items-center px-3 py-5 cursor-pointer h-8 text-gray-900 select-none hover:bg-indigo-600 hover:text-white hover:outline-hidden"
             id="listbox-option-<%= item.id %>"
             data-id="<%= item.id %>"
             data-title="<%= item.title %>"
             role="option">
-            <div data-attribute="item-label" class="flex items-center px-3">
-              <div data-attribute="icon" class="avatar placeholder">
-                <div class="<%= category_color(item) %> text-center text-white rounded-full w-9">
-                  <%= category_icon(item, variant: :solid, class: "fill-white size-4") %>
-                </div>
-              </div>
-
-              <span data-attribute="title" class="ml-2 block truncate select-none font-normal"><%= item.title %></span>
-            </div>
-
+            <span data-attribute="title" class="block truncate select-none font-normal text-md"><%= item.title %></span>
             <span
               class="hidden absolute inset-y-0 right-0 flex items-center pr-5 text-indigo-600 group-hover:text-white"
               data-attribute="check">

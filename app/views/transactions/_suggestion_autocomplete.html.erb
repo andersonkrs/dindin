@@ -1,13 +1,13 @@
 <div
   data-controller="autocomplete"
-  data-action="autocomplete:choose@window->transactions--dialog#suggestionSelected"
   class="relative"
+  data-action="autocomplete:choose@window->transactions--dialog#suggestionSelected"
   data-autocomplete-url-value="/search/transactions/suggestions">
   <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
     <%= icon "pencil", class: "w-9" %>
 
     <%= form.text_field(
-      :title,
+      field,
       placeholder: _("Description"),
       required: true,
       class: "grow",
@@ -21,7 +21,7 @@
   <ul
     data-autocomplete-target="results"
     style="z-index: 1000"
-    class="hidden absolute top-0 left-0 w-full max-h-48 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg focus:outline-hidden sm:text-sm"
+    class="hidden absolute top-0 left-0 w-full max-h-48 overflow-auto rounded-md bg-white text-base ring-1 shadow-lg focus:outline-hidden sm:text-sm"
     tabindex="-1"
     role="listbox">
 

@@ -9,7 +9,15 @@ export default class extends Controller {
   }
 
   suggestionSelected(e) {
-    this.comboboxOutlet.selectId(e.detail.dataset.category_id);
+    this.comboboxOutlets.forEach((combobox) => {
+      if (combobox.element.id === "form-category-id-combobox") {
+        combobox.selectId(e.detail.category_id);
+      }
+
+      if (combobox.element.id === "form-account-id-combobox") {
+        combobox.selectId(e.detail.account_id);
+      }
+    });
   }
 
   open() {
@@ -18,12 +26,5 @@ export default class extends Controller {
 
   close() {
     this.modalTarget.close();
-  }
-
-  submitEnd(e) {
-    console.log(e);
-    if (e.detail.success) {
-      this.close();
-    }
   }
 }

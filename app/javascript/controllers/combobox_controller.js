@@ -29,9 +29,7 @@ export default class extends Controller {
   selectId(value) {
     this.inputTarget.value = value;
 
-    const selectedItem = this.itemTargets.find(
-      (item) => item.dataset.id === value,
-    );
+    const selectedItem = this.currentItem();
 
     if (selectedItem) {
       this.selectedTarget.value = selectedItem.dataset.title;
@@ -67,14 +65,16 @@ export default class extends Controller {
           left: `${x}px`,
           top: `${y}px`,
         });
+
+        this.currentItem()?.scrollIntoView();
       });
     });
+  }
 
-    const selectedItem = this.itemTargets.find(
+  currentItem() {
+    return this.itemTargets.find(
       (item) => item.dataset.id === this.inputTarget.value,
     );
-
-    selectedItem?.scrollIntoView();
   }
 
   close() {
@@ -105,18 +105,7 @@ export default class extends Controller {
   }
 
   updateSelectedElement(selectedItem) {
-    const selectedIcon = selectedItem
-      .querySelector(`[data-attribute="icon"]`)
-      .cloneNode(true);
-
-    this.selectedIconTarget
-      .querySelector(`[data-attribute="icon"]`)
-      .replaceWith(selectedIcon);
-
-    this.selectedIconTarget
-      .querySelector(`[data-attribute="icon-placeholder"]`)
-      .classList.add("hidden");
-
+    this.showSelectedIcon(selectedItem);
     this.removeCheckMarks();
 
     // Add checkmark to selected item.
@@ -149,7 +138,29 @@ export default class extends Controller {
     });
   }
 
+  showSelectedIcon(selectedElement) {
+    if (!this.hasSelectedIconTarget) {
+      return;
+    }
+
+    const selectedIcon = selectedElement
+      .querySelector(`[data-attribute="icon"]`)
+      .cloneNode(true);
+
+    this.selectedIconTarget
+      .querySelector(`[data-attribute="icon"]`)
+      .replaceWith(selectedIcon);
+
+    this.selectedIconTarget
+      .querySelector(`[data-attribute="icon-placeholder"]`)
+      .classList.add("hidden");
+  }
+
   showEmptyIcon() {
+    if (!this.hasSelectedIconTarget) {
+      return;
+    }
+
     this.selectedIconTarget
       .querySelector(`[data-attribute="icon"]`)
       .classList.add("hidden");

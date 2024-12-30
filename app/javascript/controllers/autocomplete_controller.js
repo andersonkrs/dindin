@@ -38,7 +38,12 @@ export default class extends Controller {
   choose(e) {
     this.inputTarget.value = e.currentTarget.dataset.title;
     this.closeResults();
-    this.dispatch("choose", { detail: { dataset: e.currentTarget.dataset } });
+    this.dispatch("choose", {
+      detail: {
+        category_id: e.currentTarget.dataset.category_id,
+        account_id: e.currentTarget.dataset.account_id,
+      },
+    });
   }
 
   clickOutside() {
