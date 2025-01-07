@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { useClickOutside } from "stimulus-use";
+import { useClickOutside, useMatchMedia } from "stimulus-use";
 import {
   autoUpdate,
   computePosition,
@@ -19,6 +19,9 @@ export default class extends Controller {
   ];
 
   connect() {
+    this.isMobile = false;
+    console.log(this.modalTarget);
+
     useClickOutside(this);
 
     if (this.inputTarget.value) {
@@ -50,11 +53,11 @@ export default class extends Controller {
   }
 
   open() {
-    this.listTarget.classList.remove("hidden");
-
     if (this.cleanup) {
       this.cleanup();
     }
+
+    this.listTarget.classList.remove("hidden");
 
     this.cleanup = autoUpdate(this.labelTarget, this.listTarget, () => {
       computePosition(this.labelTarget, this.listTarget, {
@@ -71,14 +74,22 @@ export default class extends Controller {
     });
   }
 
+  close() {
+    this.listTarget.classList.add("hidden");
+  }
+
+  openModal() {
+    this.modalTarget.classList.remove("hidden");
+  }
+
+  closeModal() {
+    this.modalTarget.classList.add("hidden");
+  }
+
   currentItem() {
     return this.itemTargets.find(
       (item) => item.dataset.id === this.inputTarget.value,
     );
-  }
-
-  close() {
-    this.listTarget.classList.add("hidden");
   }
 
   handleKeyDown(e) {

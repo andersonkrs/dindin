@@ -10,7 +10,7 @@ class Search::Transactions::SuggestionsController < AccountController
       .includes(:category, :account)
       .where(row_no: 1)
       .order(title: :asc)
-      .limit(3)
+      .limit(2)
 
     head :no_content and return if @transactions.empty?
   end
