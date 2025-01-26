@@ -1,9 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  kind: MyString
+groceries:
+  title: Groceries
+  kind: expense
 
-two:
-  title: MyString
-  kind: MyString
+eating_out:
+  title: eating out
+  kind: expense
+
+transportation:
+  title: Transportation
+  kind: expense
+
+subscriptions:
+  title: Subscriptions
+  kind: expense
