@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_03_145459) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_26_150424) do
   create_table "accounts", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -75,6 +75,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_03_145459) do
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "token"
+    t.index ["token"], name: "index_sessions_on_token", unique: true
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
