@@ -1,20 +1,5 @@
 <%= turbo_stream.replace dom_id(Transaction, :autocomplete_results) do %>
   <div id="<%= dom_id(Transaction, :autocomplete_results) %>">
-    <% if @transactions.any? %>
-      <%= render partial: "transaction", cache: true, collection: @transactions, as: :transaction %>
-    <% else %>
-      <li
-        class="group relative py-1 text-gray-900 select-none"
-        id="listbox-option-0"
-        role="option">
-        <div class="flex items-center justify-center px-3">
-          <div class="select-none">
-            <h3 class="font-semibold text-gray-800">
-              No suggestions found
-            </h3>
-          </div>
-        </div>
-      </li>
-    <% end %>
+    <%= render partial: "transaction", cache: true, collection: @transactions, as: :transaction %>
   </div>
 <% end %>

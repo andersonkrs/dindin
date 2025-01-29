@@ -10,6 +10,8 @@ class Transaction < ApplicationRecord
 
   validates :title, presence: true
 
+  scope :most_recent_sorted, -> { order(created_at: :desc, id: :desc) }
+
   def paid? = paid_at.present?
 
   def sort_key
