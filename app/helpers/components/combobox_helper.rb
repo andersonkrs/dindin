@@ -9,7 +9,7 @@ module Components::ComboboxHelper
       data: {
         combobox_target: "item",
         action: "click->combobox#choose",
-        id: object.title,
+        id: object.id,
         title: object.title
       }
     ) do
