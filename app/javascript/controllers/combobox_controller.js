@@ -18,12 +18,56 @@ export default class extends Controller {
     "item",
   ];
 
+  static classes = ["highlightedItem", "highlightedCheck"];
+
   connect() {
     useClickOutside(this);
 
     if (this.inputTarget.value) {
       this.selectId(this.inputTarget.value);
+      this.highlightedIndex = this.indexOfCurrentItem();
+    } else {
+      this.highlightedIndex = 0;
     }
+  }
+
+  set highlightedIndex(index) {
+    this.itemTargets.forEach((item) => {
+      item.classList.remove(...this.highlightedItemClasses);
+      item
+        .querySelector(`[data-attribute="check"]`)
+        .classList.remove(...this.highlightedItemClasses);
+    });
+
+    const maxIndex = this.visibleItems.length - 1;
+    this._highlightedIndex = Math.max(Math.min(index, maxIndex), -1);
+
+    if (
+      this._highlightedIndex >= 0 &&
+      this._highlightedIndex < this.visibleItems.length
+    ) {
+      const item = this.visibleItems[this._highlightedIndex];
+      item.classList.add(...this.highlightedItemClasses);
+      item
+        .querySelector(`[data-attribute="check"]`)
+        .classList.add(...this.highlightedItemClasses);
+
+      item.scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  get highlightedIndex() {
+    return this._highlightedIndex;
+  }
+
+  get visibleItems() {
+    return this.itemTargets.filter(
+      (item) => !item.classList.contains("hidden"),
+    );
+  }
+
+  get isClosed() {
+    return this.listTarget.classList.contains("hidden");
   }
 
   selectId(value) {
@@ -38,19 +82,48 @@ export default class extends Controller {
   }
 
   clickOutside() {
+    this.highlightedIndex = -1;
+
+    if (this.selectedTarget.value && !this.inputTarget.value) {
+      this.selectedTarget.value = null;
+    }
     this.close();
   }
 
   toggle() {
-    if (this.isListHidden()) {
+    if (this.isClosed) {
       this.open();
     } else {
       this.close();
     }
   }
 
-  isListHidden() {
-    return this.listTarget.classList.contains("hidden");
+  handleSearch(e) {
+    const typedText = e.target.value.toLowerCase();
+
+    if (this.isClosed) {
+      this.open();
+    }
+
+    this.inputTarget.value = null;
+    this.showEmptyIcon();
+    this.removeCheckMarks();
+
+    this.itemTargets.forEach((item) => {
+      const title = item.dataset.title.toLowerCase();
+      if (title.includes(typedText)) {
+        item.classList.remove("hidden");
+      } else {
+        item.classList.add("hidden");
+      }
+    });
+
+    if (this.visibleItems.length > 0) {
+      this.highlightedIndex = 0;
+    } else {
+      this.close();
+      this.highlightedIndex = -1;
+    }
   }
 
   open() {
@@ -59,6 +132,13 @@ export default class extends Controller {
     }
 
     this.listTarget.classList.remove("hidden");
+    this.itemTargets.forEach((element) => element.classList.remove("hidden"));
+
+    if (this.indexOfCurrentItem() >= 0) {
+      this.highlightedIndex = this.indexOfCurrentItem();
+    } else {
+      this.highlightedIndex = -1;
+    }
 
     this.cleanup = autoUpdate(this.labelTarget, this.listTarget, () => {
       computePosition(this.labelTarget, this.listTarget, {
@@ -79,28 +159,80 @@ export default class extends Controller {
     this.listTarget.classList.add("hidden");
   }
 
-  openModal() {
-    this.modalTarget.classList.remove("hidden");
-  }
-
-  closeModal() {
-    this.modalTarget.classList.add("hidden");
-  }
-
   currentItem() {
     return this.itemTargets.find(
       (item) => item.dataset.id === this.inputTarget.value,
     );
   }
 
-  handleKeyDown(e) {
-    if (e.key === "Backspace") {
-      e.preventDefault();
-      this.inputTarget.value = null;
-      this.selectedTarget.value = null;
-      this.removeCheckMarks();
-      this.showEmptyIcon();
+  indexOfCurrentItem() {
+    const item = this.currentItem();
+    if (!item) return -1;
+
+    return this.visibleItems.indexOf(item);
+  }
+
+  highlightPrevious(e) {
+    e.preventDefault();
+
+    if (this.isClosed) {
+      this.open();
+    } else {
+      this.highlightedIndex = Math.max(this.highlightedIndex - 1, 0);
     }
+  }
+
+  highlightNext(e) {
+    e.preventDefault();
+
+    if (this.isClosed) {
+      this.open();
+    } else {
+      this.highlightedIndex = Math.min(
+        this.highlightedIndex + 1,
+        this.itemTargets.length - 1,
+      );
+
+      console.log(this.highlightedIndex);
+    }
+  }
+
+  highlight(e) {
+    e.preventDefault();
+
+    const index = this.visibleItems.findIndex(
+      (el) => el.dataset.id == e.target.dataset.id,
+    );
+
+    this.highlightedIndex = index;
+  }
+
+  chooseHighlightedItem(e) {
+    e.preventDefault();
+
+    if (
+      this.highlightedIndex < 0 ||
+      this.highlightedIndex >= this.visibleItems.length
+    ) {
+      return;
+    }
+
+    const item = this.visibleItems[this.highlightedIndex];
+    this.selectId(item.dataset.id);
+    this.close();
+  }
+
+  clear(e) {
+    e.preventDefault();
+    this.inputTarget.value = null;
+    this.selectedTarget.value = null;
+    this.removeCheckMarks();
+    this.showEmptyIcon();
+  }
+
+  cancel(e) {
+    e.preventDefault();
+    this.close();
   }
 
   choose(e) {
@@ -112,7 +244,6 @@ export default class extends Controller {
     this.inputTarget.value = id;
 
     this.updateSelectedElement(selectedItem);
-
     this.close();
   }
 

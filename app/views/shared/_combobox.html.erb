@@ -1,4 +1,9 @@
-<div <%= "id=#{id}" if id.present? %> data-controller="combobox" class="form-combobox relative">
+<div <%= "id=#{id}" if id.present? %>
+data-controller="combobox"
+class="form-combobox relative"
+data-combobox-highlighted-item-class="bg-indigo-600 text-white outline-hidden"
+data-combobox-highlighted-check-class="text-white"
+>
   <%= form.label field, class: "input input-bordered flex items-center gap-2", data: { combobox_target: "label" } do %>
     <div data-combobox-target="selectedIcon">
       <div data-attribute="icon-placeholder" class="<%= class_names("avatar placeholder") %>">
@@ -20,8 +25,10 @@
                         placeholder: placeholder,
                         required: true,
                         class: "flex-1 cursor-pointer caret-transparent",
-                        data: { combobox_target: "selected", action: "click->combobox#toggle keydown->combobox#handleKeyDown" }) %>
-
+                        data: {
+                          combobox_target: "selected",
+                          action: "input->combobox#handleSearch click->combobox#toggle keydown.up->combobox#highlightPrevious keydown.down->combobox#highlightNext keydown.enter->combobox#chooseHighlightedItem keydown.esc->combobox#cancel"
+                        }) %>
 
       <a class="col-start-1 row-start-1 self-center justify-self-end" data-action="click->combobox#toggle">
         <%= icon "chevron-up-down", class: "text-gray-500 size-4" %>
@@ -36,13 +43,14 @@
     tabindex="-1"
     role="listbox">
 
-    <% collection.each do |item| %>
+    <% collection.each_with_index do |item, index| %>
       <% cache item do %>
         <li
           data-combobox-target="item"
-          data-action="click->combobox#choose"
-          class="group relative flex items-center px-3 py-6 cursor-pointer h-8 text-gray-900 select-none hover:bg-indigo-600 hover:text-white hover:outline-hidden"
+          data-action="click->combobox#choose mouseover->combobox#highlight"
+          class="group relative flex items-center px-3 py-6 cursor-pointer h-8 text-gray-900 select-none"
           id="listbox-option-<%= item.id %>"
+          data-index="<%= index %>"
           data-id="<%= item.id %>"
           data-title="<%= item.title %>"
           role="option">
@@ -54,7 +62,7 @@
           <% end %>
 
           <span
-            class="hidden absolute inset-y-0 right-0 flex items-center pr-5 text-indigo-600 group-hover:text-white"
+            class="hidden absolute inset-y-0 right-0 flex items-center pr-5 text-indigo-600"
             data-attribute="check">
             <%= icon("check", variant: :solid, class: "size-5 stroke-6") %>
           </span>
