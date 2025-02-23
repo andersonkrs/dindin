@@ -1,4 +1,4 @@
-<div id="form-category-id-combobox" data-controller="combobox" class="form-combobox relative">
+<div <%= "id=#{id}" if id.present? %> data-controller="combobox" class="form-combobox relative">
   <%= form.label field, class: "input input-bordered flex items-center gap-2", data: { combobox_target: "label" } do %>
     <div data-combobox-target="selectedIcon">
       <div data-attribute="icon-placeholder" class="<%= class_names("avatar placeholder") %>">
@@ -11,12 +11,13 @@
       </div>
     </div>
 
-    <%= form.hidden_field field, data: { combobox_target: "input" } %>
+    <%= form.hidden_field field, autocomplete: "off", data: { combobox_target: "input" } %>
 
     <div class="w-full flex">
       <%=
         form.text_field("_#{field}",
-                        placeholder: _("Select a category"),
+                        autocomplete: "off",
+                        placeholder: placeholder,
                         required: true,
                         class: "flex-1 cursor-pointer caret-transparent",
                         data: { combobox_target: "selected", action: "click->combobox#toggle keydown->combobox#handleKeyDown" }) %>
@@ -36,16 +37,28 @@
     role="listbox">
 
     <% collection.each do |item| %>
-      <%= render_combobox_item(item) do %>
-        <div data-attribute="item-label" class="flex items-center px-3">
-          <div data-attribute="icon" class="avatar placeholder">
-            <div class="<%= category_color(item) %> text-center text-white rounded-full w-9">
-              <%= category_icon(item, variant: :solid, class: "fill-white size-4") %>
-            </div>
-          </div>
+      <% cache item do %>
+        <li
+          data-combobox-target="item"
+          data-action="click->combobox#choose"
+          class="group relative flex items-center px-3 py-6 cursor-pointer h-8 text-gray-900 select-none hover:bg-indigo-600 hover:text-white hover:outline-hidden"
+          id="listbox-option-<%= item.id %>"
+          data-id="<%= item.id %>"
+          data-title="<%= item.title %>"
+          role="option">
 
-          <span data-attribute="title" class="ml-2 block truncate select-none font-normal"><%= item.title %></span>
-        </div>
+          <% if item_block %>
+            <%= capture(item, &item_block) %>
+          <% else %>
+            <span data-attribute="title" class="block truncate select-none font-normal text-md"><%= item.title %></span>
+          <% end %>
+
+          <span
+            class="hidden absolute inset-y-0 right-0 flex items-center pr-5 text-indigo-600 group-hover:text-white"
+            data-attribute="check">
+            <%= icon("check", variant: :solid, class: "size-5 stroke-6") %>
+          </span>
+        </li>
       <% end %>
     <% end %>
   </ul>

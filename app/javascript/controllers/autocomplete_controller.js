@@ -97,18 +97,13 @@ export default class extends Controller {
   }
 
   clear() {
-    // Clear input
     this.inputTarget.value = "";
 
-    // Hide clear button
     if (this.hasClearButtonTarget) {
       this.clearButtonTarget.classList.add(this.hiddenClass);
     }
 
-    // Close results
     this.closeResults();
-
-    // Focus input
     this.inputTarget.focus();
   }
 }

@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { useClickOutside, useMatchMedia } from "stimulus-use";
+import { useClickOutside } from "stimulus-use";
 import {
   autoUpdate,
   computePosition,
@@ -19,9 +19,6 @@ export default class extends Controller {
   ];
 
   connect() {
-    this.isMobile = false;
-    console.log(this.modalTarget);
-
     useClickOutside(this);
 
     if (this.inputTarget.value) {
@@ -45,11 +42,15 @@ export default class extends Controller {
   }
 
   toggle() {
-    if (this.listTarget.classList.contains("hidden")) {
+    if (this.isListHidden()) {
       this.open();
     } else {
       this.close();
     }
+  }
+
+  isListHidden() {
+    return this.listTarget.classList.contains("hidden");
   }
 
   open() {
@@ -119,7 +120,6 @@ export default class extends Controller {
     this.showSelectedIcon(selectedItem);
     this.removeCheckMarks();
 
-    // Add checkmark to selected item.
     selectedItem
       .querySelector(`[data-attribute="title"]`)
       .classList.remove("font-normal");
@@ -154,9 +154,13 @@ export default class extends Controller {
       return;
     }
 
-    const selectedIcon = selectedElement
-      .querySelector(`[data-attribute="icon"]`)
-      .cloneNode(true);
+    const iconElement = selectedElement.querySelector(
+      `[data-attribute="icon"]`,
+    );
+
+    if (!iconElement) return;
+
+    const selectedIcon = iconElement.cloneNode(true);
 
     this.selectedIconTarget
       .querySelector(`[data-attribute="icon"]`)

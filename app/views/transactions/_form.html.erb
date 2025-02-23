@@ -49,9 +49,18 @@
 
             <%= transaction_title_autocomplete(form, :title) %>
 
-            <%= transaction_category_combobox(form, :category_id, collection: Category.expense.order(:title)) %>
+            <%= combobox_tag(form, :category_id, Category.expense.order(:title), id: "form-category-id-combobox", placeholder: _("Select a category")) do |category| %>
+              <div data-attribute="icon" class="avatar placeholder">
+                <div class="<%= category_color(category) %> text-center text-white rounded-full w-9">
+                  <%= category_icon(category, variant: :solid, class: "fill-white size-4") %>
+                </div>
+              </div>
+              <span data-attribute="title" class="ml-2 block truncate select-none font-normal">
+                <%= category.title %>
+              </span>
+            <% end %>
 
-            <%= transaction_account_combobox(form, :account_id, collection: Account.order(:title)) %>
+            <%= combobox_tag(form, :account_id, Account.order(:title), id: "form-account-id-combobox", placeholder: _("Select an account")) %>
 
             <div class="flex gap-1">
               <%= form.label :due_on, class: "input input-bordered flex items-center gap-2 indicator w-full" do %>
