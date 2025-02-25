@@ -1,8 +1,9 @@
 <div <%= "id=#{id}" if id.present? %>
 data-controller="combobox"
 class="form-combobox relative"
-data-combobox-highlighted-item-class="bg-indigo-600 text-white outline-hidden"
-data-combobox-highlighted-check-class="text-white"
+data-combobox-hidden-class="hidden"
+data-combobox-highlighted-item-class="is-highlighted bg-indigo-600"
+data-combobox-selected-class="is-selected"
 >
   <%= form.label field, class: "input input-bordered flex items-center gap-2", data: { combobox_target: "label" } do %>
     <div data-combobox-target="selectedIcon">
@@ -27,7 +28,7 @@ data-combobox-highlighted-check-class="text-white"
                         class: "flex-1 cursor-pointer caret-transparent",
                         data: {
                           combobox_target: "selected",
-                          action: "input->combobox#handleSearch click->combobox#toggle keydown.up->combobox#highlightPrevious keydown.down->combobox#highlightNext keydown.enter->combobox#chooseHighlightedItem keydown.esc->combobox#cancel"
+                          action: combobox_input_controller_actions
                         }) %>
 
       <a class="col-start-1 row-start-1 self-center justify-self-end" data-action="click->combobox#toggle">
@@ -48,24 +49,24 @@ data-combobox-highlighted-check-class="text-white"
         <li
           data-combobox-target="item"
           data-action="click->combobox#choose mouseover->combobox#highlight"
-          class="group relative flex items-center px-3 py-6 cursor-pointer h-8 text-gray-900 select-none"
+          class="group flex justify-between items-center px-3 py-6 cursor-pointer h-8 text-gray-900 select-none"
           id="listbox-option-<%= item.id %>"
           data-index="<%= index %>"
           data-id="<%= item.id %>"
           data-title="<%= item.title %>"
           role="option">
 
-          <% if item_block %>
-            <%= capture(item, &item_block) %>
-          <% else %>
-            <span data-attribute="title" class="block truncate select-none font-normal text-md"><%= item.title %></span>
-          <% end %>
+          <div data-attribute="title" class="relative grow flex justify-start items-center m-2 gap-2 truncate select-none font-normal text-md group-[.is-highlighted]:text-white group-[.is-selected]:font-semibold">
+            <% if item_block %>
+              <%= capture(item, &item_block) %>
+            <% else %>
+              <%= item.title %>
+            <% end %>
+          </div>
 
-          <span
-            class="hidden absolute inset-y-0 right-0 flex items-center pr-5 text-indigo-600"
-            data-attribute="check">
+          <div class="text-indigo-600 hidden group-[.is-highlighted]:text-white group-[.is-selected]:block">
             <%= icon("check", variant: :solid, class: "size-5 stroke-6") %>
-          </span>
+          </div>
         </li>
       <% end %>
     <% end %>

@@ -1,7 +1,7 @@
 <li
   data-autocomplete-target="item"
-  data-action="click->autocomplete#choose"
-  class="group relative cursor-pointer py-1 text-gray-900 select-none hover:bg-indigo-600 hover:text-white hover:outline-hidden"
+  data-action="click->autocomplete#choose mouseover->autocomplete#highlight"
+  class="group relative cursor-pointer py-1 text-gray-900 select-none"
   id="listbox-option-<%= transaction.id %>"
   data-id="<%= transaction.id %>"
   data-title="<%= transaction.title %>"
@@ -17,10 +17,10 @@
     </div>
 
     <div class="ml-2 select-none">
-      <h3 class="font-semibold text-gray-800 group-hover:text-white">
+      <h3 class="font-semibold text-gray-800 group-[.is-highlighted]:text-white">
         <%= transaction.title %>
       </h3>
-      <p class="text-xs font-medium text-gray-400 group-hover:text-slate-100">
+      <p class="text-xs font-medium text-gray-400 group-[.is-highlighted]:text-slate-100">
         <%= transaction.account.title %>
       </p>
     </div>

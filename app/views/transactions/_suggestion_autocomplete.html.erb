@@ -2,7 +2,8 @@
   data-controller="autocomplete"
   class="relative"
   data-action="autocomplete:choose@window->transactions--dialog#suggestionSelected"
-  data-autocomplete-url-value="/search/transactions/suggestions">
+  data-autocomplete-url-value="/search/transactions/suggestions"
+  data-autocomplete-highlighted-item-class="is-highlighted bg-indigo-600">
   <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
     <%= icon "pencil", class: "w-9" %>
 
@@ -14,7 +15,7 @@
       autocomplete: "off",
       data: {
         autocomplete_target: "input",
-        action: "input->autocomplete#search"
+        action: "input->autocomplete#search keydown.down->autocomplete#focusNext keydown.up->autocomplete#focusPrevious keydown.enter->autocomplete#chooseFocused"
       }
     ) %>
   <% end %>

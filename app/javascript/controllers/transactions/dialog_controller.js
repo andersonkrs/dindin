@@ -11,11 +11,11 @@ export default class extends Controller {
   suggestionSelected(e) {
     this.comboboxOutlets.forEach((combobox) => {
       if (combobox.element.id === "form-category-id-combobox") {
-        combobox.selectId(e.detail.category_id);
+        combobox.selectId(e.target.dataset.category_id);
       }
 
       if (combobox.element.id === "form-account-id-combobox") {
-        combobox.selectId(e.detail.account_id);
+        combobox.selectId(e.target.dataset.account_id);
       }
     });
   }

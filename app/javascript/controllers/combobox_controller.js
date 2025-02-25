@@ -18,7 +18,7 @@ export default class extends Controller {
     "item",
   ];
 
-  static classes = ["highlightedItem", "highlightedCheck"];
+  static classes = ["selected", "highlightedItem"];
 
   connect() {
     useClickOutside(this);
@@ -34,9 +34,6 @@ export default class extends Controller {
   set highlightedIndex(index) {
     this.itemTargets.forEach((item) => {
       item.classList.remove(...this.highlightedItemClasses);
-      item
-        .querySelector(`[data-attribute="check"]`)
-        .classList.remove(...this.highlightedItemClasses);
     });
 
     const maxIndex = this.visibleItems.length - 1;
@@ -48,11 +45,6 @@ export default class extends Controller {
     ) {
       const item = this.visibleItems[this._highlightedIndex];
       item.classList.add(...this.highlightedItemClasses);
-      item
-        .querySelector(`[data-attribute="check"]`)
-        .classList.add(...this.highlightedItemClasses);
-
-      item.scrollIntoView({ block: "nearest" });
     }
   }
 
@@ -66,6 +58,19 @@ export default class extends Controller {
     );
   }
 
+  get currentItem() {
+    return this.itemTargets.find(
+      (item) => item.dataset.id === this.inputTarget.value,
+    );
+  }
+
+  get indexOfCurrentItem() {
+    const item = this.currentItem;
+    if (!item) return -1;
+
+    return this.visibleItems.indexOf(item);
+  }
+
   get isClosed() {
     return this.listTarget.classList.contains("hidden");
   }
@@ -73,11 +78,11 @@ export default class extends Controller {
   selectId(value) {
     this.inputTarget.value = value;
 
-    const selectedItem = this.currentItem();
+    const selectedItem = this.currentItem;
 
     if (selectedItem) {
       this.selectedTarget.value = selectedItem.dataset.title;
-      this.updateSelectedElement(selectedItem);
+      this._updateSelectedElement(selectedItem);
     }
   }
 
@@ -106,8 +111,8 @@ export default class extends Controller {
     }
 
     this.inputTarget.value = null;
-    this.showEmptyIcon();
-    this.removeCheckMarks();
+    this._showEmptyIcon();
+    this._removeCheckMarks();
 
     this.itemTargets.forEach((item) => {
       const title = item.dataset.title.toLowerCase();
@@ -121,8 +126,8 @@ export default class extends Controller {
     if (this.visibleItems.length > 0) {
       this.highlightedIndex = 0;
     } else {
-      this.close();
       this.highlightedIndex = -1;
+      this.close();
     }
   }
 
@@ -134,8 +139,8 @@ export default class extends Controller {
     this.listTarget.classList.remove("hidden");
     this.itemTargets.forEach((element) => element.classList.remove("hidden"));
 
-    if (this.indexOfCurrentItem() >= 0) {
-      this.highlightedIndex = this.indexOfCurrentItem();
+    if (this.indexOfCurrentItem >= 0) {
+      this.highlightedIndex = this.indexOfCurrentItem;
     } else {
       this.highlightedIndex = -1;
     }
@@ -150,26 +155,13 @@ export default class extends Controller {
           top: `${y}px`,
         });
 
-        this.currentItem()?.scrollIntoView();
+        this.currentItem?.scrollIntoView({ block: "center" });
       });
     });
   }
 
   close() {
     this.listTarget.classList.add("hidden");
-  }
-
-  currentItem() {
-    return this.itemTargets.find(
-      (item) => item.dataset.id === this.inputTarget.value,
-    );
-  }
-
-  indexOfCurrentItem() {
-    const item = this.currentItem();
-    if (!item) return -1;
-
-    return this.visibleItems.indexOf(item);
   }
 
   highlightPrevious(e) {
@@ -179,6 +171,9 @@ export default class extends Controller {
       this.open();
     } else {
       this.highlightedIndex = Math.max(this.highlightedIndex - 1, 0);
+
+      const item = this.visibleItems[this.highlightedIndex];
+      item?.scrollIntoView({ block: "nearest", inline: "nearest" });
     }
   }
 
@@ -190,10 +185,11 @@ export default class extends Controller {
     } else {
       this.highlightedIndex = Math.min(
         this.highlightedIndex + 1,
-        this.itemTargets.length - 1,
+        this.visibleItems.length - 1,
       );
 
-      console.log(this.highlightedIndex);
+      const item = this.visibleItems[this.highlightedIndex];
+      item?.scrollIntoView({ block: "nearest", inline: "nearest" });
     }
   }
 
@@ -201,7 +197,7 @@ export default class extends Controller {
     e.preventDefault();
 
     const index = this.visibleItems.findIndex(
-      (el) => el.dataset.id == e.target.dataset.id,
+      (el) => el.dataset.id == e.currentTarget.dataset.id,
     );
 
     this.highlightedIndex = index;
@@ -226,13 +222,8 @@ export default class extends Controller {
     e.preventDefault();
     this.inputTarget.value = null;
     this.selectedTarget.value = null;
-    this.removeCheckMarks();
-    this.showEmptyIcon();
-  }
-
-  cancel(e) {
-    e.preventDefault();
-    this.close();
+    this._removeCheckMarks();
+    this._showEmptyIcon();
   }
 
   choose(e) {
@@ -243,44 +234,24 @@ export default class extends Controller {
     this.selectedTarget.value = title;
     this.inputTarget.value = id;
 
-    this.updateSelectedElement(selectedItem);
+    this._updateSelectedElement(selectedItem);
     this.close();
   }
 
-  updateSelectedElement(selectedItem) {
-    this.showSelectedIcon(selectedItem);
-    this.removeCheckMarks();
+  _updateSelectedElement(selectedItem) {
+    this._showSelectedIcon(selectedItem);
+    this._removeCheckMarks();
 
-    selectedItem
-      .querySelector(`[data-attribute="title"]`)
-      .classList.remove("font-normal");
-
-    selectedItem
-      .querySelector(`[data-attribute="title"]`)
-      .classList.add("font-semibold");
-
-    selectedItem
-      .querySelector(`[data-attribute="check"]`)
-      .classList.remove("hidden");
+    selectedItem.classList.add(...this.selectedClasses);
   }
 
-  removeCheckMarks() {
+  _removeCheckMarks() {
     this.itemTargets.forEach((itemTarget) => {
-      itemTarget
-        .querySelector(`[data-attribute="title"]`)
-        .classList.remove("font-semibold");
-
-      itemTarget
-        .querySelector(`[data-attribute="title"]`)
-        .classList.add("font-normal");
-
-      itemTarget
-        .querySelector(`[data-attribute="check"]`)
-        .classList.add("hidden");
+      itemTarget.classList.remove(...this.selectedClasses);
     });
   }
 
-  showSelectedIcon(selectedElement) {
+  _showSelectedIcon(selectedElement) {
     if (!this.hasSelectedIconTarget) {
       return;
     }
@@ -302,7 +273,7 @@ export default class extends Controller {
       .classList.add("hidden");
   }
 
-  showEmptyIcon() {
+  _showEmptyIcon() {
     if (!this.hasSelectedIconTarget) {
       return;
     }

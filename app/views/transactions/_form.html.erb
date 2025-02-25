@@ -55,9 +55,7 @@
                   <%= category_icon(category, variant: :solid, class: "fill-white size-4") %>
                 </div>
               </div>
-              <span data-attribute="title" class="ml-2 block truncate select-none font-normal">
-                <%= category.title %>
-              </span>
+              <%= category.title %>
             <% end %>
 
             <%= combobox_tag(form, :account_id, Account.order(:title), id: "form-account-id-combobox", placeholder: _("Select an account")) %>
