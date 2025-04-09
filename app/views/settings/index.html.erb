@@ -1,0 +1,42 @@
+<% content_for :title, "Account & Settings" %>
+
+<div class="index-card md:w-2/4">
+  <div class="index-card-body">
+    <div class="font-bold text-3xl py-4 mx-0 my-0 sm:text-center sm:py-5 sm:text-5xl sm:mx-2 sm:my-1">
+      Account & Settings
+    </div>
+
+    <div class="flex w-full flex-col border-opacity-50">
+      <div class="card bg-zinc-100 flex flex-col items-center gap-1">
+        <%= link_to(edit_profile_path, class: "flex flex-row w-full justify-start items-center gap-4 p-4 hover:bg-zinc-200 hover:!rounded-xl") do %>
+          <div class="flex-none">
+            <%= render "users/avatar", class: "size-14 text-2xl font-bold" %> 
+          </div>
+          <div class="flex flex-grow flex-col">
+            <h3 class="text-xl font-semibold"><%= Current.user.name %></h3>
+            <h5 class="text-lg"><%= Current.user.email %></h5>
+          </div>
+          <div>
+            <%= icon "chevron-right", class: "size-10 text-zinc-500" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="divider"></div>
+      <div class="card bg-zinc-100 flex flex-col items-center gap-1">
+        <%= link_to(edit_profile_path, class: "flex flex-row w-full justify-start items-center gap-4 px-4 hover:bg-zinc-200 hover:!rounded-xl") do %>
+          <div class="flex-none">
+            <%= render "users/avatar", class: "size-14 text-2xl font-bold" %> 
+          </div>
+          <div class="flex flex-grow flex-col">
+            <h3 class="text-xl font-semibold"><%= Current.user.name %></h3>
+            <h5 class="text-lg"><%= Current.user.email %></h5>
+          </div>
+          <div>
+            <%= icon "chevron-right", class: "size-10 text-zinc-500" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

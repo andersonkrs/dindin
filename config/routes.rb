@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resource :session
+  resource :session, only: %i[new create destroy]
+  resource :onboarding, only: %i[new create]
 
   resources :transactions, only: %i[index destroy]
   resources :expenses, only: %i[new edit create update]
@@ -9,6 +10,13 @@ Rails.application.routes.draw do
     namespace :transactions do
       resources :suggestions, only: %i[index]
     end
+  end
+
+  resources :settings, only: %i[ index ]
+
+  scope :my, module: :settings do
+    resource :profile, only: %i[ edit update ]
+    resource :avatar, only: %i[ create destroy ]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

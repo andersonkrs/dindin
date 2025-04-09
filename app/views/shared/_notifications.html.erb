@@ -11,11 +11,15 @@
       >
       <div class="flex p-4">
         <div class="flex-shrink-0">
-          <%= icon "information-circle", class: "flex-shrink-0 size-4 text-blue-500 mt-0.5" %>
+          <% if type == "alert" %>
+            <%= icon("information-circle", class: "flex-shrink-0 size-5 stroke-2 mt-0.5 text-orange-500") %>
+          <% else %>
+            <%= icon("information-circle", class: "flex-shrink-0 size-5 stroke-2 mt-0.5 text-blue-500") %>
+          <% end %>
         </div>
         <div class="ms-3">
           <p class="text-md">
-          <%= message %>
+            <%= message %>
           </p>
         </div>
       </div>

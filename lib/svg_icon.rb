@@ -9,7 +9,13 @@ class SvgIcon
     @path = options.fetch(:path, "icons/#{variant}/#{name}.svg")
   end
 
-  def raw_svg = Rails.application.assets.load_path.find(path).content
+  def raw_svg
+    if icon = Rails.application.assets.load_path.find(path)
+      icon.content
+    else
+      raise ArgumentError, path
+    end
+  end
 
   def render
     doc = Nokogiri::HTML::DocumentFragment.parse(raw_svg)

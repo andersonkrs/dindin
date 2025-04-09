@@ -1,0 +1,87 @@
+<% content_for :title, "My Profile" %>
+
+<div class="flex flex-row justify-center mb-4">
+  <%= link_to(settings_path, class: "btn-action btn-info font-semibold") do %>
+    <%= icon("arrow-left", variant: :solid) %>
+    Account & Settings
+  <% end %>
+</div>
+
+<div class="index-card md:w-2/4">
+  <div class="index-card-body px-12">
+    <div class="flex w-full flex-col items-center border-opacity-50 mt-10 gap-2">
+      <div class="">
+        <%= render "users/avatar", class: "size-20 !text-3xl font-bold" %> 
+      </div>
+      <div class="">
+        <%= form_with(
+          model: Current.user,
+          url: avatar_path,
+          method: :post,
+          multipart: true,
+          class: "flex flex-col items-center",
+          data: { controller: "auto-submit" }
+        ) do |f| %>
+        <%= f.label(
+          :avatar,
+          class: "btn-action btn-info bg-pink-200 !text-pink-500 border-[1.5px] hover:!bg-pink-300 hover:!border-pink-600 hover:!text-pink-600",
+          onclick: "this.querySelector('input').click()"
+        ) do %>
+            <%= icon "arrow-up-tray", class: "font-semibold" %> Upload Photo
+            <%= f.file_field(
+              :avatar,
+              class: "hidden",
+              id: "avatar-upload",
+              accept: "image/*",
+              direct_upload: true,
+              data: { action: "change->auto-submit#submit" }
+            ) %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if Current.user.avatar.attached? %>
+        <%= link_to(
+          "Remove photo and only show initials",
+          avatar_path,
+          class: "link link-info font-semibold",
+          data: { turbo_method: :delete }
+        ) %>
+      <% end %>
+
+      <%= form_with(
+        id: "profile_form",
+        model: Current.user,
+        url: profile_path,
+        method: :patch,
+        class: "mt-4 w-full"
+      ) do |f| %>
+
+        <%= f.label(
+          :name,
+          class: "input input-lg input-bordered flex items-center gap-2 text-xl",
+        ) do %>
+          <%= icon "user", class: "size-7" %>
+
+          <%= f.text_field(
+            :name,
+            required: true,
+            placeholder: "Your Name",
+            class: "grow",
+          ) %>
+        <% end %>
+
+      <% end %>
+
+      <div class="card-actions flex justify-center items-center mt-2 relative">
+        <%= button_tag(
+          type: "submit",
+          form: "profile_form",
+          class: "btn-submit",
+        ) do %>
+          <%= icon "check", class: "stroke-4" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

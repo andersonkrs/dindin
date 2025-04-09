@@ -1,9 +1,10 @@
 class SessionsController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
 
+  before_action :ensure_onboarded, only: %i[ new ]
   before_action :check_already_authenticated, only: %i[ new ]
 
-  # rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_session_url, alert: "Try again later." }
+  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { render_too_many_requests }
 
   def new
   end
@@ -30,8 +31,17 @@ class SessionsController < ApplicationController
     params.permit(:email, :password)
   end
 
+  def ensure_onboarded
+    redirect_to new_onboarding_url if User.none?
+  end
+
   def check_already_authenticated
     resume_session
     redirect_to after_authentication_url if authenticated?
+  end
+
+  def render_too_many_requests
+    flash[:alert] = "Too many requests, try again later."
+    render :new, status: :too_many_requests
   end
 end

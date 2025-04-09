@@ -1,12 +1,9 @@
-import { Application } from "@hotwired/stimulus"
-import Notification from '@stimulus-components/notification'
+import { Application } from "@hotwired/stimulus";
 
-
-const application = Application.start()
-application.register('notification', Notification)
+const application = Application.start();
 
 // Configure Stimulus development experience
-application.debug = false
-window.Stimulus   = application
+application.debug = false;
+window.Stimulus = application;
 
-export { application }
+export { application };
