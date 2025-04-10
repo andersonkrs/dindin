@@ -19,22 +19,26 @@
           url: avatar_path,
           method: :post,
           multipart: true,
-          class: "flex flex-col items-center",
-          data: { controller: "auto-submit" }
+          class: "flex flex-col items-center group",
+          data: {
+            controller: "upload-button",
+            upload_button_submitting_class: "is-submitting",
+          },
         ) do |f| %>
-        <%= f.label(
-          :avatar,
-          class: "btn-action btn-info bg-pink-200 !text-pink-500 border-[1.5px] hover:!bg-pink-300 hover:!border-pink-600 hover:!text-pink-600",
-          onclick: "this.querySelector('input').click()"
-        ) do %>
-            <%= icon "arrow-up-tray", class: "font-semibold" %> Upload Photo
+          <%= f.label(
+            :avatar,
+            class: "btn btn-action btn-secondary border-[1.5px]",
+            data: { upload_button_target: "button", action: "click->upload-button#click" }
+          ) do %>
+            <span class="hidden group-[.is-submitting]:block loading loading-spinner"></span>
+            <%= icon "arrow-up-tray", class: "font-semibold block group-[.is-submitting]:hidden" %> Upload Photo
             <%= f.file_field(
               :avatar,
               class: "hidden",
               id: "avatar-upload",
               accept: "image/*",
               direct_upload: true,
-              data: { action: "change->auto-submit#submit" }
+              data: { upload_button_target: "input", action: "change->upload-button#submit" }
             ) %>
           <% end %>
         <% end %>

@@ -7,8 +7,8 @@ import { application } from "./application";
 import Notification from "@stimulus-components/notification";
 application.register("notification", Notification);
 
-import AutoSubmit from "@stimulus-components/auto-submit";
-application.register("auto-submit", AutoSubmit);
+import UploadButtonController from "./upload_button_controller";
+application.register("upload-button", UploadButtonController);
 
 import AutocompleteController from "./autocomplete_controller";
 application.register("autocomplete", AutocompleteController);

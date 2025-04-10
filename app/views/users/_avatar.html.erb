@@ -1,18 +1,17 @@
 <%# locals: (class: "") -%>
 
-  <% if Current.user.avatar.attached? %>
-    <div class="avatar">
-      <div class="size-11 rounded-full <%= local_assigns[:class] %>">
-        <%= cache Current.user do %>
-          <%= image_tag Current.user.avatar %>
-        <% end %>
-      </div>
+<% if Current.user.avatar.attached? %>
+  <div class="avatar">
+    <div class="size-11 rounded-full <%= local_assigns[:class] %>">
+      <%= cache Current.user do %>
+        <%= image_tag Current.user.avatar %>
+      <% end %>
     </div>
-  <% else %>
-    <div class="avatar placeholder">
-      <div class="text-center text-white rounded-full size-11 text-xl bg-pink-400  <%= local_assigns[:class] %>">
-        <%= title_initials(Current.user.name) %> 
-      </div>
+  </div>
+<% else %>
+  <div class="avatar placeholder">
+    <div class="text-center text-white rounded-full size-11 text-xl bg-pink-400  <%= local_assigns[:class] %>">
+      <%= title_initials(Current.user.name) %> 
     </div>
-  <% end %>
-
+  </div>
+<% end %>
