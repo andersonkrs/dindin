@@ -12,6 +12,7 @@
     "@rails/request.js": "^0.0.9",
     "@stimulus-components/auto-submit": "^6.0.0",
     "@stimulus-components/notification": "^3.0.0",
+    "@tailwindcss/upgrade": "^4.1.3",
     "autoprefixer": "^10.4.19",
     "current.js": "^0.2.1",
     "daisyui": "^4.12.24",
