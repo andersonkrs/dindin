@@ -28,5 +28,7 @@ module DinDin
     config.session_store :cookie_store, expire_after: 1.month
     config.i18n.available_locales = ["en", "pt-BR"]
     config.i18n.locale = :en
+
+    config.active_support.to_time_preserves_timezone = :zone
   end
 end

@@ -9,8 +9,18 @@ class Search::Transactions::SuggestionsControllerTest < ActionDispatch::Integrat
   end
 
   test "returns a single transaction when there are multiple with the same name" do
-    _transaction_1 = expense.create!(title: "bada bing", value: 1, account: accounts(:santander), category: categories(:groceries))
-    transaction_2 = expense.create!(title: "bada bing", value: 2, account: accounts(:wallet), category: categories(:groceries))
+    _transaction_1 = Expense.create!(
+      title: "bada bing",
+      value: 1,
+      account: accounts(:santander),
+      category: categories(:groceries)
+    )
+    transaction_2 = Expense.create!(
+      title: "bada bing",
+      value: 2,
+      account: accounts(:wallet),
+      category: categories(:groceries)
+    )
 
     get search_transactions_suggestions_url(format: :turbo_stream), params: { q: "bing" }
 
