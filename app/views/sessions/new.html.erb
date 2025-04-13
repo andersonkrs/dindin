@@ -8,13 +8,13 @@
 
           <div class="w-[11rem] h-[5rem] self-center" style="background: url(<%= image_path("logo.png")%>) no-repeat 0.1rem center/11rem"></div>
 
-          <%= form.label :email, class: "input input-lg  flex items-center gap-2 text-xl" do %>
-            <%= icon("at-symbol", class: "size-7") %>
+          <%= form.label :email, class: "input input-lg w-full flex items-center gap-2 text-xl" do %>
+            <%= icon("at-symbol", class: "size-7 opacity-50") %>
             <%= form.email_field :email, placeholder: "Enter your email address", required: true, autofocus: true, autocomplete: "username", class: "grow", value: params[:email] %>
           <% end %>
 
-          <%= form.label :password, class: "input input-lg flex items-center gap-2 text-xl" do %>
-            <%= icon("key", class: "size-7") %>
+          <%= form.label :password, class: "input input-lg w-full flex items-center gap-2 text-xl" do %>
+            <%= icon("key", class: "size-7 opacity-50") %>
             <%= form.password_field :password, placeholder: "Enter your password", autocomplete: "current-password", maxlenght: 72, required: true, class: "grow" %>
           <% end %>
 
@@ -24,7 +24,7 @@
               method: "post",
               form: "login",
               data: {turbo_frame: "_top"},
-              class: "btn btn-primary btn-lg btn-circle outline hover:outline-4 hover:outline-gray-400",
+              class: "btn btn-secondary btn-xl btn-circle",
               
             ) do %>
               <%= icon("arrow-right", class: "size-7 stroke-4 text-white") %>
