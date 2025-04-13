@@ -47,7 +47,6 @@ gem "money-rails", "~> 1.12"
 
 # Active Storage
 gem "image_processing", "~> 1.2"
-gem "aws-sdk-s3", require: false
 
 # Pagination
 gem "geared_pagination"
@@ -76,4 +75,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
