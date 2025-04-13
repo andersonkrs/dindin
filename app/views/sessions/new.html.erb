@@ -8,12 +8,12 @@
 
           <div class="w-[11rem] h-[5rem] self-center" style="background: url(<%= image_path("logo.png")%>) no-repeat 0.1rem center/11rem"></div>
 
-          <%= form.label :email, class: "input input-lg input-bordered flex items-center gap-2 text-xl" do %>
+          <%= form.label :email, class: "input input-lg  flex items-center gap-2 text-xl" do %>
             <%= icon("at-symbol", class: "size-7") %>
             <%= form.email_field :email, placeholder: "Enter your email address", required: true, autofocus: true, autocomplete: "username", class: "grow", value: params[:email] %>
           <% end %>
 
-          <%= form.label :password, class: "input input-lg input-bordered flex items-center gap-2 text-xl" do %>
+          <%= form.label :password, class: "input input-lg flex items-center gap-2 text-xl" do %>
             <%= icon("key", class: "size-7") %>
             <%= form.password_field :password, placeholder: "Enter your password", autocomplete: "current-password", maxlenght: 72, required: true, class: "grow" %>
           <% end %>

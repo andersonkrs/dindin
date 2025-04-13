@@ -1,7 +1,7 @@
 <% content_for :title, "My Profile" %>
 
 <div class="flex flex-row justify-center mb-4">
-  <%= link_to(settings_path, class: "btn-action btn-info font-semibold") do %>
+  <%= link_to(settings_path, class: "btn btn-info btn-outline font-bold text-lg") do %>
     <%= icon("arrow-left", variant: :solid) %>
     Account & Settings
   <% end %>
@@ -11,7 +11,7 @@
   <div class="index-card-body px-12">
     <div class="flex w-full flex-col items-center border-opacity-50 mt-10 gap-2">
       <div class="">
-        <%= render "users/avatar", class: "size-20 !text-3xl font-bold" %> 
+        <%= render "users/avatar", class: "avatar--lg" %> 
       </div>
       <div class="">
         <%= form_with(
@@ -27,11 +27,11 @@
         ) do |f| %>
           <%= f.label(
             :avatar,
-            class: "btn btn-action btn-secondary border-[1.5px]",
+            class: "btn btn-md btn-secondary",
             data: { upload_button_target: "button", action: "click->upload-button#click" }
           ) do %>
             <span class="hidden group-[.is-submitting]:block loading loading-spinner"></span>
-            <%= icon "arrow-up-tray", class: "font-semibold block group-[.is-submitting]:hidden" %> Upload Photo
+            <%= icon "arrow-up-tray", class: "font-semibold block group-[.is-submitting]:hidden" %> <%= _("Upload Photo") %> 
             <%= f.file_field(
               :avatar,
               class: "hidden",
@@ -63,9 +63,9 @@
 
         <%= f.label(
           :name,
-          class: "input input-lg input-bordered flex items-center gap-2 text-xl",
+          class: "input input-xl flex items-center gap-2 text-xl w-full",
         ) do %>
-          <%= icon "user", class: "size-7" %>
+          <%= icon "user", class: "ml-2 size-7 h-[1em] opacity-50" %>
 
           <%= f.text_field(
             :name,
@@ -81,7 +81,7 @@
         <%= button_tag(
           type: "submit",
           form: "profile_form",
-          class: "btn-submit",
+          class: "btn btn-lg btn-success btn-circle",
         ) do %>
           <%= icon "check", class: "stroke-4" %>
         <% end %>

@@ -1,11 +1,29 @@
-<%# locals: (category:, size: "sm") -%>
+<%# locals: (category:, size: "sm", data: {}) -%>
 
-<div class="avatar placeholder">
-  <div data-category-icon-target="avatar" class="<%= category_color(category) %> text-center text-white rounded-full <%= class_names("w-10" => size == "sm", "w-12" => size == "md", "w-16 text-xl" => size == "lg") %>">
+<%= tag.div class: "relative inline-flex align-middle group size--#{size}" do %>
+  <%= tag.div(
+    data: data,
+    class: [
+      category_color(category),
+      "block",
+      "aspect-square",
+      "overflow-hidden",
+      "rounded-full",
+      "group-[.size--sm]:w-10",
+      "group-[.size--md]:w-12",
+      "group-[.size--lg]:w-15",
+      "text-neutral-content",
+      "flex",
+      "items-center",
+      "justify-center"
+    ].join(" ")
+  ) do %>
+    <% icon_classes = "category-icon fill-white group-[.size--sm]:w-6 group-[.size--md]:w-8 group-[.size--lg]:w-10" %>
+
     <% if category.persisted? && category.icon.blank? %>
-      <%= category_icon_placeholder(category, class: class_names("category-icon fill-white", "size-8" => size == "lg")) %> 
+      <%= category_icon_placeholder(category, class: icon_classes) %> 
     <% else %>
-      <%= category_icon(category, variant: :solid, class: class_names("category-icon fill-white", "size-8" => size == "lg")) %>
+      <%= category_icon(category, variant: :solid, class: icon_classes) %>
     <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>

@@ -1,17 +1,23 @@
-<%# locals: (class: "") -%>
-
-<% if Current.user.avatar.attached? %>
-  <div class="avatar">
-    <div class="size-11 rounded-full <%= local_assigns[:class] %>">
-      <%= cache Current.user do %>
-        <%= image_tag Current.user.avatar %>
-      <% end %>
-    </div>
+<div class="group <%= local_assigns.fetch(:class, "avatar--sm") %>">
+  <div class="relative inline-flex align-middle">
+    <%= cache Current.user do %>
+      <div
+        class="<%= class_names("block
+                               aspect-square
+                               overflow-hidden
+                               rounded-full
+                               w-11
+                               group-[.avatar--md]:w-15
+                               group-[.avatar--lg]:w-18",
+                               "bg-pink-400 text-neutral-content flex items-center justify-center" => !Current.user.avatar.attached?) %>">
+        <% if Current.user.avatar.attached? %>
+            <%= image_tag Current.user.avatar, class: "h-full w-full object-cover" %>
+        <% else %>
+          <span class="text-xl group-[.avatar--md]:text-3xl group-[.avatar--lg]:text-4xl">
+            <%= title_initials(Current.user.name) %>
+          </span> 
+        <% end %>
+      </div>
+    <% end %>
   </div>
-<% else %>
-  <div class="avatar placeholder">
-    <div class="text-center text-white rounded-full size-11 text-xl bg-pink-400  <%= local_assigns[:class] %>">
-      <%= title_initials(Current.user.name) %> 
-    </div>
-  </div>
-<% end %>
+</div>

@@ -8,11 +8,11 @@
 
     <div class="flex w-full flex-col border-opacity-50">
       <div class="card bg-zinc-100 flex flex-col items-center gap-1">
-        <%= link_to(edit_profile_path, class: "flex flex-row w-full justify-start items-center gap-4 p-4 hover:bg-zinc-200 hover:!rounded-xl") do %>
+        <%= link_to(edit_profile_path, class: "flex flex-row w-full justify-start items-center gap-4 p-4 hover:bg-zinc-200 hover:rounded-xl!") do %>
           <div class="flex-none">
-            <%= render "users/avatar", class: "size-14 text-2xl font-bold" %> 
+            <%= render "users/avatar", class: "avatar--md" %> 
           </div>
-          <div class="flex flex-grow flex-col">
+          <div class="flex grow flex-col">
             <h3 class="text-xl font-semibold"><%= Current.user.name %></h3>
             <h5 class="text-lg"><%= Current.user.email %></h5>
           </div>
@@ -23,20 +23,7 @@
       </div>
       <div class="divider"></div>
       <div class="card bg-zinc-100 flex flex-col items-center gap-1">
-        <%= link_to(edit_profile_path, class: "flex flex-row w-full justify-start items-center gap-4 px-4 hover:bg-zinc-200 hover:!rounded-xl") do %>
-          <div class="flex-none">
-            <%= render "users/avatar", class: "size-14 text-2xl font-bold" %> 
-          </div>
-          <div class="flex flex-grow flex-col">
-            <h3 class="text-xl font-semibold"><%= Current.user.name %></h3>
-            <h5 class="text-lg"><%= Current.user.email %></h5>
-          </div>
-          <div>
-            <%= icon "chevron-right", class: "size-10 text-zinc-500" %>
-          </div>
-        <% end %>
       </div>
     </div>
   </div>
-
 </div>

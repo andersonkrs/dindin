@@ -8,7 +8,7 @@
       <button data-action="click->transactions--dialog#close" class="btn btn-md btn-circle btn-ghost absolute font-bold right-2 top-2 text-lg">✕</button>
 
       <div class="card-body items-stretch px-1 py-1">
-        <h1 class="card-title justify-center mb-2">
+        <h1 class="card-title font-light text-2xl justify-center mb-2">
           <% if transaction.persisted? %>
             <%= "Edit #{transaction.model_name.human}" %>
           <% else %>
@@ -16,22 +16,10 @@
           <% end %>
         </h1>
 
-        <% if transaction.errors.any? %>
-          <div style="color: red">
-            <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
-
-            <ul>
-              <% transaction.errors.each do |error| %>
-                <li><%= error.full_message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
         <%= form_with(id: "transaction_form", model: transaction) do |form| %>
           <div class="flex flex-col gap-4">
-            <%= form.label :value, class: "input input-bordered flex items-center gap-2", data: { controller: "money-input" } do %>
-              <%= icon "banknotes", class: "w-9" %>
+            <%= form.label :value, class: "input input-lg flex items-center gap-2 w-full", data: { controller: "money-input" } do %>
+              <%= icon "banknotes", class: "size-7 opacity-50 ml-2" %>
 
               <%= form.text_field(
                 :value,
@@ -49,25 +37,39 @@
 
             <%= transaction_title_autocomplete(form, :title) %>
 
-            <%= combobox_tag(form, :category_id, Category.expense.order(:title), id: "form-category-id-combobox", placeholder: _("Select a category")) do |category| %>
-              <div data-attribute="icon" class="avatar placeholder">
-                <div class="<%= category_color(category) %> text-center text-white rounded-full w-9">
-                  <%= category_icon(category, variant: :solid, class: "fill-white size-4") %>
+            <%= combobox_tag(
+              form,
+              :category_id,
+              Category.expense.order(:title),
+              id: "form-category-id-combobox",
+              placeholder: _("Select a category"),
+              icon: "chart-pie",
+            ) do |category| %>
+              <div data-attribute="icon" class="avatar avatar-placeholder">
+                <div class="<%= category_color(category) %> w-10 rounded-full">
+                  <%= category_icon(category, variant: :solid, class: "w-4 fill-white") %>
                 </div>
               </div>
               <%= category.title %>
             <% end %>
 
-            <%= combobox_tag(form, :account_id, Account.order(:title), id: "form-account-id-combobox", placeholder: _("Select an account")) %>
+            <%= combobox_tag(
+              form,
+              :account_id,
+              Account.order(:title),
+              id: "form-account-id-combobox",
+              placeholder: _("Select an account"),
+              icon: "credit-card",
+            ) %>
 
             <div class="flex gap-1">
-              <%= form.label :due_on, class: "input input-bordered flex items-center gap-2 indicator w-full" do %>
+              <%= form.label :due_on, class: "input input-lg flex items-center gap-2 indicator w-full" do %>
                 <span class="indicator-item indicator-center badge">Due date</span>
-                <%= icon "calendar-days", class: "w-9" %>
+                <%= icon "calendar-days", class: "size-7 opacity-50 ml-2" %>
                 <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow" %>
               <% end %>
 
-              <%= form.label :paid, class: "input flex-1 w-full swap swap-rotate input-ghost" do %>
+              <%= form.label :paid, class: "input input-lg flex-1 w-full swap swap-rotate input-ghost" do %>
                 <%= form.check_box :paid, checked: transaction.paid? %>
                 <%= icon "hand-thumb-up", class: "swap-on w-8 h-8 size-6 text-emerald-500" %>
                 <%= icon "hand-thumb-down", class: "swap-off w-8 h-8 size-6 text-red-500" %>
@@ -80,16 +82,16 @@
           <%= button_tag(
             type: "submit",
             form: "transaction_form",
-            class: "btn-submit",
+            class: "btn btn-xl btn-success btn-circle btn-hover-scale-up",
           ) do %>
-            <%= icon "check", class: "stroke-4" %>
+            <%= icon "check", class: "stroke-6" %>
           <% end %>
 
           <% if transaction.persisted? %>
             <%= button_to(
               transaction.becomes(Transaction),
               method: :delete,
-              class: "btn btn-sm h-11 w-11 btn-error btn-circle btn-outline transition ease-in-out hover:scale-125 duration-300",
+              class: "btn size-11 btn-error btn-circle btn-outline btn-hover-scale-up",
               form_class: "absolute inset-y-0 right-0 flex items-center",
               data: { turbo_method: :delete }
             ) do %>

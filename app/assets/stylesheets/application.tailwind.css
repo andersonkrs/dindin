@@ -1,55 +1,114 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "daisyui";
 
-@layer components {
-  .bg-panel-gradient {
-    @apply bg-gradient-to-r from-pink-600 via-red-400 to-red-400;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: true;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(97% 0 0);
+  --color-base-content: oklch(0% 0 0);
+  --color-primary: oklch(45% 0.24 277.023);
+  --color-primary-content: oklch(93% 0.034 272.788);
+  --color-secondary: oklch(65% 0.241 354.308);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(77% 0.152 181.912);
+  --color-accent-content: oklch(38% 0.063 188.416);
+  --color-neutral: oklch(14% 0.005 285.823);
+  --color-neutral-content: oklch(100% 0 0);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(100% 0 0);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 1rem;
+  --radius-field: 1rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.29125rem;
+  --border: 1.5px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
+}
 
-  .index-card {
-    @apply card bg-base-100 rounded-2xl shadow-2xl w-full md:w-2/3;
-  }
+@utility bg-panel-gradient {
+  @apply bg-linear-to-r from-pink-600 via-red-400 to-red-400;
+}
 
-  .index-card-body {
-    @apply card-body p-4 gap-0 sm:p-5 sm:gap-2;
+@utility category-gradient--income {
+  @apply bg-linear-to-b from-green-200 via-teal-50 to-zinc-50;
+}
 
-    > .index-card-actions {
-      @apply flex items-center justify-end w-full sm:px-2;
-    }
+@utility category-gradient--expense {
+  @apply bg-linear-to-b from-red-200 via-red-100 to-zinc-50;
+}
 
-    > .index-card-title {
-      @apply max-sm:divider-start divider font-bold text-xl py-4 mx-0 my-0 sm:py-5 sm:text-4xl sm:mx-2 sm:my-1;
-    }
-  }
+@utility index-card {
+  @apply card bg-base-100 rounded-2xl shadow-2xl w-full md:w-2/3;
+}
 
-  .btn-action {
-    @apply btn font-extrabold text-[1.1rem] btn-sm h-[2.5rem] sm:h-[2.7rem] border-[1.8px] px-4 rounded-[2rem] btn-outline;
-  }
+/* DaisyUI bug? */
+@utility btn-success {
+  --btn-fg: var(--color-success-content) !important;
+}
 
-  .btn-submit {
-    @apply btn btn-primary btn-circle text-white h-14 w-14 bg-green-400 transition ease-in-out delay-150 hover:scale-125 duration-300;
-  }
+@utility btn-xl {
+  --size: calc(var(--size-field, .25rem)* 14) !important;
+}
 
-  .category-gradient--income {
-    @apply bg-gradient-to-b from-green-200 via-teal-50 to-zinc-50;
-  }
+@utility btn {
+  @apply rounded-full!;
+}
 
-  .category-gradient--expense {
-    @apply bg-gradient-to-b from-red-200 via-red-100 to-zinc-50;
-  }
+@utility btn-action {
+  @apply btn font-extrabold text-[1.1rem] btn-sm h-[2.5rem] sm:h-[2.7rem] border-[1.8px] px-4 btn-outline;
+}
 
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
+@utility btn-hover-scale-up {
+  @apply transition ease-in-out delay-150 hover:scale-125 duration-300;
+}
 
-  .rotate-y-180 {
-    transform: rotateY(180deg) !important;
-  }
+@utility category-gradient--income {
+  @apply bg-linear-to-b from-green-200 via-teal-50 to-zinc-50;
+}
 
-  .divider-list {
-    @apply before:text-sm before:font-semibold before:text-gray-500 capitalize
-  }
+@utility category-gradient--expense {
+  @apply bg-linear-to-b from-red-200 via-red-100 to-zinc-50;
+}
+
+@utility backface-hidden {
+  backface-visibility: hidden;
+}
+
+@utility rotate-y-180 {
+  @apply transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]
+}
+
+@utility divider-list {
+  @apply before:text-sm before:font-semibold before:text-gray-500 capitalize;
 }
 
 /* Chrome, Safari, Edge, Opera */

@@ -28,12 +28,12 @@
 
       <div class="flex flex-col gap-1">
         <div class="flex items-center justify-center">
-          <%= render "icon", category: category, size: "lg" %>
+          <%= render "icon", category: category, size: "lg", data: { category_icon_target: "icon" } %>
         </div>
 
         <div class="flex gap-2 items-center justify-start mt-1">
-          <%= form.label :title, class: "input input-bordered font-semibold text-secondary input-md flex items-center text-xl w-full" do %>
-            <%= form.text_field :title, placeholder: "Name", required: true, class: "grow" %>
+          <%= form.label :title, class: "input font-semibold text-secondary input-md flex items-center text-xl w-full" do %>
+            <%= form.text_field :title, placeholder: "Name", required: true, class: "grow", autocomplete: "off" %>
           <% end %>
         </div>
 
@@ -68,7 +68,7 @@
         </label>
 
         <div class="card-actions mt-3 flex justify-center items-center">
-          <%= form.button(type: "submit", data: { "categories_dialog_target": "submit" }, class: "btn-submit btn-disabled") do %>
+          <%= form.button(type: "submit", data: { "categories_dialog_target": "submit" }, class: "btn btn-xl btn-success btn-circle btn-hover-scale-up btn-disabled") do %>
             <%= icon "check", class: "stroke-4" %>
           <% end %>
         </div>

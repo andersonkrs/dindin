@@ -5,15 +5,15 @@ data-combobox-hidden-class="hidden"
 data-combobox-highlighted-item-class="is-highlighted bg-indigo-600"
 data-combobox-selected-class="is-selected"
 >
-  <%= form.label field, class: "input input-bordered flex items-center gap-2", data: { combobox_target: "label" } do %>
+  <%= form.label field, class: "input input-lg flex items-center gap-2 w-full", data: { combobox_target: "label" } do %>
     <div data-combobox-target="selectedIcon">
-      <div data-attribute="icon-placeholder" class="<%= class_names("avatar placeholder") %>">
+      <div data-attribute="icon-placeholder" class="<%= class_names("avatar avatar-placeholder") %>">
         <div class="text-center">
-          <%= icon "chart-pie", class: "w-9" %>
+          <%= icon icon, class: "size-7 opacity-50 ml-2" %>
         </div>
       </div>
 
-      <div data-attribute="icon" class="<%= class_names("hidden avatar placeholder") %>">
+      <div data-attribute="icon" class="<%= class_names("hidden avatar avatar-placeholder") %>">
       </div>
     </div>
 

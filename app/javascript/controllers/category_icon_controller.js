@@ -1,13 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["avatar"];
+  static targets = ["icon"];
 
   handleColorChanged(e) {
     let categoryColor = e.target.parentElement.querySelector(".category-color");
     let color = document.defaultView.getComputedStyle(categoryColor).background;
 
-    this.avatarTarget.style.background = color;
+    this.iconTarget.style.background = color;
   }
 
   handleIconChanged(e) {
@@ -15,7 +15,7 @@ export default class extends Controller {
       .querySelector(".category-icon")
       .cloneNode(true);
 
-    let oldCategoryIcon = this.avatarTarget.querySelector(".category-icon");
+    let oldCategoryIcon = this.iconTarget.querySelector(".category-icon");
 
     newCategoryIcon.classList = oldCategoryIcon.classList.toString();
     oldCategoryIcon.replaceWith(newCategoryIcon);

@@ -4,8 +4,8 @@
   data-action="autocomplete:choose@window->transactions--dialog#suggestionSelected"
   data-autocomplete-url-value="/search/transactions/suggestions"
   data-autocomplete-highlighted-item-class="is-highlighted bg-indigo-600">
-  <%= form.label :title, class: "input input-bordered flex items-center gap-2" do %>
-    <%= icon "pencil", class: "w-9" %>
+  <%= form.label :title, class: "input input-lg flex items-center gap-2 w-full" do %>
+    <%= icon "pencil", class: "size-7 opacity-50 ml-2" %>
 
     <%= form.text_field(
       field,

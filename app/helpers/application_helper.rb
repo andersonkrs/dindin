@@ -4,6 +4,12 @@ module ApplicationHelper
   end
 
   def title_initials(title)
-    title.upcase.split(" ").values_at(0, -1).map { _1.chars.first }.join()
+    words = title.upcase.split(" ")
+
+    if words.length > 1
+      words.values_at(0, -1).map { _1.chars.first }.join()
+    else
+      words.first.chars.first
+    end
   end
 end
