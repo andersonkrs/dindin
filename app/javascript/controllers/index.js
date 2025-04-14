@@ -7,11 +7,20 @@ import { application } from "./application";
 import Notification from "@stimulus-components/notification";
 application.register("notification", Notification);
 
+import AutoSubmitController from "@stimulus-components/auto-submit";
+application.register("auto-submit", AutoSubmitController);
+
 import UploadButtonController from "./upload_button_controller";
 application.register("upload-button", UploadButtonController);
 
 import AutocompleteController from "./autocomplete_controller";
 application.register("autocomplete", AutocompleteController);
+
+import ClipboardController from "./clipboard_controller";
+application.register("clipboard", ClipboardController);
+
+import DialogController from "./dialog_controller";
+application.register("dialog", DialogController);
 
 import CategoriesDialogController from "./categories_dialog_controller";
 application.register("categories-dialog", CategoriesDialogController);

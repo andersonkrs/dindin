@@ -11,7 +11,7 @@
   <div class="index-card-body px-12">
     <div class="flex w-full flex-col items-center border-opacity-50 mt-10 gap-2">
       <div class="">
-        <%= render "users/avatar", class: "avatar--lg" %> 
+        <%= render "users/avatar", user: Current.user, size: "lg" %> 
       </div>
       <div class="">
         <%= form_with(

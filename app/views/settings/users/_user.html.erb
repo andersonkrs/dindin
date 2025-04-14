@@ -1,0 +1,42 @@
+<li class="flex flex-row w-full items-center gap-4">
+  <div class="flex-none">
+    <%= render "users/avatar", user: user, size: "md" %>
+  </div>
+  <div>
+    <%= link_to(user.name, "#", class: "link text-2xl font-bold") %>
+  </div>
+  <div class="divider grow"></div>
+
+  <%= form_with model: user, url: user_path(user), data: { controller: "auto-submit" }, method: :patch do | form | %>
+    <div class="tooltip" data-tip="<%= "Make #{user.admin? ? "member" : "admin"}" %>">
+      <%= form.label(
+        :role,
+        for: dom_id(user, :role),
+        class: class_names("btn btn-lg btn-circle group bg-white", "checked bg-neutral! text-white" => user.admin? && !user.current?, "btn-disabled" => user.current?),
+        data: { action: "click->auto-submit#submit" }
+      ) do %>
+        <%= icon(
+          "crown",
+          variant: :solid,
+          class: "size-8 stroke-2 group-[.checked]:fill-yellow-400"
+        ) %>
+        <%= form.check_box(:role, { id: dom_id(user, :role), class: "hidden" }, "admin", "member") %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="tooltip" data-tip="Deactivate user">
+    <%= button_to(
+      user_path(user),
+      class: class_names(
+        "btn btn-lg btn-circle btn-error",
+        "btn-disabled" => user.current?
+      ),
+      data: { turbo_confirm: "Are you sure you want to permanently remove this person from the account? This can’t be undone." },
+      method: :delete,
+    ) do %>
+    <%= icon("trash", variant: :solid, class: "stroke-10 font-bold") %>
+  <% end %>
+  </div>
+</li>
+

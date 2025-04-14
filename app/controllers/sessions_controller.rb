@@ -13,10 +13,10 @@ class SessionsController < ApplicationController
     if user = User.authenticate_by(permitted_params)
       start_new_session_for user
 
-      redirect_to after_authentication_url
+      redirect_to after_authentication_url, status: :see_other
     else
       flash[:alert] = "Try another email address or password."
-      redirect_to new_session_url
+      render :new, status: :unprocessable_entity
     end
   end
 

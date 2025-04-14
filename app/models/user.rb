@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Role, Deactivatable
+
   normalizes :email, with: ->(e) { e.strip.downcase }
 
   has_secure_password :password, validations: true
@@ -10,4 +12,8 @@ class User < ApplicationRecord
 
   has_many :sessions, dependent: :destroy
   has_many :transactions, dependent: :destroy, foreign_key: :creator_id
+
+  def current?
+    Current.user == self
+  end
 end

@@ -4,7 +4,7 @@
   <div class="card w-[500px] bg-base-100 shadow-xl">
     <div class="card-body">
       <%= turbo_frame_tag :onboarding do %>
-        <%= form_with id: "onboarding_form", model: @user, url: onboarding_path, html: { multipart: true }, data: { turbo: true }, class: "flex flex-col gap-6 justify-between"  do |form| %>
+        <%= form_with id: "onboarding_form", model: @user, url: onboarding_path, data: { turbo: true }, class: "flex flex-col gap-6 justify-between"  do |form| %>
 
           <div class="w-[11rem] h-[5rem] self-center" style="background: url(<%= image_path("logo.png")%>) no-repeat 0.1rem center/11rem"></div>
 
@@ -25,13 +25,10 @@
           <% end %>
 
           <div class="card-actions justify-center">
-            <%= button_tag(
-              type: "submit",
-              method: "post",
-              form: "onboarding_form",
+            <%= form.button(
+              nil,
               data: {turbo_frame: "_top"},
-              class: "btn btn-success btn-lg btn-circle btn-hover-scale-up",
-              
+              class: "btn btn-secondary btn-xl btn-circle btn-hover-scale-up",
             ) do %>
               <%= icon("arrow-right", class: "size-7 stroke-4 text-white") %>
             <% end %>

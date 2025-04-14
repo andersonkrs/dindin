@@ -6,11 +6,24 @@
       Account & Settings
     </div>
 
-    <div class="flex w-full flex-col border-opacity-50">
+    <div class="flex w-full flex-col border-opacity-50 gap-6">
       <div class="card bg-zinc-100 flex flex-col items-center gap-1">
-        <%= link_to(edit_profile_path, class: "flex flex-row w-full justify-start items-center gap-4 p-4 hover:bg-zinc-200 hover:rounded-xl!") do %>
+        <%= link_to(
+          edit_profile_path,
+          class: %w[
+            flex
+            flex-row
+            w-full
+            justify-start
+            items-center
+            gap-4
+            p-4
+            hover:bg-zinc-200
+            hover:rounded-xl!
+          ]
+        ) do %>
           <div class="flex-none">
-            <%= render "users/avatar", class: "avatar--md" %> 
+            <%= render "users/avatar", user: Current.user, size: "md" %> 
           </div>
           <div class="flex grow flex-col">
             <h3 class="text-xl font-semibold"><%= Current.user.name %></h3>
@@ -21,9 +34,55 @@
           </div>
         <% end %>
       </div>
-      <div class="divider"></div>
-      <div class="card bg-zinc-100 flex flex-col items-center gap-1">
-      </div>
+      <ul class="list rounded-box bg-neutral-100">
+        <% if Current.user.admin? %>
+          <%= link_to(
+            users_path,
+            class: %w[
+              list-row
+            hover:bg-zinc-200
+            ]
+          ) do %>
+            <div>
+              <%= icon "users", variant: :solid, class: "size-8 rounded-box" %>
+            </div>
+            <div>
+              <div class="text-xl font-semibold ">Users & Sessions</div>
+            </div>
+          <% end %>
+        <% end %>
+        <%= link_to(
+          edit_profile_path,
+          class: %w[
+            list-row
+            hover:bg-zinc-200
+          ]
+        ) do %>
+          <div>
+            <%= icon "lock-closed", variant: :solid, class: "size-8 rounded-box" %>
+          </div>
+          <div>
+            <div class="text-xl font-semibold ">Change your password</div>
+          </div>
+        <% end %>
+      </ul>
+      <ul class="list rounded-box bg-neutral-100">
+        <%= link_to(
+          session_path,
+          class: %w[
+            list-row
+            hover:bg-zinc-200
+          ],
+          data: { turbo_method: :delete }
+        ) do %>
+          <div>
+            <%= icon "arrow-right-end-on-rectangle", variant: :solid, class: "size-8 rounded-box" %>
+          </div>
+          <div>
+            <div class="text-xl font-semibold ">Log out</div>
+          </div>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>

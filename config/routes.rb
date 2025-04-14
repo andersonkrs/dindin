@@ -12,7 +12,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :settings, only: %i[ index ]
+  resources :qr_code, only: :show
+
+  get "join/:join_code", to: "settings/users#new", as: :join
+  post "join/:join_code", to: "settings/users#create"
+
+  resources :settings, only: %i[ index ] do
+    collection do
+      resources :users, module: :settings
+      resource :join_codes, module: :settings, only: %i[ create ]
+    end
+  end
 
   scope :my, module: :settings do
     resource :profile, only: %i[ edit update ]

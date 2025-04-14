@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_183329) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_14_111609) do
   create_table "accounts", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -44,6 +44,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_183329) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "app_accounts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "join_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "backups", force: :cascade do |t|
@@ -108,7 +115,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_183329) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
+    t.string "role", default: "member", null: false
+    t.datetime "deactivated_at"
+    t.index ["deactivated_at"], name: "index_users_on_deactivated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.check_constraint "role IN ('admin', 'member')", name: "users_role_check"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -1,0 +1,38 @@
+<% content_for(:title) { "Create your account" } %>
+<% turbo_page_requires_reload %>
+
+<div class="flex items-center h-screen">
+  <div class="card w-[500px] bg-base-100 shadow-xl">
+    <div class="card-body">
+      <%= form_with model: @user, url: join_path(params[:join_code]), class: "flex flex-col gap-6 justify-between"  do |form| %>
+
+        <div class="w-[11rem] h-[5rem] self-center" style="background: url(<%= image_path("logo.png")%>) no-repeat 0.1rem center/11rem"></div>
+
+        <%= form.label :name, class: class_names("input input-lg flex items-center gap-2 text-xl w-full", "input-error" => @user.errors[:name].any?) do %>
+          <%= icon("user", class: "size-7 opacity-50") %>
+          <%= form.text_field :name, placeholder: "Enter your name", required: true, autofocus: true %>
+        <% end %>
+
+        <%= form.label :email, class: class_names("input input-lg flex items-center gap-2 text-xl w-full", "input-error" => @user.errors[:email].any?) do %>
+          <%= icon("at-symbol", class: "size-7 opacity-50") %>
+          <%= form.email_field :email, placeholder: "Enter your email address", required: true,  autocomplete: "username" %>
+        <% end %>
+
+        <%= form.label :password, class: class_names("group input input-lg flex items-center gap-2 text-xl w-full", "input-error" => @user.errors[:password].any?) do %>
+          <%= icon("key", class: "size-7 opacity-50") %>
+          <%= form.password_field :password, placeholder: "Enter your password", autocomplete: "current-password", minlength: 5,  maxlenght: 72, required: true, class: "validator" %>
+        <% end %>
+
+        <div class="card-actions justify-center">
+          <%= form.button(
+            nil,
+            class: "btn btn-secondary btn-xl btn-circle btn-hover-scale-up",
+          ) do %>
+            <%= icon("arrow-right", class: "size-7 stroke-4 text-white") %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

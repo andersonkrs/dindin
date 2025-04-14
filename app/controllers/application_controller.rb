@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Authentication
+  include Authorization
   include SetCurrentRequestDetails
   include I18n::Gettext::Helpers
 

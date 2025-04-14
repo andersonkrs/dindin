@@ -6,7 +6,7 @@
     </div>
     <div class="navbar-end">
       <%= link_to(settings_path) do %>
-        <%= render "users/avatar" %>
+        <%= render "users/avatar", user: Current.user, size: "sm" %>
       <% end %>
     </div>
   </div>

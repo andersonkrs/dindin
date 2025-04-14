@@ -16,18 +16,4 @@ module TransactionsHelper
   def transaction_title_autocomplete(form, field)
     render partial: "transactions/suggestion_autocomplete", locals: { form: form, field: field }
   end
-
-  def transaction_category_combobox(form, field, collection:)
-    render(
-      partial: "transactions/category_combobox",
-      locals: { form: form, field: field, collection: collection }
-    )
-  end
-
-  def transaction_account_combobox(form, field, collection:)
-    render(
-      partial: "transactions/account_combobox",
-      locals: { form: form, field: field, collection: collection }
-    )
-  end
 end

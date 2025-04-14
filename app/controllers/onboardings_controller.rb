@@ -8,7 +8,7 @@ class OnboardingsController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params.merge(role: :admin))
 
     if @user.save(context: :onboarding)
       Onboarding.run!

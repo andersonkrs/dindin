@@ -1,0 +1,65 @@
+<% content_for :title, "People on the account" %>
+
+<div class="flex flex-row justify-center mb-4">
+  <%= link_to(settings_path, class: "btn btn-info btn-outline font-bold text-lg") do %>
+    <%= icon("arrow-left", variant: :solid) %>
+    Account & Settings
+  <% end %>
+</div>
+
+
+<% join_code_url = join_url(join_code: Current.account.join_code) %>
+
+<div class="index-card md:w-2/4">
+  <div class="index-card-body" data-controller="clipboard">
+    <h1 class="card-title font-light text-2xl justify-center mb-2">
+      <%= _("Share to invite more people" )%>
+    </h1>
+
+    <div class="flex flex-col gap-8 mx-4">
+      <%= label_tag :value, class: "input input-lg font-semibold flex items-center gap-2 w-full" do %>
+        <%= text_field_tag(
+          :join_code,
+          join_code_url,
+          readonly: true,
+          class: "grow font-semibold text-xl",
+          data: { clipboard_target: "source", action: "focus->clipboard#selectText" }
+        ) %>
+      <% end %>
+    </div>
+
+    <div class="card-actions flex justify-center items-center mt-4 relative">
+      <div data-controller="dialog" class="flex-inline">
+        <%= button_tag("#", class: "btn btn-xl btn-circle", data: { action: "click->dialog#open" }) do %>
+          <%= icon "qr-code", class: "stroke-2 size-8" %>
+        <% end %>
+
+        <dialog class="modal modal-bottom sm:modal-middle backdrop:opacity-20" data-dialog-target="dialog">
+          <div class="modal-box shadow-2xl sm:max-w-[25rem]">
+
+
+            <div class="flex flex-col gap-2">
+              <%= qr_code_image(join_code_url) %>
+
+              <div class="card-actions flex justify-center items-center">
+                <button type="button"data-action="dialog#close" autofocus class="btn btn-lg btn-circle btn-neutral text-base-100! font-extrabold">✕</button>
+              </div>
+            </div>
+          </div>
+        </dialog>
+      </div>
+
+      <%= link_to(nil, class: "btn btn-xl btn-circle", data: { clipboard_target: "trigger" }) do %>
+        <%= icon "clipboard-document-list", class: "stroke-2 size-8" %>
+      <% end %>
+
+      <%= link_to(join_codes_path, class: "btn btn-xl btn-circle", data: { turbo_method: :post }) do %>
+        <%= icon "arrow-path-rounded-square", class: "stroke-2 size-8" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<ul class="flex flex-col gap-2 md:w-2/4 mt-10!">
+  <%= render @users %>
+</ul>
