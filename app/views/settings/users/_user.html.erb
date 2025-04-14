@@ -1,9 +1,9 @@
-<li class="flex flex-row w-full items-center gap-4">
+<li class="flex flex-row w-full items-center gap-2 max-sm:gap-1">
   <div class="flex-none">
     <%= render "users/avatar", user: user, size: "md" %>
   </div>
   <div>
-    <%= link_to(user.name, "#", class: "link text-2xl font-bold") %>
+    <%= link_to(user.name, "#", class: "link text-xl max-sm:text-lg font-bold") %>
   </div>
   <div class="divider grow"></div>
 
@@ -12,7 +12,7 @@
       <%= form.label(
         :role,
         for: dom_id(user, :role),
-        class: class_names("btn btn-lg btn-circle group bg-white", "checked bg-neutral! text-white" => user.admin? && !user.current?, "btn-disabled" => user.current?),
+        class: class_names("btn max-sm:btn-md btn-lg btn-circle group bg-white", "checked bg-neutral! text-white" => user.admin? && !user.current?, "btn-disabled" => user.current?),
         data: { action: "click->auto-submit#submit" }
       ) do %>
         <%= icon(
@@ -29,7 +29,7 @@
     <%= button_to(
       user_path(user),
       class: class_names(
-        "btn btn-lg btn-circle btn-error",
+        "btn max-sm:btn-md btn-lg btn-circle btn-error",
         "btn-disabled" => user.current?
       ),
       data: { turbo_confirm: "Are you sure you want to permanently remove this person from the account? This can’t be undone." },

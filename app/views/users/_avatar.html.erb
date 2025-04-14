@@ -1,22 +1,25 @@
 <%# locals: (user:, size: "sm") -%>
 
 <div class="group <%= local_assigns.fetch(:class, "avatar--#{size}") %>">
-  <div class="<%= class_names("avatar", "avatar-placeholder" => !user.avatar.attached?)%>">
-    <%= cache user do %>
+  <%= cache [size, user] do %>
+    <div class="<%= class_names("avatar", "avatar-placeholder" => !user.avatar.attached?)%>">
       <div
         class="<%= class_names("w-12
                                 rounded-full
-                                group-[.avatar--md]:w-15
-                                group-[.avatar--lg]:w-18",
+                                group-[.avatar--md]:w-14
+                                group-[.avatar--md]:max-sm:w-12
+                                group-[.avatar--lg]:w-18
+                                group-[.avatar--lg]:max-sm:w-15",
                                 "text-base-100 #{avatar_color(user)}" => !user.avatar.attached?) %>">
         <% if user.avatar.attached? %>
             <%= image_tag user.avatar, class: "h-full w-full object-cover" %>
         <% else %>
-          <span class="text-xl group-[.avatar--md]:text-3xl group-[.avatar--lg]:text-4xl">
+          <span
+            class="text-xl group-[.avatar--md]:text-3xl group-[.avatar--md]:max-sm:text-2xl group-[.avatar--lg]:text-4xl group-[.avatar--md]:max-sm:text-2xl">
             <%= title_initials(user) %>
           </span> 
         <% end %>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

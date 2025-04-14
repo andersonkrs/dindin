@@ -1,8 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import {
-  animate,
-  press,
-} from "https://cdn.jsdelivr.net/npm/motion@12.6.0/+esm";
+import { animate, press } from "motion";
 
 export default class extends Controller {
   static targets = ["trigger", "source"];

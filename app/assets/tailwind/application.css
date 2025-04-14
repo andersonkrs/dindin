@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
@@ -74,10 +74,6 @@
   @apply bg-linear-to-b from-red-200 via-red-100 to-zinc-50;
 }
 
-@utility index-card {
-  @apply card bg-base-100 rounded-2xl shadow-2xl w-full md:w-2/3;
-}
-
 /* DaisyUI bug? */
 @utility btn-success {
   --btn-fg: var(--color-success-content) !important;
@@ -89,10 +85,6 @@
 
 @utility btn {
   @apply rounded-full!;
-}
-
-@utility btn-action {
-  @apply btn font-extrabold text-[1.1rem] btn-sm h-[2.5rem] sm:h-[2.7rem] border-[1.8px] px-4 btn-outline;
 }
 
 @utility btn-hover-scale-up {
@@ -115,9 +107,27 @@
   @apply transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]
 }
 
+
+@utility index-card {
+  @apply card bg-base-100 rounded-2xl shadow-2xl w-full md:w-3/4 lg:w-3/4 ;
+
+  .index-card-body {
+    @apply card-body p-4 gap-0 sm:p-5 sm:gap-2;
+
+    > .index-card-actions {
+      @apply flex items-center justify-end w-full sm:px-2;
+    }
+
+    > .index-card-title {
+      @apply max-sm:divider-start divider font-bold text-xl py-4 mx-0 my-0 sm:py-5 sm:text-4xl sm:mx-2 sm:my-1;
+    }
+  }
+}
+
 @utility divider-list {
   @apply before:text-sm before:font-semibold before:text-gray-500 capitalize;
 }
+
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -138,5 +148,4 @@ input[type="number"] {
 * {
   scrollbar-width: thin;
 }
-
 
