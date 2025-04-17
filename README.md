@@ -1,24 +1,36 @@
-# README
+### DinDin (Brazilian slang for money)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+My family's personal budgeting app.
 
-Things you may want to cover:
+#### Motivation
 
-* Ruby version
+I've created this app to help me and my wife to track our expenses, investments and goals. Before we were using a spreadsheet and a google form to to submit information, then I decided to create this PWA to tailor our needs.
 
-* System dependencies
+As it is right now, it has very few features, it's basically logging expenses, on spare time I've been slowling working on it as we need. To analyze the data I've been simply analyzing the database with SQL for now. The goal is to become a installable budgeting app that you can run on your own server/Raspebery PI/etc and have control of your finances data.
 
-* Configuration
+The desing of this app is heavily inspired on [37signals](https://37signals.com/) products like [Hey Email](https://www.hey.com/), [Writebook](https://once.com/writebook), [Campfire](https://once.com/campfire), etc.
 
-* Database creation
+Bellow a demo with the features implemented so far.
 
-* Database initialization
+<table>
+  <tr>
+    <th>Demo</th>
+  </tr>  
+  <tr>
+    <td>
+      <video src="https://github.com/user-attachments/assets/0530e145-746a-444b-8d8b-04758e03f75d" alt="App Demo" width="128" height="128">
+    </td> 
+  </tr>  
+</table>
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+#### Built With
 
-* Deployment instructions
+The idea is to keep it as close as possible to a [vanila Rails Stack](https://dev.37signals.com/a-vanilla-rails-stack-is-plenty/).
 
-* ...
+* Ruby on Rails
+* SQLite3 
+* Hotwire
+* TailwindCSS + DaisyUI
+
+Hosted on a VPS using [Kamal](https://kamal-deploy.org/).
