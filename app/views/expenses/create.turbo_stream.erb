@@ -2,9 +2,11 @@
   <%= render "transactions/transaction", transaction: @transaction %>
 <% end %>
 
-<%= turbo_stream.replace dom_id(Transaction, :form) do %>
-  <%= turbo_frame_tag dom_id(Transaction, :form) do %>
-    <%= render "transactions/form", transaction: Expense.new(**@transaction.slice(:due_on, :account)) %>
+<% new_transaction = Expense.new(**@transaction.slice(:due_on, :account)) %>
+
+<%= turbo_stream.replace :new_transaction do %>
+  <%= turbo_frame_tag :new_transaction do %>
+    <%= render "transactions/form", transaction: new_transaction %>
   <% end %>
 <% end %>
 

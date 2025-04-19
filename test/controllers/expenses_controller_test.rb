@@ -129,4 +129,3 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     assert_nil @expense.paid_at
   end
 end
-

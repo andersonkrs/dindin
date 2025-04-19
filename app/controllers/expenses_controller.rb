@@ -3,8 +3,6 @@ class ExpensesController < AccountController
 
   def new
     @transaction = Expense.new
-
-    render "transactions/new"
   end
 
   def create
@@ -15,7 +13,7 @@ class ExpensesController < AccountController
         flash.now[:notice] = "Expense created"
         format.turbo_stream
       else
-        format.html { render "transactions/new", status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -26,14 +24,12 @@ class ExpensesController < AccountController
         flash.now[:notice] = "Expense updated"
         format.turbo_stream
       else
-        format.html { render "transactions/edit", status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
 
-  def edit
-    render "transactions/edit"
-  end
+  def edit; end
 
   private
 
@@ -41,7 +37,6 @@ class ExpensesController < AccountController
     @transaction = Expense.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def expense_params
     paid_at = params[:expense][:paid] == "1" ? Time.zone.today : nil
 

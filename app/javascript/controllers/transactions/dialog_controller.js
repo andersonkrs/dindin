@@ -2,10 +2,12 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static outlets = ["combobox"];
-  static targets = ["modal"];
 
   connect() {
-    this.open();
+    this.element.showModal();
+    this.element.addEventListener("close", () => {
+      this.element.remove();
+    });
   }
 
   suggestionSelected(e) {
@@ -20,11 +22,7 @@ export default class extends Controller {
     });
   }
 
-  open() {
-    this.modalTarget.showModal();
-  }
-
   close() {
-    this.modalTarget.close();
+    this.element.close();
   }
 }

@@ -1,5 +1,0 @@
-<% content_for :title, "Editing #{@transaction.model_name.human}" %>
-
-<%= turbo_frame_tag dom_id(Transaction, :form) do %>
-  <%= render "transactions/form", transaction: @transaction %>
-<% end %>

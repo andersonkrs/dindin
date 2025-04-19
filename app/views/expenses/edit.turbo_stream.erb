@@ -1,0 +1,11 @@
+<%= turbo_stream.append_all "body" do %>
+  <dialog
+    class="modal modal-bottom sm:modal-middle max-sm:w-full"
+    data-controller="transactions--dialog"
+    data-transactions--dialog-combobox-outlet=".form-combobox">
+    id="<%= dom_id(@transaction, :dialog) %>">
+    <div class="modal-box shadow-2xl category-gradient--expense">
+      <%= turbo_frame_tag dom_id(Transaction, :edit), src: edit_expense_path(@transaction) %>
+    </div>
+  </dialog>
+<% end %>

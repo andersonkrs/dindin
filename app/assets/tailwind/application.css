@@ -83,6 +83,10 @@
   --size: calc(var(--size-field, .25rem)* 14) !important;
 }
 
+@utility modal {
+  @apply backdrop:opacity-20 z-998
+}
+
 @utility btn {
   @apply rounded-full!;
 }
