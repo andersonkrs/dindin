@@ -25,7 +25,7 @@ export default class extends Controller {
 
     if (this.inputTarget.value) {
       this.selectId(this.inputTarget.value);
-      this.highlightedIndex = this.indexOfCurrentItem();
+      this.highlightedIndex = this.indexOfCurrentItem;
     } else {
       this.highlightedIndex = 0;
     }

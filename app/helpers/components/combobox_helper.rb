@@ -19,6 +19,7 @@ module Components::ComboboxHelper
       keydown.up->combobox#highlightPrevious
       keydown.down->combobox#highlightNext
       keydown.enter->combobox#chooseHighlightedItem
+      focusout->combobox#clickOutside
     ].join(" ")
   end
 end

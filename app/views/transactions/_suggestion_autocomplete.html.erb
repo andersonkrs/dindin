@@ -15,7 +15,13 @@
       autocomplete: "off",
       data: {
         autocomplete_target: "input",
-        action: "input->autocomplete#search keydown.down->autocomplete#focusNext keydown.up->autocomplete#focusPrevious keydown.enter->autocomplete#chooseFocused"
+        action: [
+          "input->autocomplete#search",
+          "keydown.down->autocomplete#focusNext",
+          "keydown.up->autocomplete#focusPrevious",
+          "keydown.enter->autocomplete#chooseFocused",
+          "focusout->autocomplete#clickOutside",
+        ].join(" ")
       }
     ) %>
   <% end %>
