@@ -4,7 +4,6 @@ export default class extends Controller {
   static outlets = ["combobox"];
 
   connect() {
-    this.element.showModal();
     this.element.addEventListener("close", () => {
       this.element.remove();
     });
@@ -20,6 +19,10 @@ export default class extends Controller {
         combobox.selectId(e.target.dataset.account_id);
       }
     });
+  }
+
+  open() {
+    this.element.showModal();
   }
 
   close() {

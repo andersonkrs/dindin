@@ -4,7 +4,11 @@
     data-controller="transactions--dialog"
     data-transactions--dialog-combobox-outlet=".form-combobox">
     <div class="modal-box shadow-2xl category-gradient--expense">
-      <%= turbo_frame_tag :new_transaction, src: new_expense_path %>
+      <%= turbo_frame_tag(
+        :new_transaction,
+        src: new_expense_path,
+        data: { action: "turbo:frame-load->transactions--dialog#open" }
+      ) %>
     </div>
   </dialog>
 <% end %>
