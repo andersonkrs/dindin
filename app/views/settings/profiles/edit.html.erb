@@ -75,17 +75,12 @@
           ) %>
         <% end %>
 
+        <div class="card-actions flex justify-center items-center mt-2 relative">
+          <%= f.button(nil, class: "btn btn-lg btn-success btn-circle btn-hover-scale-up") do %>
+            <%= icon "check", class: "stroke-4" %>
+          <% end %>
+        </div>
       <% end %>
-
-      <div class="card-actions flex justify-center items-center mt-2 relative">
-        <%= button_tag(
-          type: "submit",
-          form: "profile_form",
-          class: "btn btn-lg btn-success btn-circle",
-        ) do %>
-          <%= icon "check", class: "stroke-4" %>
-        <% end %>
-      </div>
     </div>
   </div>
 </div>

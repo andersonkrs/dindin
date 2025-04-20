@@ -4,7 +4,7 @@
       class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition duration-300 min-w-[90%] sm:min-w-[400px] bg-white border border-gray-200 rounded-2xl shadow-2xl"
       role="alert"
       data-controller="notification"
-      data-notification-delay-value="2000"
+      data-notification-delay-value="3000"
       data-transition-enter-from="opacity-0 translate-x-3/4"
       data-transition-enter-to="opacity-100 translate-x-1/2"
       data-transition-leave-from="opacity-100 translate-x-1/2"
@@ -12,11 +12,14 @@
       >
       <div class="flex p-4">
         <div class="shrink-0">
-          <% if type == "alert" %>
-            <%= icon("information-circle", class: "shrink-0 size-5 stroke-2 mt-0.5 text-orange-500") %>
-          <% else %>
-            <%= icon("information-circle", class: "shrink-0 size-5 stroke-2 mt-0.5 text-blue-500") %>
-          <% end %>
+          <%= icon(
+            "information-circle",
+            class: class_names(
+              "shrink-0 size-5 stroke-2 mt-0.5 text-blue-500",
+              "text-orange-500!" => type == "alert",
+              "text-green-500!" => type == "success",
+            )
+          ) %>
         </div>
         <div class="ms-3">
           <p class="text-md">

@@ -1,0 +1,83 @@
+<% content_for :title, "Change your password" %>
+
+<div class="flex flex-row justify-center mb-4">
+  <%= link_to(settings_path, class: "btn btn-info btn-outline font-bold text-lg") do %>
+    <%= icon("arrow-left", variant: :solid) %>
+    Account & Settings
+  <% end %>
+</div>
+
+<div class="index-card md:w-2/4">
+  <div class="index-card-body sm:px-12!">
+    <h1 class="card-title font-normal max-sm:text-xl text-2xl justify-center">
+      <%= _("Change your password" )%>
+    </h1>
+
+    <div class="w-full">
+      <%= form_with(
+        model: Current.user,
+        url: password_path,
+        method: :patch,
+        class: "mt-4 w-full",
+      ) do |form| %>
+        <div class="flex flex-col">
+          <%= form.label(
+            :current_password,
+            class: class_names("input input-lg text-xl w-full validator")
+          ) do %>
+            <%= icon("key", class: "size-7 opacity-50 mr-2") %>
+            <%= form.password_field(
+              :current_password,
+              placeholder: _("Enter your current password"),
+              required: true,
+              autofocus: true
+            ) %>
+          <% end %>
+          <p class="validator-hint mt-1 mb-1">Current password is required</p>
+
+          <%= form.label(
+            :password,
+            class: class_names(
+              "input input-lg text-xl w-full validator",
+              "input-error" => form.object.errors[:password_confirmation].any?, 
+            )
+          ) do %>
+            <%= icon("lock-closed", class: "size-7 opacity-50") %>
+            <%= form.password_field(
+              :password,
+              placeholder: _("Enter your new password"),
+              minlength: 5,
+              maxlenght: 72,
+              required: true,
+            ) %>
+          <% end %>
+          <p class="validator-hint mt-1 mb-1"><%= _("Must be at least 5 characters long") %></p>
+
+          <%= form.label(
+            :password_confirmation,
+            class: class_names(
+              "peer input input-lg text-xl w-full validator",
+              "input-error" => form.object.errors[:password_confirmation].any?,
+            )
+          ) do %>
+            <%= icon("check-circle", class: "size-7 opacity-50") %>
+            <%= form.password_field(
+              :password_confirmation,
+              placeholder: _("Confirm your new password"),
+              required: true
+            ) %>
+          <% end %>
+          <p class="validator-hint mt-1 mb-1">
+            <%= _("Password confirmation is required") %>
+          </p>
+        </div>
+
+        <div class="card-actions flex justify-center mt-1">
+          <%= form.button(nil, class: "btn btn-lg btn-success btn-circle btn-hover-scale-up") do %>
+            <%= icon "check", class: "stroke-4" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

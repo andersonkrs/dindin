@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   scope :my, module: :settings do
     resource :profile, only: %i[ edit update ]
     resource :avatar, only: %i[ create destroy ]
+    resource :password, only: %i[ edit update ]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

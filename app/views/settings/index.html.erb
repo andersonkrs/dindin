@@ -36,13 +36,7 @@
       </div>
       <ul class="list rounded-box bg-neutral-100">
         <% if Current.user.admin? %>
-          <%= link_to(
-            users_path,
-            class: %w[
-              list-row
-            hover:bg-zinc-200
-            ]
-          ) do %>
+          <%= link_to(users_path, class: %w[ list-row hover:bg-zinc-200 ]) do %>
             <div>
               <%= icon "users", variant: :solid, class: "size-8 rounded-box" %>
             </div>
@@ -51,13 +45,7 @@
             </div>
           <% end %>
         <% end %>
-        <%= link_to(
-          edit_profile_path,
-          class: %w[
-            list-row
-            hover:bg-zinc-200
-          ]
-        ) do %>
+        <%= link_to(edit_password_path, class: %w[ list-row hover:bg-zinc-200 ]) do %>
           <div>
             <%= icon "lock-closed", variant: :solid, class: "size-8 rounded-box" %>
           </div>
