@@ -11,8 +11,16 @@ export default class extends Controller {
     this.update();
   }
 
+  get currentDate() {
+    return this.element.getAttribute(this.attributeValue);
+  }
+
+  set currentDate(value) {
+    this.element.setAttribute(this.attributeValue, value);
+  }
+
   update() {
-    const givenDate = new Date(this.element.dataset[this.attributeValue]);
+    const givenDate = new Date(this.currentDate);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -46,6 +54,6 @@ export default class extends Controller {
       formattedDate = dateWithWeekDayFormatter.format(givenDate);
     }
 
-    this.element.dataset[this.attributeValue] = formattedDate;
+    this.currentDate = formattedDate;
   }
 }

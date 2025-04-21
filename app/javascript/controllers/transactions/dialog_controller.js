@@ -7,6 +7,8 @@ export default class extends Controller {
     this.element.addEventListener("close", () => {
       this.element.remove();
     });
+
+    this.open();
   }
 
   suggestionSelected(e) {

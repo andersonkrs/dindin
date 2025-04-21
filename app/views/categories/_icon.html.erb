@@ -1,24 +1,23 @@
 <%# locals: (category:, size: "sm", data: {}) -%>
 
-<%= tag.div class: "relative inline-flex align-middle group size--#{size}" do %>
+<%= tag.div(
+  class: class_names(
+    "avatar group size--#{size}",
+    "avatar-placeholder"
+  )
+) do %>
   <%= tag.div(
     data: data,
     class: [
       category_color(category),
-      "block",
-      "aspect-square",
-      "overflow-hidden",
       "rounded-full",
       "group-[.size--sm]:w-10",
       "group-[.size--md]:w-12",
       "group-[.size--lg]:w-15",
       "text-neutral-content",
-      "flex",
-      "items-center",
-      "justify-center"
     ].join(" ")
   ) do %>
-    <% icon_classes = "category-icon fill-white group-[.size--sm]:w-6 group-[.size--md]:w-8 group-[.size--lg]:w-10" %>
+    <% icon_classes = "category-icon fill-white group-[.size--sm]:w-6 group-[.size--md]:w-7 group-[.size--lg]:w-10" %>
 
     <% if category.persisted? && category.icon.blank? %>
       <%= category_icon_placeholder(category, class: icon_classes) %> 

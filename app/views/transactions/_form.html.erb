@@ -40,11 +40,7 @@
       placeholder: _("Select a category"),
       icon: "chart-pie",
     ) do |category| %>
-      <div data-attribute="icon" class="avatar avatar-placeholder">
-        <div class="<%= category_color(category) %> w-10 rounded-full">
-          <%= category_icon(category, variant: :solid, class: "w-4 fill-white") %>
-        </div>
-      </div>
+      <%= render "categories/icon", size: "sm", category: category %>
       <%= category.title %>
     <% end %>
 

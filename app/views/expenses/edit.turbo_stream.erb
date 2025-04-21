@@ -6,11 +6,9 @@
     id="<%= dom_id(@transaction, :dialog) %>"
   >
     <div class="modal-box shadow-2xl category-gradient--expense">
-      <%= turbo_frame_tag(
-        :edit_transaction,
-        src: edit_expense_path(@transaction),
-        data: { action: "turbo:frame-load->transactions--dialog#open" }
-      ) %>
+      <%= turbo_frame_tag :edit_transaction do %>
+        <%= render "transactions/form", transaction: @transaction %>
+      <% end %>
     </div>
   </dialog>
 <% end %>

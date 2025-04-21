@@ -11,10 +11,10 @@ class Settings::PasswordsController < ApplicationController
       Current.user.transaction do
         Current.user.sessions.destroy_all
         Current.user.save!
-
         start_new_session_for(Current.user)
-        redirect_to settings_path, notice: "Password updated successfully."
       end
+
+      redirect_to settings_path, notice: "Password updated successfully."
     else
       flash.now[:alert] = "Passwords do not match. Please try again."
       render :edit, status: :unprocessable_entity
