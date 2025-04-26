@@ -61,7 +61,6 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
-
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
@@ -80,4 +79,10 @@ Rails.application.configure do
   # Development hosts
   hosts = ENV.fetch("RAILS_HOSTS", "").split(";")
   config.hosts |= hosts
+
+  config.tidewave.allowed_origins = hosts
+
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+  config.solid_queue.logger = ActiveSupport::Logger.new(STDOUT)
 end

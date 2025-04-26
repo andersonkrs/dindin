@@ -42,6 +42,10 @@
   --color-avatar-placeholder-3: oklch(75% 0.18 120);
   --color-avatar-placeholder-4: oklch(65% 0.2 300);
   --color-avatar-placeholder-5: oklch(80% 0.17 40);
+
+  --color-almost-due: oklch(90% 0.182 98.111);
+  --color-due-today: oklch(76% 0.188 70.08);
+  --color-overdue: oklch(70% 0.191 22.216);
 }
 
 /*
@@ -116,7 +120,7 @@
   @apply card bg-base-100 rounded-2xl shadow-2xl w-full md:w-3/4 lg:w-3/4 ;
 
   .index-card-body {
-    @apply card-body p-4 gap-0 sm:p-5 sm:gap-2;
+    @apply card-body p-4 gap-0 max-sm:px-1 sm:p-5 sm:gap-2;
 
     > .index-card-actions {
       @apply flex items-center justify-end w-full sm:px-2;

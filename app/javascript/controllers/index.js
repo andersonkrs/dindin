@@ -45,3 +45,9 @@ application.register("sorted", SortedController);
 
 import Transactions__DialogController from "./transactions/dialog_controller";
 application.register("transactions--dialog", Transactions__DialogController);
+
+import Transactions__RecurrenceController from "./transactions/recurrence_controller";
+application.register(
+  "transactions--recurrence",
+  Transactions__RecurrenceController,
+);

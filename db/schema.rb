@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_14_111609) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_01_104453) do
   create_table "accounts", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -76,6 +76,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_111609) do
     t.check_constraint "kind in ('expense', 'income')"
   end
 
+  create_table "recurrences", force: :cascade do |t|
+    t.string "title"
+    t.date "start_on", null: false
+    t.string "frequency", null: false
+    t.integer "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -99,10 +108,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_111609) do
     t.datetime "updated_at", null: false
     t.integer "creator_id"
     t.string "type", null: false
+    t.integer "recurrence_id"
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["category_id"], name: "index_transactions_on_category_id"
     t.index ["creator_id"], name: "index_transactions_on_creator_id"
     t.index ["due_on"], name: "index_transactions_on_due_on", order: :desc
+    t.index ["recurrence_id"], name: "index_transactions_on_recurrence_id"
     t.index ["title"], name: "index_transactions_on_title"
     t.index ["type"], name: "index_transactions_on_type"
     t.check_constraint "type in ('Expense', 'Income')"

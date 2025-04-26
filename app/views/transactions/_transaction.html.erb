@@ -1,5 +1,3 @@
-<%# locals: (transaction:) -%>
-
 <%=
   link_to polymorphic_path(transaction, action: :edit),
           id: dom_id(transaction),
@@ -8,12 +6,18 @@
             controller: "relative-date",
             relative_date_attribute_value: "data-divider-content",
             sort_key: transaction.sort_key,
-            divider_key: transaction_divider_key(transaction),
+            divider_key: transaction.divider_key,
             divider_content: transaction.due_on.in_time_zone.iso8601,
           },
           class: "block divider-list" do %>
-  <article class="flex hover:bg-gray-100 px-1 sm:py-1 sm:px-2 rounded-2xl">
-    <div class="grow py-1 text-sm font-medium text-gray-800">
+  <article class="flex hover:bg-gray-100 max-sm:px-0 sm:px-4 sm:py-1 sm:rounded-2xl relative">
+    <div class="<%= class_names("status status-info status-lg absolute top-1/2 -left-0 -translate-y-1/2",
+                                "status-error!" => transaction.overdue?,
+                                "status-warning!" => transaction.almost_due?,
+                                "hidden": transaction.paid?) %>">
+    </div>
+
+    <div class="grow py-1 text-sm font-medium text-gray-800 max-sm:ml-[.9rem]">
       <div class="shrink-0 group block">
         <div class="flex items-center">
           <div class="relative">
@@ -22,8 +26,8 @@
             <% end %>
           </div>
           <div class="ms-3">
-            <h3 class="font-semibold text-gray-800">
-              <%= transaction.title %>
+            <h3 class="font-semibold text-gray-800 flex items-center">
+              <%= transaction.title %><% if transaction.recurrent? %><%= icon "refresh-ccw", variant: :solid, class: "size-3 ml-1" %><% end %>
             </h3>
             <p class="text-sm font-medium text-gray-400">
               <%= transaction.account.title %>

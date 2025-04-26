@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 8.0.0.rc1"
+gem "rails", "~> 8.0.2"
 
 gem "bootsnap", require: false
 
@@ -39,20 +39,15 @@ gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-# Password encryption
-gem "bcrypt", "~> 3.1.7"
-
-# Handles monetization
-gem "money-rails", "~> 1.12"
-
 # Active Storage
 gem "image_processing", "~> 1.2"
 
-# Pagination
-gem "geared_pagination"
-
 # Misc
+gem "bcrypt", "~> 3.1.7"
 gem "rqrcode"
+gem "geared_pagination"
+gem "ice_cube"
+gem "money-rails", "~> 1.12"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -66,6 +61,8 @@ group :development, :test do
 
   # Generate fake data
   gem "faker", require: false
+
+  gem "tidewave"
 end
 
 group :development do

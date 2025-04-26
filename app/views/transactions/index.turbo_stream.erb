@@ -1,4 +1,4 @@
-<%= turbo_stream.append dom_id(Transaction, :list) do %>
+<%= turbo_stream.append :transactions do %>
   <% cache [@categories, @page.records] do %>
     <%= render partial: "transaction", collection: @page.records %>
   <% end %>

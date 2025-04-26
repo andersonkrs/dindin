@@ -1,6 +1,6 @@
 <%# locals: (transaction:) -%>
 
-<button data-action="transactions--dialog#close" class="btn btn-md btn-circle btn-ghost absolute font-bold right-2 top-2 text-lg">✕</button>
+<button data-action="transactions--dialog#close" class="group btn btn-md btn-circle btn-ghost absolute font-bold right-2 top-2 text-lg">✕</button>
 
 <div class="card-body items-stretch px-1 py-1">
   <h1 class="card-title font-light text-2xl justify-center mb-2">
@@ -11,7 +11,14 @@
     <% end %>
   </h1>
 
-  <%= form_with(model: transaction) do |form| %>
+  <%= form_with(
+    model: transaction,
+    data: {
+      controller: "transactions--recurrence",
+      transactions__recurrence_toggle_class: "is-recurrent"
+    },
+    class: "group"
+  ) do |form| %>
     <div class="flex flex-col gap-4">
       <%= form.label :value, class: "input input-lg flex items-center gap-2 w-full", data: { controller: "money-input" } do %>
         <%= icon "banknotes", class: "size-7 opacity-50 ml-2" %>
@@ -57,7 +64,7 @@
       <%= form.label :due_on, class: "input input-lg flex items-center gap-2 indicator w-full" do %>
         <span class="indicator-item indicator-center badge">Due date</span>
         <%= icon "calendar-days", class: "size-7 opacity-50 ml-2" %>
-        <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow" %>
+        <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow items-center" %>
       <% end %>
 
       <%= form.label :paid, class: "input input-lg flex-1 w-full swap swap-rotate input-ghost" do %>
@@ -66,6 +73,75 @@
         <%= icon "hand-thumb-down", class: "swap-off w-8 h-8 size-6 text-red-500" %>
       <% end %>
     </div>
+
+    <%= form.hidden_field(
+      :_recurrent,
+      value: false,
+      data: { transactions__recurrence_target: "toggle" }
+    ) %>
+
+    <%= form.fields_for(:recurrence_attributes) do |recurrence_fields| %>
+      <div class="hidden group-[.is-recurrent]:flex gap-2 max-sm:gap-1 max-sm:text-lg text-xl rounded-xl p-1 hover:bg-[#0000000f]">
+        <div class="flex items-center w-full gap-4">
+          <span class="label text-secondary ml-4">
+            <%= icon "refresh-ccw", variant: :solid, class: "size-6" %>
+          </span>
+
+          <%= recurrence_fields.select(
+            :frequency,
+            [["Monthly", "monthly"], ["Annually", "annually"]],
+            { selected: "monthly" },
+            {
+              class: "underline decoration-2 underline-offset-2",
+              data: {
+                transactions__recurrence_target: "recurrenceFrequency",
+              },
+            }
+          ) %>
+
+          <%= recurrence_fields.select(
+            :end_condition,
+            [["Forever", "forever"], ["For...", "for"]],
+            { selected: "monthly" },
+            {
+              class: "underline decoration-2 underline-offset-2",
+              data: {
+                transactions__recurrence_target: "endCondition",
+                action: "input->transactions--recurrence#endConditionChanged:prevent",
+              },
+            }
+          ) %>
+
+          <%= recurrence_fields.label(:count, class: "input input-md grow invisible") do %>
+            <%= recurrence_fields.number_field(
+              :count,
+              min: 1,
+              max: 100,
+              step: 1,
+              class: "grow",
+              data: {
+                transactions__recurrence_target: "count",
+              }
+            ) %>
+            <span class="label">times</span>
+          <% end %>
+        </div>
+
+        <button class="btn btn-circle btn-md btn-ghost" data-action="transactions--recurrence#toggle:prevent">
+          <%= icon "x-circle", class: "size-7 opacity-50" %>
+        </button>
+      </div>
+
+    <% end %>
+
+    <% if transaction.new_record? %>
+      <div class="flex justify-start block group-[.is-recurrent]:hidden">
+        <button class="btn btn-xs p-4" data-action="transactions--recurrence#toggle:prevent">
+          <%= icon "refresh-ccw", variant: :solid, class: "size-4 opacity-50" %>
+          <span class="text-gray-600">Recurrent</span>
+        </button>
+      </div>
+    <% end %>
 
     <div class="card-actions flex justify-center items-center mt-2 relative">
       <%= form.button(nil, class: "btn btn-xl btn-success btn-circle btn-hover-scale-up") do %>

@@ -13,7 +13,7 @@ class ExpensesController < AccountController
         flash.now[:notice] = "Expense created"
         format.turbo_stream
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -40,7 +40,7 @@ class ExpensesController < AccountController
   def expense_params
     paid_at = params[:expense][:paid] == "1" ? Time.zone.today : nil
 
-    params
+    permitted = params
       .require(:expense)
       .permit(
         :title,
@@ -51,5 +51,15 @@ class ExpensesController < AccountController
       ).with_defaults(
         paid_at: paid_at,
       )
+
+    if params[:expense][:_recurrent] == "true"
+      permitted.merge!(recurrence_params)
+    end
+
+    permitted
+  end
+
+  def recurrence_params
+    params.require(:expense).permit(recurrence_attributes: [:frequency, :count])
   end
 end

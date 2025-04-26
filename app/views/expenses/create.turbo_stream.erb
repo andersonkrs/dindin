@@ -1,7 +1,3 @@
-<%= turbo_stream.prepend dom_id(Transaction, :list) do %>
-  <%= render "transactions/transaction", transaction: @transaction %>
-<% end %>
-
 <% new_transaction = Expense.new(**@transaction.slice(:due_on, :account)) %>
 
 <%= turbo_stream.replace :new_transaction do %>
