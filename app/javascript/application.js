@@ -1,9 +1,9 @@
 // Entry point for the build script in your package.json
 import "@hotwired/turbo-rails";
-import { Turbo } from "@hotwired/turbo-rails";
 import { StreamActions } from "@hotwired/turbo";
 import { Application, defaultSchema } from "@hotwired/stimulus";
 import "./controllers";
+import "cally";
 
 const customSchema = {
   ...defaultSchema,

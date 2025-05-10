@@ -15,6 +15,7 @@
     model: transaction,
     data: {
       controller: "transactions--recurrence",
+      action: "transactions--recurrence:toggle->transactions--dialog#recurrenceChanged",
       transactions__recurrence_toggle_class: "is-recurrent"
     },
     class: "group"
@@ -60,17 +61,49 @@
       icon: "credit-card",
     ) %>
 
-    <div class="flex gap-1">
-      <%= form.label :due_on, class: "input input-lg flex items-center gap-2 indicator w-full" do %>
+    <div
+      class="flex gap-1"
+      data-controller="calendar"
+      data-action="calendar:onchange->transactions--dialog#paidOnChanged">
+      <%= form.label(
+        :due_on,
+        class: "input input-lg flex items-center gap-2 indicator w-full",
+        data: { action: "click->calendar#toggle" }
+      ) do %>
         <span class="indicator-item indicator-center badge">Due date</span>
         <%= icon "calendar-days", class: "size-7 opacity-50 ml-2" %>
-        <%= form.date_field :due_on, placeholder: "Due On", required: true, class: "grow items-center" %>
+        <%= form.text_field(
+          :_due_on,
+          required: true,
+          readonly: true,
+          class: "grow",
+          data: { calendar_target: "maskedInput" },
+          value: transaction.due_on
+        ) %>
+        <%= form.hidden_field(:due_on, data: { calendar_target: "input" }) %>
       <% end %>
 
+      <calendar-date
+        class="cally hidden bg-base-100 rounded-box shadow-lg"
+        data-calendar-target="calendar"
+        data-action="change->calendar#dateSelected" value="<%= transaction.due_on %>">
+        <%= icon "arrow-left", class: "size-6", html: { slot: "previous", aria_label: "Previous" } %>
+        <%= icon "arrow-right", class: "size-6", html: { slot: "next", aria_label: "Next" } %>
+        <calendar-month></calendar-month>
+      </calendar-date>
+
       <%= form.label :paid, class: "input input-lg flex-1 w-full swap swap-rotate input-ghost" do %>
-        <%= form.check_box :paid, checked: transaction.paid? %>
-        <%= icon "hand-thumb-up", class: "swap-on w-8 h-8 size-6 text-emerald-500" %>
-        <%= icon "hand-thumb-down", class: "swap-off w-8 h-8 size-6 text-red-500" %>
+        <%= form.check_box(
+          :paid,
+          checked: transaction.paid?,
+          data: { transactions__dialog_target: "paidToggle" }
+        ) %>
+        <div class="swap-on">
+          <%= icon "hand-thumb-up", class: "w-8 h-8 size-6 text-emerald-500" %>
+        </div>
+        <div class="swap-off">
+          <%= icon "hand-thumb-down", class: "w-8 h-8 size-6 text-red-500" %>
+        </div>
       <% end %>
     </div>
 
@@ -82,7 +115,7 @@
 
     <%= form.fields_for(:recurrence_attributes) do |recurrence_fields| %>
       <div class="hidden group-[.is-recurrent]:flex gap-2 max-sm:gap-1 max-sm:text-lg text-xl rounded-xl p-1 hover:bg-[#0000000f]">
-        <div class="flex items-center w-full gap-4">
+        <div class="flex items-center w-full gap-2">
           <span class="label text-secondary ml-4">
             <%= icon "refresh-ccw", variant: :solid, class: "size-6" %>
           </span>

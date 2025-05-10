@@ -43,6 +43,9 @@ application.register("relative-date", RelativeDateController);
 import SortedController from "./sorted_controller";
 application.register("sorted", SortedController);
 
+import CalendarController from "./calendar_controller";
+application.register("calendar", CalendarController);
+
 import Transactions__DialogController from "./transactions/dialog_controller";
 application.register("transactions--dialog", Transactions__DialogController);
 

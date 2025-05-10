@@ -1,10 +1,11 @@
 class SvgIcon
-  attr_reader :name, :variant, :class_names, :path, :data_attributes
+  attr_reader :name, :variant, :class_names, :path, :data_attributes, :html_attributes
 
   def initialize(name, **options)
     @name = name
     @variant = options.fetch(:variant, :outline)
     @data_attributes = options.fetch(:data, {})
+    @html_attributes = options.fetch(:html, {})
     @class_names = options.fetch(:class, nil)
     @path = options.fetch(:path, "icons/#{variant}/#{name}.svg")
   end
@@ -30,6 +31,12 @@ class SvgIcon
     if data_attributes.present?
       data_attributes.each do |key, attr_value|
         svg.set_attribute("data-#{key.to_s.dasherize}", attr_value)
+      end
+    end
+
+    if html_attributes.present?
+      html_attributes.each do |key, attr_value|
+        svg.set_attribute(key.to_s.dasherize, attr_value)
       end
     end
 

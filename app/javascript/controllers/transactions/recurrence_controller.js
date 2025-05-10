@@ -15,10 +15,11 @@ export default class extends Controller {
   }
 
   toggle() {
-    console.log("toggle", this.element);
     const willBeRecurrent = !this.element.classList.contains(this.toggleClass);
     this.element.classList.toggle(this.toggleClass, willBeRecurrent);
     this.toggleTarget.value = willBeRecurrent;
+
+    this.dispatch("toggle", { detail: { recurrent: willBeRecurrent } });
   }
 
   get #isForever() {

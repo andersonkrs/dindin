@@ -2,6 +2,7 @@
   <dialog
     class="modal modal-bottom sm:modal-middle max-sm:w-full"
     data-controller="transactions--dialog"
+    data-transactions--dialog-transaction-id-value="<%= @transaction.id %>"
     data-transactions--dialog-combobox-outlet=".form-combobox"
     id="<%= dom_id(@transaction, :dialog) %>"
   >
