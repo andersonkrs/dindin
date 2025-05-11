@@ -169,15 +169,15 @@
 
     <% if transaction.new_record? %>
       <div class="flex justify-start block group-[.is-recurrent]:hidden">
-        <button class="btn btn-xs p-4" data-action="transactions--recurrence#toggle:prevent">
+        <a class="btn btn-xs p-4" data-action="click->transactions--recurrence#toggle">
           <%= icon "refresh-ccw", variant: :solid, class: "size-4 opacity-50" %>
           <span class="text-gray-600">Recurrent</span>
-        </button>
+        </a>
       </div>
     <% end %>
 
     <div class="card-actions flex justify-center items-center mt-2 relative">
-      <%= form.button(nil, class: "btn btn-xl btn-success btn-circle btn-hover-scale-up") do %>
+      <%= form.button(nil, class: "btn btn-xl btn-success btn-circle btn-hover-scale-up", type: :submit) do %>
         <%= icon "check", class: "stroke-6" %>
       <% end %>
 
