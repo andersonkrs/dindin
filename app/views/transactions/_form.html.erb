@@ -114,23 +114,24 @@
     ) %>
 
     <%= form.fields_for(:recurrence_attributes) do |recurrence_fields| %>
-      <div class="hidden group-[.is-recurrent]:flex gap-2 max-sm:gap-1 max-sm:text-lg text-xl rounded-xl p-1 hover:bg-[#0000000f]">
-        <div class="flex items-center w-full gap-2">
-          <span class="label text-secondary ml-4">
-            <%= icon "refresh-ccw", variant: :solid, class: "size-6" %>
-          </span>
+      <div class="hidden group-[.is-recurrent]:flex items-start gap-2 max-sm:text-lg text-xl rounded-xl p-1 hover:bg-[#0000000f] relative">
+        <span class="label text-secondary ml-4 mt-[calc(var(--spacing)*2.5)] self-top">
+          <%= icon "refresh-ccw", variant: :solid, class: "size-6" %>
+        </span>
 
+        <div class="flex items-center gap-1 flex-wrap grow">
           <%= recurrence_fields.select(
             :frequency,
             [["Monthly", "monthly"], ["Annually", "annually"]],
             { selected: "monthly" },
             {
-              class: "underline decoration-2 underline-offset-2",
+              class: "underline decoration-2 underline-offset-2 min-h-10",
               data: {
                 transactions__recurrence_target: "recurrenceFrequency",
               },
             }
           ) %>
+
 
           <%= recurrence_fields.select(
             :end_condition,
@@ -145,13 +146,13 @@
             }
           ) %>
 
-          <%= recurrence_fields.label(:count, class: "input input-md grow invisible") do %>
+          <%= recurrence_fields.label(:count, class: "input input-md hidden basis-2/3") do %>
             <%= recurrence_fields.number_field(
               :count,
               min: 1,
               max: 100,
               step: 1,
-              class: "grow",
+              class: "width-1/4",
               data: {
                 transactions__recurrence_target: "count",
               }
@@ -160,11 +161,10 @@
           <% end %>
         </div>
 
-        <button class="btn btn-circle btn-md btn-ghost" data-action="transactions--recurrence#toggle:prevent">
+        <button class="btn btn-circle btn-md btn-ghost self-center" data-action="transactions--recurrence#toggle:prevent">
           <%= icon "x-circle", class: "size-7 opacity-50" %>
         </button>
       </div>
-
     <% end %>
 
     <% if transaction.new_record? %>

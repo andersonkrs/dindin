@@ -27,9 +27,6 @@ export default class extends Controller {
   }
 
   #toggleCountVisibility() {
-    this.countTarget.parentElement.classList.toggle(
-      "invisible",
-      this.#isForever,
-    );
+    this.countTarget.parentElement.classList.toggle("hidden", this.#isForever);
   }
 }
