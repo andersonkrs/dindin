@@ -16,6 +16,8 @@ export default class extends Controller {
 
   static classes = ["highlightedItem"];
 
+  #highlightedIndex;
+
   static values = {
     url: String,
     minLength: { type: Number, default: 2 },
@@ -37,28 +39,28 @@ export default class extends Controller {
     });
 
     const maxIndex = this.itemTargets.length - 1;
-    this._highlightedIndex = Math.max(Math.min(index, maxIndex), -1);
+    this.#highlightedIndex = Math.max(Math.min(index, maxIndex), -1);
 
     if (
-      this._highlightedIndex >= 0 &&
-      this._highlightedIndex < this.itemTargets.length
+      this.#highlightedIndex >= 0 &&
+      this.#highlightedIndex < this.itemTargets.length
     ) {
-      const item = this.itemTargets[this._highlightedIndex];
+      const item = this.itemTargets[this.#highlightedIndex];
       item.classList.add(...this.highlightedItemClasses);
     }
   }
 
   get highlightedIndex() {
-    return this._highlightedIndex;
+    return this.#highlightedIndex;
   }
 
   search() {
     const query = this.inputTarget.value;
 
     if (query.length >= this.minLengthValue) {
-      this._startSearch(query);
+      this.#startSearch(query);
     } else {
-      this._closeResults();
+      this.close();
     }
   }
 
@@ -92,33 +94,45 @@ export default class extends Controller {
   }
 
   chooseFocused(e) {
-    e.preventDefault();
+    if (this.isOpen) {
+      e.preventDefault();
 
-    const focused = this.itemTargets[this.highlightedIndex];
+      const focused = this.itemTargets[this.highlightedIndex];
 
-    if (focused) {
-      this._internalChoose(focused);
+      if (focused) {
+        this.#internalChoose(focused);
+      } else {
+        this.close();
+      }
     }
   }
 
   choose(e) {
-    this._internalChoose(e.currentTarget);
+    this.#internalChoose(e.currentTarget);
+  }
+
+  close() {
+    this.resultsTarget.classList.add("hidden");
+
+    if (this.cleanupFloating) {
+      this.cleanupFloating();
+    }
   }
 
   clickOutside() {
-    this._closeResults();
+    this.close();
   }
 
-  async _startSearch(query) {
+  async #startSearch(query) {
     const response = await get(this.urlValue, {
       query: { q: encodeURIComponent(query) },
       responseKind: "turbo-stream",
     });
 
     if (response.statusCode === 200) {
-      this._showResults();
+      this.#showResults();
     } else {
-      this._closeResults();
+      this.close();
     }
   }
 
@@ -129,13 +143,17 @@ export default class extends Controller {
       this.clearButtonTarget.classList.add(this.hiddenClass);
     }
 
-    this._closeResults();
+    this.close();
     this.inputTarget.focus();
   }
 
-  _showResults() {
+  #showResults() {
     if (this.cleanupFloating) {
       this.cleanupFloating();
+    }
+
+    if (this.inputTarget != document.activeElement) {
+      return;
     }
 
     this.cleanupFloating = autoUpdate(
@@ -159,19 +177,11 @@ export default class extends Controller {
     this.highlightedIndex = -1;
   }
 
-  _closeResults() {
-    this.resultsTarget.classList.add("hidden");
-
-    if (this.cleanupFloating) {
-      this.cleanupFloating();
-    }
-  }
-
-  _internalChoose(itemElement) {
+  #internalChoose(itemElement) {
     this.inputTarget.value = itemElement.dataset.title;
     this.highlightedIndex = -1;
 
-    this._closeResults();
+    this.close();
     this.dispatch("choose", { target: itemElement });
   }
 }

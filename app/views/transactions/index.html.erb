@@ -23,7 +23,7 @@
 
     <%= turbo_stream_from [:transactions, @month] %>
 
-    <div class="flex flex-col justify-center w-full pt-0 px-0 sm:px-3">
+    <div class="flex flex-col justify-center w-full max-sm:mt-2 px-0 sm:px-3">
       <%= turbo_frame_tag(
         :transactions,
         data: {

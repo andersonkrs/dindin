@@ -17,9 +17,11 @@
         autocomplete_target: "input",
         action: [
           "input->autocomplete#search",
-          "keydown.down->autocomplete#focusNext",
-          "keydown.up->autocomplete#focusPrevious",
+          "keydown.down->autocomplete#focusNext:prevent",
+          "keydown.up->autocomplete#focusPrevious:prevent",
           "keydown.enter->autocomplete#chooseFocused",
+          "keydown.esc->autocomplete#close",
+          "blur->autocomplete#close",
         ].join(" ")
       }
     ) %>
